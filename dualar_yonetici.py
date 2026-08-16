@@ -18,6 +18,9 @@ JSON_FILE = "dualar.json"
 
 LOG_FILE = "yonetici_log.txt"
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/selahattin35/dualar/main/dualar.json"
+# 🎯 Yedek hedefi: dualar deposu — yalnızca bu araç üzerinden yedeklenir
+GITHUB_REMOTE = "dualar-public"
+GITHUB_REMOTE_URL = "https://github.com/selahattin35/dualar.git"
 # 🔒 Yönetici aracı şifresi — istediğiniz şifreyi buraya yazın
 ADMIN_PASSWORD = "7412"
 
@@ -579,18 +582,42 @@ def github_gonder():
     btn_github.config(text="Yükleniyor...", state=tk.DISABLED)
     root.update()
     try:
-        stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
-        subprocess.run(["git", "add", "dualar.json"], check=True, capture_output=True, text=True)
-        commit = subprocess.run(["git", "commit", "-m", f"Arayüzden dualar ve listeler güncellendi ({stamp})"], capture_output=True, text=True)
-        push = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True)
-        if push.returncode != 0:
-            # Remote ileride olabilir: rebase yapıp tekrar dene
-            pull = subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True, text=True)
-            if pull.returncode != 0:
-                raise RuntimeError("Push başarısız ve rebase hatalı:\n" + (pull.stderr or "")[:600])
-            push = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True)
+        # Hedef deposu kontrolü: dualar deposu (yalnızca bu araçtan yedeklenir)
+        remote_kontrol = subprocess.run(["git", "config", "--get", f"remote.{GITHUB_REMOTE}.url"], capture_output=True, text=True)
+        if remote_kontrol.returncode != 0 or not remote_kontrol.stdout.strip():
+            raise RuntimeError(
+                f"'{GITHUB_REMOTE}' deposu tanımlı değil.\n"
+                f"Eklemek için:\n    git remote add {GITHUB_REMOTE} {GITHUB_REMOTE_URL}"
+            )
+        # dualar.json'da değişiklik var mı? (dualar deposundaki sürüme göre)
+        # Önce dualar deposunun en güncel halini çek
+        fetch = subprocess.run(["git", "fetch", GITHUB_REMOTE], capture_output=True, text=True)
+        if fetch.returncode != 0:
+            raise RuntimeError("Fetch başarısız:\n" + (fetch.stderr or "")[:600])
+        fark = subprocess.run(["git", "diff", "--quiet", f"{GITHUB_REMOTE}/main", "--", "dualar.json"], capture_output=True, text=True)
+        if fark.returncode == 0:
+            commit_cikti = "nothing to commit"
+        else:
+            # Sadece dualar.json değişikliğini dualar deposunun üstüne işle.
+            # Çalışma klasörüne dokunulmaz; index geçici olarak kullanılır.
+            try:
+                subprocess.run(["git", "read-tree", f"{GITHUB_REMOTE}/main"], check=True, capture_output=True, text=True)
+                subprocess.run(["git", "add", "dualar.json"], check=True, capture_output=True, text=True)
+                agac = subprocess.run(["git", "write-tree"], check=True, capture_output=True, text=True).stdout.strip()
+                stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
+                commit_hash = subprocess.run(
+                    ["git", "commit-tree", agac, "-p", f"{GITHUB_REMOTE}/main",
+                     "-m", f"Arayüzden dualar ve listeler güncellendi ({stamp})"],
+                    check=True, capture_output=True, text=True
+                ).stdout.strip()
+            finally:
+                # İndeksi normale döndür (çalışma klasörü hiç değişmedi)
+                subprocess.run(["git", "reset", "-q"], capture_output=True, text=True)
+            # Push — remote arada ilerlerse fetch + yeni commit ile tekrar dene
+            push = subprocess.run(["git", "push", GITHUB_REMOTE, f"{commit_hash}:main"], capture_output=True, text=True)
             if push.returncode != 0:
                 raise RuntimeError("Push başarısız:\n" + (push.stderr or "")[:600])
+            commit_cikti = "yeni commit gönderildi"
         # Başarılı: Firebase'deki onaylanmış duaları sil (artık GitHub deposunda)
         silinen = 0
         temizlik_hatasi = False
@@ -603,16 +630,15 @@ def github_gonder():
             print("Firebase temizliği atlandı:", e)
             temizlik_hatasi = True
             log_action(f"Firebase onaylı dua temizliği atlandı: {e}")
-        commit_cikti = (commit.stdout or "").strip()
         if silinen:
-            mesaj = f"Dualar başarıyla GitHub'a gönderildi!\n{silinen} onaylı dua Firebase'den silindi (GitHub'a taşındı)."
+            mesaj = f"Dualar başarıyla dualar deposuna gönderildi!\n{silinen} onaylı dua Firebase'den silindi (GitHub'a taşındı)."
         elif temizlik_hatasi:
-            mesaj = "Dualar GitHub'a gönderildi ancak Firebase'deki onaylı dualar temizlenemedi (ağ/bağlantı hatası). Dualar Firebase'de kaldı; bir sonraki gönderimde tekrar temizlenecek."
+            mesaj = "Dualar dualar deposuna gönderildi ancak Firebase'deki onaylı dualar temizlenemedi (ağ/bağlantı hatası). Dualar Firebase'de kaldı; bir sonraki gönderimde tekrar temizlenecek."
         elif "nothing to commit" in commit_cikti:
             mesaj = "Değişiklik yok — dualar zaten güncel. Firebase onaylı dualar kontrol edildi."
         else:
-            mesaj = "Tüm liste ve dualar başarıyla GitHub'a gönderildi!\nZikirmatik güncellendi."
-        log_action(f"GitHub push başarılı | Firebase'den silinen onaylı dua: {silinen}")
+            mesaj = "Tüm liste ve dualar başarıyla dualar deposuna gönderildi!\nZikirmatik güncellendi."
+        log_action(f"GitHub push başarılı (dualar deposu) | Firebase'den silinen onaylı dua: {silinen}")
         messagebox.showinfo("Başarılı", mesaj)
     except Exception as e:
         log_action(f"GitHub push HATASI: {e}")
@@ -626,9 +652,13 @@ def github_indir():
     btn_github_indir.config(text="İndiriliyor...", state=tk.DISABLED)
     root.update()
     try:
-        indir = subprocess.run(["git", "pull", "origin", "main"], capture_output=True, text=True)
+        # Önce fetch, sonra dualar deposundaki dualar.json'u çalışma klasörüne getir
+        fetch = subprocess.run(["git", "fetch", GITHUB_REMOTE], capture_output=True, text=True)
+        if fetch.returncode != 0:
+            raise RuntimeError(fetch.stderr or "fetch başarısız")
+        indir = subprocess.run(["git", "checkout", f"{GITHUB_REMOTE}/main", "--", "dualar.json"], capture_output=True, text=True)
         if indir.returncode != 0:
-            raise RuntimeError(indir.stderr or "pull başarısız")
+            raise RuntimeError(indir.stderr or "indirme başarısız")
         load_data()
         guncelle_combo_tur()
         guncelle_combo_listeler()
