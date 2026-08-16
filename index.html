@@ -3517,11 +3517,11 @@
 
                 if (window.firebaseAuth) {
                     const unsubscribe = window.onAuthStateChanged(window.firebaseAuth, (user) => {
-                        unsubscribe();
+                        if (typeof unsubscribe === 'function') unsubscribe();
                         check();
                     });
                     setTimeout(() => {
-                        unsubscribe();
+                        if (typeof unsubscribe === 'function') unsubscribe();
                         check();
                     }, 1000);
                 } else {
@@ -3588,6 +3588,7 @@
                 clearTimeout(autoRetryTimer);
                 autoRetryTimer = null;
             }
+            await ensureLoggedIn();
             try {
                 let fetchedOk = false;
                 window._lastGithubFetch = 0;
@@ -3691,8 +3692,6 @@
                     showToast("İnternet bağlantısı sağlandı, dualar başarıyla yüklendi 🌿");
                 }
                 
-                await ensureLoggedIn();
-
                 // 2. Fetch user state from Firestore (misafirlerde atlanır)
                 let dbState = null;
                 if (canUseFirestore()) {
@@ -7663,12 +7662,10 @@
             document.addEventListener('backbutton', () => { handleAndroidBack(); });
         } catch (_) { }
 
-        window.onload = async () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             clearLocalStateCache();
-            // The authOverlay remains visible until user clicks "BAŞLA" or "Login"
-            // which calls startAppWithFullscreen() and hides the overlay.
             await load();
-        };
+        });
 
         // ─── EĞİM İLE OTOMATİK KAYDIRMA (Tilt-to-Scroll) ───────────────────
         (function initTiltScroll() {
