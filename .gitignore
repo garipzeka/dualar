@@ -1,0 +1,51 @@
+# Bağımlılıklar
+node_modules/
+
+# 🔴 KRİTİK GÜVENLİK: Firebase Admin SDK özel anahtarı — ASLA git'e eklenmemeli!
+# Bu dosya dışarı sızarsa saldırgan Firebase projesinin tamamını (tüm veriler,
+# tüm kullanıcılar) kontrol edebilir. Sadece kendi bilgisayarınızda kalsın.
+serviceAccountKey.json
+
+# Firebase istemci yapılandırması (build sırasında gerekli, Firebase Console'dan indirilir)
+google-services.json
+
+# Android / derleme çıktıları
+*.apk
+*.aab
+*.rar
+*.exe
+*.log
+
+# Android build / gradle cache
+android/.gradle/
+android/.gradle_home/
+android/app/build/
+android/build/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+.freebuff/
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE / kişisel ayarlar
+.idea/
+.vscode/
+.sixth/
+
+# Geliştirme artıkları / geçici dosyalar
+scratch/
+kurn/
+patch_*.js
+patch_*.py
+temp*.js
+temp*.json
+out*.js
+out_orig.js
+test*.js
+test_*.json
+check_divs.py
+validator_output.txt
+result.json
+script_test.html

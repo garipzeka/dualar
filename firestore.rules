@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Kullanıcı durumu (sayaç ilerlemesi) ──
+    // Her kullanıcı sadece kendi dokümanını okuyabilir/yazabilir.
+    // Misafirler (auth yok) Firestore'a hiç erişemez → tamamen yerel çalışır.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── Aktif kullanıcı sayacı (presence heartbeat) ──
+    // Her kullanıcı kendi dokümanına lastSeen zamanını yazar;
+    // herkes (giriş yapmış kullanıcılar) tüm presence dokümanlarını okuyabilir
+    // böylece "şu an aktif kullanıcı" bilgisi yönetici aracında görünür.
+    match /presence/{uid} {
+      allow create, update, delete: if request.auth != null && request.auth.uid == uid;
+      allow read: if request.auth != null;
+    }
+
+    // ── Kullanıcı duaları (custom_prayers) ──
+    // - Oluşturma: sadece kendi uid'si ile; status asla 'onaylandi' olamaz
+    // - Okuma: kendi duaları + herkese açık onaylanmış dualar
+    // - Güncelleme: sadece kendi dokümanı; uid değiştirilemez;
+    //   status sadece private/bekliyor olabilir (onaylandi ASLA kullanıcıdan yazılamaz)
+    // - Silme: sadece kendi dokümanı
+    // Not: Yönetici onayı/reddi masaüstü aracındaki Admin SDK ile yapılır,
+    // Admin SDK bu kuralları bypass eder, bu yüzden burada ayrıca admin izni gerekmez.
+    match /custom_prayers/{docId} {
+      function isOwner() {
+        return request.auth != null && resource.data.uid == request.auth.uid;
+      }
+      function isValidStatus(status) {
+        return status in ['private', 'bekliyor', 'pending'];
+      }
+
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && isValidStatus(request.resource.data.status);
+
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid
+        || resource.data.status == 'onaylandi';
+
+      allow update: if isOwner()
+        && request.resource.data.uid == request.auth.uid
+        && resource.data.status != 'onaylandi'
+        && isValidStatus(request.resource.data.status);
+
+      allow delete: if isOwner();
+    }
+  }
+}

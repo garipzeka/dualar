@@ -1,0 +1,16 @@
+{
+  "appId": "com.zikirmatik.pro",
+  "appName": "Zikirmatik Pro",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "FirebaseAuthentication": {
+      "providers": ["google.com"]
+    }
+  }
+}

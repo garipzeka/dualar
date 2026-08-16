@@ -1,0 +1,1145 @@
+{
+  "version": 2,
+  "items": [
+    {
+      "id": "mjrjfqk08xzx07z0xn",
+      "name": "Fatiha",
+      "text": "Bismillahirrahmanirrahim \nElhamdulillâhi Rabbil'alemin. Errahmânir'rahim. Mâliki yevmiddin. İyyâke na'budü ve iyyâke neste'în, İhdinessırâtel müstakîm. Sırâtellezine en'amte aleyhim ğayrilmağdûbi aleyhim ve leddâllîn.",
+      "meaning": "Rahmân ve Rahîm olan Allah’ın adıyla (1). Hamd (bütün övgü ve övülme) Alemlerin Rabbi Allah'a mahsustur. O, Rahmandır ve Rahimdir. O Allah din (ceza ve hesap) gününün malikidir.(2-4) (Rabbimiz!) Ancak sana kulluk eder ve yalnız senden yardım isteriz.(5) Bizi doğru yola hidayet et. Kendilerine lütuf ve ikramda bulunduğun kimselerin yoluna; senin gazabına uğramışların ve (haktan) sapmışların yoluna değil.(6-7)",
+      "goal": 1
+    },
+    {
+      "id": "mjrjgy40zpgntgv4jns",
+      "name": "Ayetel Kürsi ",
+      "text": "Bismillahirrahmanirrahim \nAllahü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te’huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil erd. Menzellezî yeşfeu indehû illâ biiznihi. ya’lemü mâ beyne eydîhim vemâ halfehüm velâ yühîtûne bişey’in min ilmihî illâ bimâ şâe vesia kürsiyyühüssemâvâti vel erd. Velâ yeûdühü hıfzuhumâ ve hüvel aliyyül azîm",
+      "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nAllah kendisinden başka hiçbir ilah olmayandır. Diridir, kayyumdur. Onu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey onundur. İzni olmaksızın onun katında şefaatte bulunacak kimdir? O, kulların önlerindekileri ve arkalarındakileri (yaptıklarını ve yapacaklarını) bilir. Onlar onun ilminden, kendisinin dilediği kadarından başka bir şey kavrayamazlar. Onun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek ona güç gelmez. O, yücedir, büyüktür. (Bakara - 255)",
+      "goal": 1
+    },
+    {
+      "id": "1",
+      "name": "Sübhanallah",
+      "text": "Sübhanallah",
+      "meaning": "Allah her türlü noksanlıktan uzaktır.",
+      "goal": 33
+    },
+    {
+      "id": "mjrjiztnif5de79c4r",
+      "name": "Elhamdulillah",
+      "text": "Elhamdulillah",
+      "meaning": "Hamd Allah'a mahsustur.",
+      "goal": 33
+    },
+    {
+      "id": "mjrjka1aoweeurtdedr",
+      "name": "Allahu Ekber",
+      "text": "Allahu Ekber",
+      "meaning": "Allah en büyüktür.",
+      "goal": 33
+    },
+    {
+      "id": "mjrjlhydvij7jn286ja",
+      "name": "Haşr Suresi 22.",
+      "text": "Huvallâhullezî lâ ilâhe illâ huve, âlimul gaybi veş şehâdeti, huver rahmânur rahîm(rahîmu).",
+      "meaning": "O Allah ki, O’ndan başka ilah yoktur. Görüleni de görülmeyeni de bilendir. O, Rahmân’dır, Rahîm’dir.",
+      "goal": 1
+    },
+    {
+      "id": "mjrjmbpglk4cmu4ofja",
+      "name": "Haşr Suresi 23",
+      "text": "Huvallâhullezî lâ ilâhe illâ huve, el melikul kuddûsus selâmul mu'minul muheyminul azîzul cebbârul mutekebbir(mutekebbiru), subhânallâhi ammâ yuşrikûn(yuşrikûne).",
+      "meaning": "O Allah ki, O’ndan başka ilah yoktur. Melik’tir, Kuddûs’tür, Selâm’dır, Mü’min’dir, Müheymin’dir, Azîz’dir, Cebbâr’dır, Mütekebbir’dir. Allah, onların ortak koştuklarından münezzehtir.",
+      "goal": 1
+    },
+    {
+      "id": "mjrjn6o0mmzzh7m889",
+      "name": "Haşr Suresi 24.",
+      "text": "Huvallâhul hâlikul bâriul musavviru lehul esmâul husnâ, yusebbihu lehu mâ fîs semâvâti vel ard(ardı) ve huvel azîzul hakîm(hakîmu).",
+      "meaning": "O Allah yaratandır, yoktan var edendir, şekil verendir. En güzel isimler O’nundur. Göklerde ve yerde olanların hepsi O’nu tesbih eder. O Azîz’dir, Hakîm’dir.",
+      "goal": 1
+    },
+    {
+      "id": "mjrjott13e4ljkvobgy",
+      "name": "“Allahümme ecirnî minennâr”",
+      "text": "“Allahümme ecirnî minennâr ve edhılnil Cennete”",
+      "meaning": "Allah'ım bizi cehennem ateşinden koru, iyiler ile beraber cennete dahil eyle!) Âmin…",
+      "goal": 7
+    },
+    {
+      "id": "mjrjq6qump7hr86vyi",
+      "name": "Hasbiyallahü",
+      "text": "“Hasbiyallahü lâ ilahe illâ hü, aleyhi tevekkeltü ve hüve Rabbül-arşil-azîm” ",
+      "meaning": "“Bana, Allah yeter (kâfidir), O'ndan başka ilâh yoktur. Ben, Allah'a tevekkül ettim (güvendim). Ve O, azîm arşın Rabbidir.”",
+      "goal": 7
+    },
+    {
+      "id": "mjrjs6gbffqrifrewxi",
+      "name": " \"La ilahe illallahü vahdehü la-şerikeleh",
+      "text": " \"La ilahe illallahü vahdehü la-şerikeleh lehül-mülkü ve lehül-hamdü yuhyi ve yümit ve hüve ala külli şeyin kadir\"",
+      "meaning": "Allah’tan başka ilah yoktur. İbadete layık yalnız Allah’tır, O birdir, ortağı yoktur, kâinat Onun mülküdür, hamd Ona mahsustur, O her şeye kadirdir.",
+      "goal": 10
+    },
+    {
+      "id": "mjrjtmfomlsemffl8fn",
+      "name": "İhlas",
+      "text": "Bismillahirrahmanirrahim \nKul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
+      "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"O, Allah'tır, bir tektir.\" (1)\n\"Allah Samed'dir. (Her şey O'na muhtaçtır, o, hiçbir şeye muhtaç değildir.)\" (2)\nOndan çocuk olmamıştır (Kimsenin babası değildir). Kendisi de doğmamıştır (kimsenin çocuğu değildir).\" (3)\n\"Hiçbir şey O'na denk ve benzer değildir.\" (4)",
+      "goal": 11
+    },
+    {
+      "id": "mjrjvasz200x8fvrtuj",
+      "name": "Felak",
+      "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbilfelak. Min şerri mâ halak. Ve min şerri ğasikın izâ vekab. Ve min şerrinneffâsâti fil'ukad. Ve min şerri hâsidin izâ hased.",
+      "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Yarattığı şeylerin kötülüğünden, karanlığı çöktüğü zaman gecenin kötülüğünden, düğümlere üfleyenlerin kötülüğünden, haset ettiği zaman hasetçinin kötülüğünden, sabah aydınlığının Rabbine sığınırım.\" (1-5)",
+      "goal": 1
+    },
+    {
+      "id": "mjrjwspp2y7dl6naqx8",
+      "name": "Nas",
+      "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbinnâsi. Melikinnâsi. İlâhinnâs. Min şerrilvesvâsilhannâs. Ellezî yüvesvisü fî sudûrinnâsi. Minelcinneti vennâs.",
+      "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Cinlerden ve insanlardan; insanların kalplerine vesvese veren sinsi vesvesecinin kötülüğünden, insanların Rabbine, insanların Melik'ine, insanların İlah'ına sığınırım.\" (1-6)",
+      "goal": 1
+    },
+    {
+      "id": "mjrjxuyq9144wfd0gsb",
+      "name": "Istigfar",
+      "text": "Estagfirullah",
+      "meaning": "Allah’tan bağışlanma dilerim.",
+      "goal": 67
+    },
+    {
+      "id": "mjrjz7nton3evzjrj6",
+      "name": "Sübhânallahi",
+      "text": "Sübhânallahi ve bi-hamdihi, sübhânallahil azîm",
+      "meaning": "Kemâl sıfatlarla muttasıf ve noksan sıfatlardan beri olan Allah’ı hamd ile tesbih ederim.",
+      "goal": 100
+    },
+    {
+      "id": "mjrk0bb7ee8kfhx52a9",
+      "name": "(Allahümme mâ esba",
+      "text": "Allahümme mâ esbaha bi min nimetin ev bi-ehadin min halkıke, fe minke vahdeke, lâ şerike leke, fe lekel hamdü ve lekeşşükür)",
+      "meaning": "Ya Rabbi, bana ve diğer yarattıklarına verdiğin maddi ve manevi nimetlerin sabaha (akşama) kadar bizim yanımızda kalması yalnız Sendendir. Senin ortağın yoktur. Sana hamd ve şükrediyoruz.\n[Akşam okurken (Mâ esbaha) yerine (Mâ emsa) demelidir.]",
+      "goal": 1
+    },
+    {
+      "id": "mjrk1ezyps0gefpxzu8",
+      "name": "Bismillâhillezî",
+      "text": "Bismillâhillezî lâ-yedurru me’asmihî şey’ün fil-erdı velâ fissemâi ve hüves-semî’ul’alîm) ",
+      "meaning": "Allah’ın yüce ismine sığınana yerde ve gökte hiç bir şey zarar veremez, O, her şeyi işitir ve bilir.",
+      "goal": 3
+    },
+    {
+      "id": "mjrk2dqws1gdyt4ckab",
+      "name": "(Allahümme inni euzü",
+      "text": "(Allahümme inni euzü bike min en üşrike bike şeyen ve ene âlemü ve estağfirüke li-ma la âlemü inneke, ente allamülguyub)",
+      "meaning": "Allah’ım! Bilerek Sana ortak koşmaktan Sana sığınırım; bilmeden yaptıklarım için de Senden bağışlanma dilerim. Şüphesiz Sen gaybı en iyi bilensin.",
+      "goal": 1
+    },
+    {
+      "id": "mjrk3jkoubtyoycxcea",
+      "name": "Allahümme barik",
+      "text": "(Allahümme barik li fil-mevt ve fi ma badelmevt",
+      "meaning": "Allah’ım! Ölümde ve ölümden sonraki hâllerde benim için bereket ve hayır ihsan eyle.",
+      "goal": 25
+    },
+    {
+      "id": "mjrk57r2a4pjz51jw3",
+      "name": "(Allahümmağfirli ve li-valideyye",
+      "text": "(Allahümmağfirli ve li-valideyye ve li-üstaziyye ve lil müminine vel müminat vel müslimine vel müslimat el ahya-i minhüm vel emvat bi-rahmetike ya erhamerrahimin)",
+      "meaning": "Allah’ım! Beni, anne babamı, hocalarımı, mümin erkekleri ve mümin kadınları, Müslüman erkekleri ve Müslüman kadınları; yaşayanlarını ve ölmüşlerini rahmetinle bağışla ey merhametlilerin en merhametlisi.",
+      "goal": 25
+    },
+    {
+      "id": "mjrk6nnyti456nvjykn",
+      "name": "Salavat-ı Şerif",
+      "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+      "meaning": "Allahım! Hz. Muhammed'e ve aline (evladu iyaline) salatu selam ve esenlikler eyle.\nAllah Teâlâ (C.C.) :\n“Ey îman edenler! Allah ve melekleri Peygamber’e çok salavât getirirler. Siz de O’na salavât getirin ve tam bir teslîmiyetle selâm verin.”  buyurmuştur. (el-Ahzâb, 56)\nPeygamber Efendimiz (Sallallahu Aleyhi Vesellem) şöyle buyurmuştur :\n“Kıyamet günü insanların bana en yakını, bana en çok salavât okuyanıdır.”  (Tirmizî, Vitr, 21)\n“Her kim bana bir defa salât ederse, Allâh’u Teâlâ’da ona on salât eder.” Müslim (408); Ebû Dâvûd (1530)\n“–Cuma günü bana çok salavât getirin! Zira o gün, meleklerin hazır ve şâhid olduğu bir gündür.”\n“Her kim Cuma günü Nebî (Sallâllâhu Aleyhi ve Sellem)e yüz kere salâvât getirirse, kıyâmet günü mahşer yerine yüzü çok güzel ve nurlu bir kimse olarak gelir. İnsanlar ona gıpta eder ve: ‘Bu zât acaba hangi ameli işliyordu?’ diye birbirilerine sorarlar.”\nBeyhakî, Şu‘abu’l-Îmân, c. 3, s. 212.",
+      "goal": 100
+    },
+    {
+      "id": "mjrkafleusbe3yodm3a",
+      "name": "(Lâ havle",
+      "text": "(Lâ havle velâ kuvvete illâ billâhilaliyyilazîm)",
+      "meaning": "Allah’tan başka güç kuvvet sahibi yoktur. Her şeye kuvvet ve güç veren ancak zati ve sübuti sıfatların sahibi yüce Allah’tır.",
+      "goal": 250
+    },
+    {
+      "id": "mjrkbreswqvd61dgups",
+      "name": "salavat2",
+      "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+      "meaning": "Allah’ım! Efendimiz Muhammed’e ve Efendimiz Muhammed’in âline salât ve selâm eyle.",
+      "goal": 100
+    },
+    {
+      "id": "mjrkcwtbsy07bulpnda",
+      "name": "istivar",
+      "text": "Estagfirullah min külli mâ kerihallah",
+      "meaning": "Ya Rabbi, razı olmadığın, beğenmediğin şeylerden, yaptıklarımı af et, yapmadıklarımı da yapmaktan koru!",
+      "goal": 100
+    },
+    {
+      "id": "mjrkdzg7yrgz2q3e8u",
+      "name": "istigfar",
+      "text": "Allahümme ente rabbî lâilâhe illâ ente halaktenî ve ene abdüke ve ene alâ ahdike ve va’dike mestetatü eûzü bike min şerri mâ sanatü ebûü leke bi-ni’metike aleyye ve ebûü bi zenbî fağfirlî zünûbî feinnehû lâ yağfirüzzünûbe illâ ente. Lâ ilâhe illâ ente sübhâneke innî küntü minezzâlimîn.",
+      "meaning": "Allah’ım, sen benim rabbimsin, senden başka mabud yoktur, ancak sen varsın, beni yoktan yaratan sensin, ve ben senin kulunum, gücüm nispetinde sana verdiğim ahdimde ve sözümde duruyorum, işlemiş olduğum kötü şeylerin şerrinden sana sığınırım, bana olan nimetlerini ve günahlarımı da sana itiraf ederim, benim günahlarımı affet çünkü senden başka bağışlayıcı yoktur. Senden başka hiç bir ilâh yoktur, seni bütün noksanlıklardan, tenzîh ederim. Gerçekten ben, nefsime haksızlık edenlerdenim.",
+      "goal": 1
+    },
+    {
+      "id": "mjrkfepjq7fexpi9tno",
+      "name": "Kelime-i Tevhid",
+      "text": "Lâ ilâhe İllallâh, Muhammedun Resûlullah",
+      "meaning": "Allah'tan başka ilah yoktur. Hz. Muhammed (S.A.V.) O'nun elçisidir.",
+      "goal": 100
+    },
+    {
+      "id": "mjrkglylq84110jw3cj",
+      "name": "estağfurullah el azim",
+      "text": "(Estagfirullahelazim ellezi la ilahe illa hüverrahmanürrahim el-hayy-ül-kayyumüllezi la-yemutü ve etubü ileyh Rabbigfir li)",
+      "meaning": "Kendisinden başka ilah olmayan, Rahmân ve Rahîm, Hayy ve Kayyûm olan, ölmeyen yüce Allah’tan bağışlanma diler ve O’na tövbe ederim. Rabbim beni bağışla.",
+      "goal": 25
+    },
+    {
+      "id": "mjrkinkbrcjram3zgoo",
+      "name": "Estagfirullah",
+      "text": "Estagfirullahel’azîm, ellezî lâ ilâhe illâ huv, el hayyel kayyûme ve etûbü ileyh.",
+      "meaning": "\"Kendisinden başka ilah olmayan, hakikî hayatla diri olan Hay, her şeyi ayakta tutan  Kayyum olan büyük Allah’dan beni bağışlamasını istiyor ve -bütün benliğimle- ona tövbe edip, yöneliyorum; nefsine / kendine zulmetmiş, üstelik nefsi için ne ölümü, ne hayatı ve ne de öldükten sonra dirilmeyi elinde tutamayan bir kulun tevbesiyle / yönelişiyle (tevbe ediyorum).\"",
+      "goal": 3
+    },
+    {
+      "id": "mjrkkqiy7wkv10ea6rn",
+      "name": "Euzü bi-kelimâ",
+      "text": "Euzü bi-kelimâtillahittâmmeti min şerri külli şeytânin ve hâmmetin ve min şerri külli aynin lâmmetin)",
+      "meaning": "Şeytanların, haşaratın ve kem gözlerin şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazar değene okunacak dua:",
+      "goal": 1
+    },
+    {
+      "id": "mjrkm9vdvb344foobk",
+      "name": "Allahümme",
+      "text": "Allahümme, ya mukallibel kulüb, sebbit kalbi, alâ dinik)",
+      "meaning": "Ey büyük Allah’ım, kalbleri iyiden kötüye, kötüden iyiye çeviren, ancak sensin. Kalbimi, dininde sâbit kıl, dininden döndürme, Müslümanlıktan ayırma!\nDinde sebat edip son nefeste iman ile ölmek için:",
+      "goal": 1
+    },
+    {
+      "id": "mjrknenljrcg9zh8jms",
+      "name": "tövbe",
+      "text": "Estagfirullah ve etûbü ilellah min cemî’i mâ kerihallah, kavlen ve fi’len ve hâtıran ve nâzıran.",
+      "meaning": "Allahü teâlâdan magfiret dilerim ve Allahü teâlânın beğenmediği sözden, işden, düşünceden ve görüşden Allahü teâlâya tevbe ederim.",
+      "goal": 1
+    },
+    {
+      "id": "mjrkoj0xi1561a98yj",
+      "name": "Es Elullahel",
+      "text": "Es Elullahel azim rabbel arşil azim en Yeşfiyek",
+      "meaning": "Yüce arşın Rabbi olan büyük Allah’tan sana şifa vermesini dilerim.",
+      "goal": 7
+    },
+    {
+      "id": "mjrkq7droi7j2sgdrnq",
+      "name": "Euzü bikelimâti",
+      "text": "Euzü bikelimâtillahittammâti min şerri mâ haleka)",
+      "meaning": "Bütün yaratıkların şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazardan ve her türlü zarardan korunmak için okunan dua:",
+      "goal": 1
+    },
+    {
+      "id": "mjrkrwfpdqho9uwfrjv",
+      "name": "Sübhânallahi vel",
+      "text": "Sübhânallahi velhamdü lillahi ve lâ ilâhe illallahü vallahü ekber)",
+      "meaning": "Allah’ı hamd ve tesbih ederim. Allah’tan başka ilah yoktur ve O en büyüktür.\n\nGünahları affettiren en kıymetli tesbih:",
+      "goal": 10
+    },
+    {
+      "id": "mjrktnug21q448ibyzsh",
+      "name": "Yunus  Aleyhisselam",
+      "text": "La ilahe illa ente sübhaneke inni küntü minezzalimin",
+      "meaning": "Senden başka ilah yoktur. Seni noksan sıfatlardan tenzih ederim. Şüphesiz ben nefsine zulmedenlerden oldum.",
+      "goal": 20
+    },
+    {
+      "id": "dua_95aa8577",
+      "name": "rızık",
+      "text": "Allahümmeğfir li, verhamni, ve âfini, verzukni",
+      "meaning": "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır",
+      "goal": 1
+    },
+    {
+      "id": "dua_c6b92ab5",
+      "name": "sıkıntı",
+      "text": "Rabbena atina min ledünke rahmeten ve heyyi' lena min emrina raşeda",
+      "meaning": "",
+      "goal": 1
+    },
+    {
+      "id": "dua_9c294be7",
+      "name": "şeytan",
+      "text": "Vekul rabbi e’ûżu bike min hemezâti-şşeyâtîn.  Ve e’ûżu bike rabbi en yahdurûn  ",
+      "meaning": "",
+      "goal": 1
+    },
+    {
+      "id": "dua_5a8aede8",
+      "name": "Gadap",
+      "text": "Allahümmagfir li-zenbî ve ezhib gayza kalbî ve ecirnî mineşşeytân",
+      "meaning": "Rabbî! Günâhımı afv eyle. Beni kalbimdeki gadabdan ve şeytânın vesvesesinden kurtar)",
+      "goal": 1
+    },
+    {
+      "id": "mjrkubmjg5dc11kfg9c",
+      "name": "silsiliyeyi Ali'ye ",
+      "text": "\n1- Ebubekr-i Sıddık\n2- Selman-ı Farisi\n3- Kasım bin Muhammed\n4- Cafer-i Sadık\n5- Bayezid-i Bistami\n6- Ebul Hasan Harkani\n7- Ebu Ali Farmedi\n8- Yusuf-i Hemedani\n9- Abdülhalık-i Goncdüvani\n10- Arif-i Rivegeri\n11- Mahmud-i Encirfagnevi\n12- Ali Ramiteni\n13- Muhammed Bâbâ Semmasi\n14- Seyyid Emir Gilâl\n15- Seyyid Muhammed Behaeddin Buhari\n16- Alâüddin-i Attâr\n17- Yakub-i Çerhi\n18- Ubeydullah-i Ahrâr\n19- Kâdi Muhammed Zâhid\n20- Derviş Muhammed\n21- Hâcegi Muhammed Emkenegi\n22- Muhammed Bakibillah\n23- İmam-ı Ahmed Rabbani\n24- Muhammed Masum Faruki\n25- Seyfeddin Faruki\n26- Seyyid Nur Muhammed\n27- Seyyid Mazhar-ı Can-ı Canan\n28- Seyyid Abdullah Dehlevi\n29- Mevlana Halid-i Bağdâdi\n30- Seyyid Abdullah Şemdini\n31- Seyyid Tâhâ-yı Hakkâri\n32- Seyyid Muhammed Sâlih\n33- Seyyid Sıbgatullah-i Hizâni\n34- Seyyid Fehim-i Arvâsi\n35- Seyyid Abdülhakim-i Arvâsi\n36- Hüseyin Hilmi Işık Efendi\n\nAbdülkadir-i Geylani\nAbdullah-ı Tercüman\nAkşemseddin -\nAziz Mahmud Hüdayi\nBişr-i Hafi\nEbül Vefa\nEbu Turab\nEmir Sultan\nHacı Bayram-ı Veli\nHacı Bektaş-ı Veli\nHasan Sezai\nHayat bin Kays el-Harrani\nİbrahim Ethem\nİbrahim Gülşeni\nİbrahim Havvas\nİsmail Fakirullah\nMalik bin Dinar\nMehmed Emin Tokadi\nMerkez Efendi\nÖmer bin Abdülaziz\nOsman Bedrettin\nRabia-tül-Adviyye\nSeyyidet Nefise\nVeysel Karani\nYunus Emre\nAhmet mekki\nEyüp Sultan\nİbn-i melek\nimami Birgi\nMevlana Celaleddin Rumi\nenver ören\nosman ünlü \nhandan hanim\nbehice hanim\nAybike hanim \n\nRabbim senden isteyipte verdiklerinin yüzü suyu hürmetine\n\n\n",
+      "meaning": "Silsile-i aliyye büyüklerinin ruhlarına hediye edilen okuma ve dualardır.",
+      "goal": 1
+    },
+    {
+      "id": "dua_07157781",
+      "name": "duam",
+      "text": "1. Dua\nYâ Rabbi; vefatıma kadar namazlarımı güzelce kılabilmeyi, ibadetlerimi rahatlıkla ve aksatmadan yapabilmeyi lütfeyle.\n2. Dua\nRabbim; son nefesime kadar aklım başımda, kendi işlerimi rahatlıkla yapabilecek sağlık, sıhhat ve afiyeti tatmayı lütfeyle.\n3. Dua\nAllah’ım; yataklara düşmeden, kimseye yük olmadan, izzetle ve ikramla dolu bir hayat yaşamayı nasip eyle.\n4. Dua\nAllah’ım; Peygamber Efendimiz Sallallahu Aleyhi Vesellem’in gül cemalini görerek, cenneti seyrederek ve kelime-i şehadet getirerek son nefesimi iman ile vermeyi nasip eyle.\nÂmin.",
+      "meaning": "",
+      "goal": 33
+    }
+  ],
+  "lists": [
+    {
+      "id": "default",
+      "name": "Tüm Dualar (Genel Liste)",
+      "items": [
+        {
+          "id": "mjrjfqk08xzx07z0xn",
+          "name": "Fatiha",
+          "text": "Bismillahirrahmanirrahim \nElhamdulillâhi Rabbil'alemin. Errahmânir'rahim. Mâliki yevmiddin. İyyâke na'budü ve iyyâke neste'în, İhdinessırâtel müstakîm. Sırâtellezine en'amte aleyhim ğayrilmağdûbi aleyhim ve leddâllîn.",
+          "meaning": "Rahmân ve Rahîm olan Allah’ın adıyla (1). Hamd (bütün övgü ve övülme) Alemlerin Rabbi Allah'a mahsustur. O, Rahmandır ve Rahimdir. O Allah din (ceza ve hesap) gününün malikidir.(2-4) (Rabbimiz!) Ancak sana kulluk eder ve yalnız senden yardım isteriz.(5) Bizi doğru yola hidayet et. Kendilerine lütuf ve ikramda bulunduğun kimselerin yoluna; senin gazabına uğramışların ve (haktan) sapmışların yoluna değil.(6-7)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjgy40zpgntgv4jns",
+          "name": "Ayetel Kürsi ",
+          "text": "Bismillahirrahmanirrahim \nAllahü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te’huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil erd. Menzellezî yeşfeu indehû illâ biiznihi. ya’lemü mâ beyne eydîhim vemâ halfehüm velâ yühîtûne bişey’in min ilmihî illâ bimâ şâe vesia kürsiyyühüssemâvâti vel erd. Velâ yeûdühü hıfzuhumâ ve hüvel aliyyül azîm",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nAllah kendisinden başka hiçbir ilah olmayandır. Diridir, kayyumdur. Onu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey onundur. İzni olmaksızın onun katında şefaatte bulunacak kimdir? O, kulların önlerindekileri ve arkalarındakileri (yaptıklarını ve yapacaklarını) bilir. Onlar onun ilminden, kendisinin dilediği kadarından başka bir şey kavrayamazlar. Onun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek ona güç gelmez. O, yücedir, büyüktür. (Bakara - 255)",
+          "goal": 1
+        },
+        {
+          "id": "1",
+          "name": "Sübhanallah",
+          "text": "Sübhanallah",
+          "meaning": "Allah her türlü noksanlıktan uzaktır.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjiztnif5de79c4r",
+          "name": "Elhamdulillah",
+          "text": "Elhamdulillah",
+          "meaning": "Hamd Allah'a mahsustur.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjka1aoweeurtdedr",
+          "name": "Allahu Ekber",
+          "text": "Allahu Ekber",
+          "meaning": "Allah en büyüktür.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjlhydvij7jn286ja",
+          "name": "Haşr Suresi 22.",
+          "text": "Huvallâhullezî lâ ilâhe illâ huve, âlimul gaybi veş şehâdeti, huver rahmânur rahîm(rahîmu).",
+          "meaning": "O Allah ki, O’ndan başka ilah yoktur. Görüleni de görülmeyeni de bilendir. O, Rahmân’dır, Rahîm’dir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjmbpglk4cmu4ofja",
+          "name": "Haşr Suresi 23",
+          "text": "Huvallâhullezî lâ ilâhe illâ huve, el melikul kuddûsus selâmul mu'minul muheyminul azîzul cebbârul mutekebbir(mutekebbiru), subhânallâhi ammâ yuşrikûn(yuşrikûne).",
+          "meaning": "O Allah ki, O’ndan başka ilah yoktur. Melik’tir, Kuddûs’tür, Selâm’dır, Mü’min’dir, Müheymin’dir, Azîz’dir, Cebbâr’dır, Mütekebbir’dir. Allah, onların ortak koştuklarından münezzehtir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjn6o0mmzzh7m889",
+          "name": "Haşr Suresi 24.",
+          "text": "Huvallâhul hâlikul bâriul musavviru lehul esmâul husnâ, yusebbihu lehu mâ fîs semâvâti vel ard(ardı) ve huvel azîzul hakîm(hakîmu).",
+          "meaning": "O Allah yaratandır, yoktan var edendir, şekil verendir. En güzel isimler O’nundur. Göklerde ve yerde olanların hepsi O’nu tesbih eder. O Azîz’dir, Hakîm’dir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjott13e4ljkvobgy",
+          "name": "“Allahümme ecirnî minennâr”",
+          "text": "“Allahümme ecirnî minennâr ve edhılnil Cennete”",
+          "meaning": "Allah'ım bizi cehennem ateşinden koru, iyiler ile beraber cennete dahil eyle!) Âmin…",
+          "goal": 7
+        },
+        {
+          "id": "mjrjq6qump7hr86vyi",
+          "name": "Hasbiyallahü",
+          "text": "“Hasbiyallahü lâ ilahe illâ hü, aleyhi tevekkeltü ve hüve Rabbül-arşil-azîm” ",
+          "meaning": "“Bana, Allah yeter (kâfidir), O'ndan başka ilâh yoktur. Ben, Allah'a tevekkül ettim (güvendim). Ve O, azîm arşın Rabbidir.”",
+          "goal": 7
+        },
+        {
+          "id": "mjrjs6gbffqrifrewxi",
+          "name": " \"La ilahe illallahü vahdehü la-şerikeleh",
+          "text": " \"La ilahe illallahü vahdehü la-şerikeleh lehül-mülkü ve lehül-hamdü yuhyi ve yümit ve hüve ala külli şeyin kadir\"",
+          "meaning": "Allah’tan başka ilah yoktur. İbadete layık yalnız Allah’tır, O birdir, ortağı yoktur, kâinat Onun mülküdür, hamd Ona mahsustur, O her şeye kadirdir.",
+          "goal": 10
+        },
+        {
+          "id": "mjrjtmfomlsemffl8fn",
+          "name": "İhlas",
+          "text": "Bismillahirrahmanirrahim \nKul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"O, Allah'tır, bir tektir.\" (1)\n\"Allah Samed'dir. (Her şey O'na muhtaçtır, o, hiçbir şeye muhtaç değildir.)\" (2)\nOndan çocuk olmamıştır (Kimsenin babası değildir). Kendisi de doğmamıştır (kimsenin çocuğu değildir).\" (3)\n\"Hiçbir şey O'na denk ve benzer değildir.\" (4)",
+          "goal": 11
+        },
+        {
+          "id": "mjrjvasz200x8fvrtuj",
+          "name": "Felak",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbilfelak. Min şerri mâ halak. Ve min şerri ğasikın izâ vekab. Ve min şerrinneffâsâti fil'ukad. Ve min şerri hâsidin izâ hased.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Yarattığı şeylerin kötülüğünden, karanlığı çöktüğü zaman gecenin kötülüğünden, düğümlere üfleyenlerin kötülüğünden, haset ettiği zaman hasetçinin kötülüğünden, sabah aydınlığının Rabbine sığınırım.\" (1-5)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjwspp2y7dl6naqx8",
+          "name": "Nas",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbinnâsi. Melikinnâsi. İlâhinnâs. Min şerrilvesvâsilhannâs. Ellezî yüvesvisü fî sudûrinnâsi. Minelcinneti vennâs.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Cinlerden ve insanlardan; insanların kalplerine vesvese veren sinsi vesvesecinin kötülüğünden, insanların Rabbine, insanların Melik'ine, insanların İlah'ına sığınırım.\" (1-6)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjxuyq9144wfd0gsb",
+          "name": "Istigfar",
+          "text": "Estagfirullah",
+          "meaning": "Allah’tan bağışlanma dilerim.",
+          "goal": 67
+        },
+        {
+          "id": "mjrjz7nton3evzjrj6",
+          "name": "Sübhânallahi",
+          "text": "Sübhânallahi ve bi-hamdihi, sübhânallahil azîm",
+          "meaning": "Kemâl sıfatlarla muttasıf ve noksan sıfatlardan beri olan Allah’ı hamd ile tesbih ederim.",
+          "goal": 100
+        },
+        {
+          "id": "mjrk0bb7ee8kfhx52a9",
+          "name": "(Allahümme mâ esba",
+          "text": "Allahümme mâ esbaha bi min nimetin ev bi-ehadin min halkıke, fe minke vahdeke, lâ şerike leke, fe lekel hamdü ve lekeşşükür)",
+          "meaning": "Ya Rabbi, bana ve diğer yarattıklarına verdiğin maddi ve manevi nimetlerin sabaha (akşama) kadar bizim yanımızda kalması yalnız Sendendir. Senin ortağın yoktur. Sana hamd ve şükrediyoruz.\n[Akşam okurken (Mâ esbaha) yerine (Mâ emsa) demelidir.]",
+          "goal": 1
+        },
+        {
+          "id": "mjrk1ezyps0gefpxzu8",
+          "name": "Bismillâhillezî",
+          "text": "Bismillâhillezî lâ-yedurru me’asmihî şey’ün fil-erdı velâ fissemâi ve hüves-semî’ul’alîm) ",
+          "meaning": "Allah’ın yüce ismine sığınana yerde ve gökte hiç bir şey zarar veremez, O, her şeyi işitir ve bilir.",
+          "goal": 3
+        },
+        {
+          "id": "mjrk2dqws1gdyt4ckab",
+          "name": "(Allahümme inni euzü",
+          "text": "(Allahümme inni euzü bike min en üşrike bike şeyen ve ene âlemü ve estağfirüke li-ma la âlemü inneke, ente allamülguyub)",
+          "meaning": "Allah’ım! Bilerek Sana ortak koşmaktan Sana sığınırım; bilmeden yaptıklarım için de Senden bağışlanma dilerim. Şüphesiz Sen gaybı en iyi bilensin.",
+          "goal": 1
+        },
+        {
+          "id": "mjrk3jkoubtyoycxcea",
+          "name": "Allahümme barik",
+          "text": "(Allahümme barik li fil-mevt ve fi ma badelmevt",
+          "meaning": "Allah’ım! Ölümde ve ölümden sonraki hâllerde benim için bereket ve hayır ihsan eyle.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk57r2a4pjz51jw3",
+          "name": "(Allahümmağfirli ve li-valideyye",
+          "text": "(Allahümmağfirli ve li-valideyye ve li-üstaziyye ve lil müminine vel müminat vel müslimine vel müslimat el ahya-i minhüm vel emvat bi-rahmetike ya erhamerrahimin)",
+          "meaning": "Allah’ım! Beni, anne babamı, hocalarımı, mümin erkekleri ve mümin kadınları, Müslüman erkekleri ve Müslüman kadınları; yaşayanlarını ve ölmüşlerini rahmetinle bağışla ey merhametlilerin en merhametlisi.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk6nnyti456nvjykn",
+          "name": "Salavat-ı Şerif",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allahım! Hz. Muhammed'e ve aline (evladu iyaline) salatu selam ve esenlikler eyle.\nAllah Teâlâ (C.C.) :\n“Ey îman edenler! Allah ve melekleri Peygamber’e çok salavât getirirler. Siz de O’na salavât getirin ve tam bir teslîmiyetle selâm verin.”  buyurmuştur. (el-Ahzâb, 56)\nPeygamber Efendimiz (Sallallahu Aleyhi Vesellem) şöyle buyurmuştur :\n“Kıyamet günü insanların bana en yakını, bana en çok salavât okuyanıdır.”  (Tirmizî, Vitr, 21)\n“Her kim bana bir defa salât ederse, Allâh’u Teâlâ’da ona on salât eder.” Müslim (408); Ebû Dâvûd (1530)\n“–Cuma günü bana çok salavât getirin! Zira o gün, meleklerin hazır ve şâhid olduğu bir gündür.”\n“Her kim Cuma günü Nebî (Sallâllâhu Aleyhi ve Sellem)e yüz kere salâvât getirirse, kıyâmet günü mahşer yerine yüzü çok güzel ve nurlu bir kimse olarak gelir. İnsanlar ona gıpta eder ve: ‘Bu zât acaba hangi ameli işliyordu?’ diye birbirilerine sorarlar.”\nBeyhakî, Şu‘abu’l-Îmân, c. 3, s. 212.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkafleusbe3yodm3a",
+          "name": "(Lâ havle",
+          "text": "(Lâ havle velâ kuvvete illâ billâhilaliyyilazîm)",
+          "meaning": "Allah’tan başka güç kuvvet sahibi yoktur. Her şeye kuvvet ve güç veren ancak zati ve sübuti sıfatların sahibi yüce Allah’tır.",
+          "goal": 250
+        },
+        {
+          "id": "mjrkbreswqvd61dgups",
+          "name": "salavat2",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allah’ım! Efendimiz Muhammed’e ve Efendimiz Muhammed’in âline salât ve selâm eyle.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkcwtbsy07bulpnda",
+          "name": "istivar",
+          "text": "Estagfirullah min külli mâ kerihallah",
+          "meaning": "Ya Rabbi, razı olmadığın, beğenmediğin şeylerden, yaptıklarımı af et, yapmadıklarımı da yapmaktan koru!",
+          "goal": 100
+        },
+        {
+          "id": "mjrkdzg7yrgz2q3e8u",
+          "name": "istigfar",
+          "text": "Allahümme ente rabbî lâilâhe illâ ente halaktenî ve ene abdüke ve ene alâ ahdike ve va’dike mestetatü eûzü bike min şerri mâ sanatü ebûü leke bi-ni’metike aleyye ve ebûü bi zenbî fağfirlî zünûbî feinnehû lâ yağfirüzzünûbe illâ ente. Lâ ilâhe illâ ente sübhâneke innî küntü minezzâlimîn.",
+          "meaning": "Allah’ım, sen benim rabbimsin, senden başka mabud yoktur, ancak sen varsın, beni yoktan yaratan sensin, ve ben senin kulunum, gücüm nispetinde sana verdiğim ahdimde ve sözümde duruyorum, işlemiş olduğum kötü şeylerin şerrinden sana sığınırım, bana olan nimetlerini ve günahlarımı da sana itiraf ederim, benim günahlarımı affet çünkü senden başka bağışlayıcı yoktur. Senden başka hiç bir ilâh yoktur, seni bütün noksanlıklardan, tenzîh ederim. Gerçekten ben, nefsime haksızlık edenlerdenim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkfepjq7fexpi9tno",
+          "name": "Kelime-i Tevhid",
+          "text": "Lâ ilâhe İllallâh, Muhammedun Resûlullah",
+          "meaning": "Allah'tan başka ilah yoktur. Hz. Muhammed (S.A.V.) O'nun elçisidir.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkglylq84110jw3cj",
+          "name": "estağfurullah el azim",
+          "text": "(Estagfirullahelazim ellezi la ilahe illa hüverrahmanürrahim el-hayy-ül-kayyumüllezi la-yemutü ve etubü ileyh Rabbigfir li)",
+          "meaning": "Kendisinden başka ilah olmayan, Rahmân ve Rahîm, Hayy ve Kayyûm olan, ölmeyen yüce Allah’tan bağışlanma diler ve O’na tövbe ederim. Rabbim beni bağışla.",
+          "goal": 25
+        },
+        {
+          "id": "mjrkinkbrcjram3zgoo",
+          "name": "Estagfirullah",
+          "text": "Estagfirullahel’azîm, ellezî lâ ilâhe illâ huv, el hayyel kayyûme ve etûbü ileyh.",
+          "meaning": "\"Kendisinden başka ilah olmayan, hakikî hayatla diri olan Hay, her şeyi ayakta tutan  Kayyum olan büyük Allah’dan beni bağışlamasını istiyor ve -bütün benliğimle- ona tövbe edip, yöneliyorum; nefsine / kendine zulmetmiş, üstelik nefsi için ne ölümü, ne hayatı ve ne de öldükten sonra dirilmeyi elinde tutamayan bir kulun tevbesiyle / yönelişiyle (tevbe ediyorum).\"",
+          "goal": 3
+        },
+        {
+          "id": "mjrkkqiy7wkv10ea6rn",
+          "name": "Euzü bi-kelimâ",
+          "text": "Euzü bi-kelimâtillahittâmmeti min şerri külli şeytânin ve hâmmetin ve min şerri külli aynin lâmmetin)",
+          "meaning": "Şeytanların, haşaratın ve kem gözlerin şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazar değene okunacak dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkm9vdvb344foobk",
+          "name": "Allahümme",
+          "text": "Allahümme, ya mukallibel kulüb, sebbit kalbi, alâ dinik)",
+          "meaning": "Ey büyük Allah’ım, kalbleri iyiden kötüye, kötüden iyiye çeviren, ancak sensin. Kalbimi, dininde sâbit kıl, dininden döndürme, Müslümanlıktan ayırma!\nDinde sebat edip son nefeste iman ile ölmek için:",
+          "goal": 1
+        },
+        {
+          "id": "mjrknenljrcg9zh8jms",
+          "name": "tövbe",
+          "text": "Estagfirullah ve etûbü ilellah min cemî’i mâ kerihallah, kavlen ve fi’len ve hâtıran ve nâzıran.",
+          "meaning": "Allahü teâlâdan magfiret dilerim ve Allahü teâlânın beğenmediği sözden, işden, düşünceden ve görüşden Allahü teâlâya tevbe ederim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkoj0xi1561a98yj",
+          "name": "Es Elullahel",
+          "text": "Es Elullahel azim rabbel arşil azim en Yeşfiyek",
+          "meaning": "Yüce arşın Rabbi olan büyük Allah’tan sana şifa vermesini dilerim.",
+          "goal": 7
+        },
+        {
+          "id": "mjrkq7droi7j2sgdrnq",
+          "name": "Euzü bikelimâti",
+          "text": "Euzü bikelimâtillahittammâti min şerri mâ haleka)",
+          "meaning": "Bütün yaratıkların şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazardan ve her türlü zarardan korunmak için okunan dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkrwfpdqho9uwfrjv",
+          "name": "Sübhânallahi vel",
+          "text": "Sübhânallahi velhamdü lillahi ve lâ ilâhe illallahü vallahü ekber)",
+          "meaning": "Allah’ı hamd ve tesbih ederim. Allah’tan başka ilah yoktur ve O en büyüktür.\n\nGünahları affettiren en kıymetli tesbih:",
+          "goal": 10
+        },
+        {
+          "id": "mjrktnug21q448ibyzsh",
+          "name": "Yunus  Aleyhisselam",
+          "text": "La ilahe illa ente sübhaneke inni küntü minezzalimin",
+          "meaning": "Senden başka ilah yoktur. Seni noksan sıfatlardan tenzih ederim. Şüphesiz ben nefsine zulmedenlerden oldum.",
+          "goal": 20
+        },
+        {
+          "id": "dua_95aa8577",
+          "name": "rızık",
+          "text": "Allahümmeğfir li, verhamni, ve âfini, verzukni",
+          "meaning": "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır",
+          "goal": 1
+        },
+        {
+          "id": "dua_c6b92ab5",
+          "name": "sıkıntı",
+          "text": "Rabbena atina min ledünke rahmeten ve heyyi' lena min emrina raşeda",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_9c294be7",
+          "name": "şeytan",
+          "text": "Vekul rabbi e’ûżu bike min hemezâti-şşeyâtîn.  Ve e’ûżu bike rabbi en yahdurûn  ",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_5a8aede8",
+          "name": "Gadap",
+          "text": "Allahümmagfir li-zenbî ve ezhib gayza kalbî ve ecirnî mineşşeytân",
+          "meaning": "Rabbî! Günâhımı afv eyle. Beni kalbimdeki gadabdan ve şeytânın vesvesesinden kurtar)",
+          "goal": 1
+        },
+        {
+          "id": "mjrkubmjg5dc11kfg9c",
+          "name": "silsiliyeyi Ali'ye ",
+          "text": "\n1- Ebubekr-i Sıddık\n2- Selman-ı Farisi\n3- Kasım bin Muhammed\n4- Cafer-i Sadık\n5- Bayezid-i Bistami\n6- Ebul Hasan Harkani\n7- Ebu Ali Farmedi\n8- Yusuf-i Hemedani\n9- Abdülhalık-i Goncdüvani\n10- Arif-i Rivegeri\n11- Mahmud-i Encirfagnevi\n12- Ali Ramiteni\n13- Muhammed Bâbâ Semmasi\n14- Seyyid Emir Gilâl\n15- Seyyid Muhammed Behaeddin Buhari\n16- Alâüddin-i Attâr\n17- Yakub-i Çerhi\n18- Ubeydullah-i Ahrâr\n19- Kâdi Muhammed Zâhid\n20- Derviş Muhammed\n21- Hâcegi Muhammed Emkenegi\n22- Muhammed Bakibillah\n23- İmam-ı Ahmed Rabbani\n24- Muhammed Masum Faruki\n25- Seyfeddin Faruki\n26- Seyyid Nur Muhammed\n27- Seyyid Mazhar-ı Can-ı Canan\n28- Seyyid Abdullah Dehlevi\n29- Mevlana Halid-i Bağdâdi\n30- Seyyid Abdullah Şemdini\n31- Seyyid Tâhâ-yı Hakkâri\n32- Seyyid Muhammed Sâlih\n33- Seyyid Sıbgatullah-i Hizâni\n34- Seyyid Fehim-i Arvâsi\n35- Seyyid Abdülhakim-i Arvâsi\n36- Hüseyin Hilmi Işık Efendi\n\nAbdülkadir-i Geylani\nAbdullah-ı Tercüman\nAkşemseddin -\nAziz Mahmud Hüdayi\nBişr-i Hafi\nEbül Vefa\nEbu Turab\nEmir Sultan\nHacı Bayram-ı Veli\nHacı Bektaş-ı Veli\nHasan Sezai\nHayat bin Kays el-Harrani\nİbrahim Ethem\nİbrahim Gülşeni\nİbrahim Havvas\nİsmail Fakirullah\nMalik bin Dinar\nMehmed Emin Tokadi\nMerkez Efendi\nÖmer bin Abdülaziz\nOsman Bedrettin\nRabia-tül-Adviyye\nSeyyidet Nefise\nVeysel Karani\nYunus Emre\nAhmet mekki\nEyüp Sultan\nİbn-i melek\nimami Birgi\nMevlana Celaleddin Rumi\nenver ören\nosman ünlü \nhandan hanim\nbehice hanim\nAybike hanim \n\nRabbim senden isteyipte verdiklerinin yüzü suyu hürmetine\n\n\n",
+          "meaning": "Silsile-i aliyye büyüklerinin ruhlarına hediye edilen okuma ve dualardır.",
+          "goal": 1
+        }
+      ]
+    },
+    {
+      "id": "list_b8280010",
+      "name": "ss",
+      "items": [
+        {
+          "id": "mjrjfqk08xzx07z0xn",
+          "name": "Fatiha",
+          "text": "Bismillahirrahmanirrahim \nElhamdulillâhi Rabbil'alemin. Errahmânir'rahim. Mâliki yevmiddin. İyyâke na'budü ve iyyâke neste'în, İhdinessırâtel müstakîm. Sırâtellezine en'amte aleyhim ğayrilmağdûbi aleyhim ve leddâllîn.",
+          "meaning": "Rahmân ve Rahîm olan Allah’ın adıyla (1). Hamd (bütün övgü ve övülme) Alemlerin Rabbi Allah'a mahsustur. O, Rahmandır ve Rahimdir. O Allah din (ceza ve hesap) gününün malikidir.(2-4) (Rabbimiz!) Ancak sana kulluk eder ve yalnız senden yardım isteriz.(5) Bizi doğru yola hidayet et. Kendilerine lütuf ve ikramda bulunduğun kimselerin yoluna; senin gazabına uğramışların ve (haktan) sapmışların yoluna değil.(6-7)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjgy40zpgntgv4jns",
+          "name": "Ayetel Kürsi ",
+          "text": "Bismillahirrahmanirrahim \nAllahü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te’huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil erd. Menzellezî yeşfeu indehû illâ biiznihi. ya’lemü mâ beyne eydîhim vemâ halfehüm velâ yühîtûne bişey’in min ilmihî illâ bimâ şâe vesia kürsiyyühüssemâvâti vel erd. Velâ yeûdühü hıfzuhumâ ve hüvel aliyyül azîm",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nAllah kendisinden başka hiçbir ilah olmayandır. Diridir, kayyumdur. Onu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey onundur. İzni olmaksızın onun katında şefaatte bulunacak kimdir? O, kulların önlerindekileri ve arkalarındakileri (yaptıklarını ve yapacaklarını) bilir. Onlar onun ilminden, kendisinin dilediği kadarından başka bir şey kavrayamazlar. Onun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek ona güç gelmez. O, yücedir, büyüktür. (Bakara - 255)",
+          "goal": 1
+        },
+        {
+          "id": "1",
+          "name": "Sübhanallah",
+          "text": "Sübhanallah",
+          "meaning": "Allah her türlü noksanlıktan uzaktır.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjiztnif5de79c4r",
+          "name": "Elhamdulillah",
+          "text": "Elhamdulillah",
+          "meaning": "Hamd Allah'a mahsustur.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjka1aoweeurtdedr",
+          "name": "Allahu Ekber",
+          "text": "Allahu Ekber",
+          "meaning": "Allah en büyüktür.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjlhydvij7jn286ja",
+          "name": "Haşr Suresi 22.",
+          "text": "Huvallâhullezî lâ ilâhe illâ huve, âlimul gaybi veş şehâdeti, huver rahmânur rahîm(rahîmu).",
+          "meaning": "O Allah ki, O’ndan başka ilah yoktur. Görüleni de görülmeyeni de bilendir. O, Rahmân’dır, Rahîm’dir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjmbpglk4cmu4ofja",
+          "name": "Haşr Suresi 23",
+          "text": "Huvallâhullezî lâ ilâhe illâ huve, el melikul kuddûsus selâmul mu'minul muheyminul azîzul cebbârul mutekebbir(mutekebbiru), subhânallâhi ammâ yuşrikûn(yuşrikûne).",
+          "meaning": "O Allah ki, O’ndan başka ilah yoktur. Melik’tir, Kuddûs’tür, Selâm’dır, Mü’min’dir, Müheymin’dir, Azîz’dir, Cebbâr’dır, Mütekebbir’dir. Allah, onların ortak koştuklarından münezzehtir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjn6o0mmzzh7m889",
+          "name": "Haşr Suresi 24.",
+          "text": "Huvallâhul hâlikul bâriul musavviru lehul esmâul husnâ, yusebbihu lehu mâ fîs semâvâti vel ard(ardı) ve huvel azîzul hakîm(hakîmu).",
+          "meaning": "O Allah yaratandır, yoktan var edendir, şekil verendir. En güzel isimler O’nundur. Göklerde ve yerde olanların hepsi O’nu tesbih eder. O Azîz’dir, Hakîm’dir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjott13e4ljkvobgy",
+          "name": "“Allahümme ecirnî minennâr”",
+          "text": "“Allahümme ecirnî minennâr ve edhılnil Cennete”",
+          "meaning": "Allah'ım bizi cehennem ateşinden koru, iyiler ile beraber cennete dahil eyle!) Âmin…",
+          "goal": 7
+        },
+        {
+          "id": "mjrjq6qump7hr86vyi",
+          "name": "Hasbiyallahü",
+          "text": "“Hasbiyallahü lâ ilahe illâ hü, aleyhi tevekkeltü ve hüve Rabbül-arşil-azîm” ",
+          "meaning": "“Bana, Allah yeter (kâfidir), O'ndan başka ilâh yoktur. Ben, Allah'a tevekkül ettim (güvendim). Ve O, azîm arşın Rabbidir.”",
+          "goal": 7
+        },
+        {
+          "id": "mjrjs6gbffqrifrewxi",
+          "name": " \"La ilahe illallahü vahdehü la-şerikeleh",
+          "text": " \"La ilahe illallahü vahdehü la-şerikeleh lehül-mülkü ve lehül-hamdü yuhyi ve yümit ve hüve ala külli şeyin kadir\"",
+          "meaning": "Allah’tan başka ilah yoktur. İbadete layık yalnız Allah’tır, O birdir, ortağı yoktur, kâinat Onun mülküdür, hamd Ona mahsustur, O her şeye kadirdir.",
+          "goal": 10
+        },
+        {
+          "id": "mjrjtmfomlsemffl8fn",
+          "name": "İhlas",
+          "text": "Bismillahirrahmanirrahim \nKul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"O, Allah'tır, bir tektir.\" (1)\n\"Allah Samed'dir. (Her şey O'na muhtaçtır, o, hiçbir şeye muhtaç değildir.)\" (2)\nOndan çocuk olmamıştır (Kimsenin babası değildir). Kendisi de doğmamıştır (kimsenin çocuğu değildir).\" (3)\n\"Hiçbir şey O'na denk ve benzer değildir.\" (4)",
+          "goal": 11
+        },
+        {
+          "id": "mjrjvasz200x8fvrtuj",
+          "name": "Felak",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbilfelak. Min şerri mâ halak. Ve min şerri ğasikın izâ vekab. Ve min şerrinneffâsâti fil'ukad. Ve min şerri hâsidin izâ hased.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Yarattığı şeylerin kötülüğünden, karanlığı çöktüğü zaman gecenin kötülüğünden, düğümlere üfleyenlerin kötülüğünden, haset ettiği zaman hasetçinin kötülüğünden, sabah aydınlığının Rabbine sığınırım.\" (1-5)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjwspp2y7dl6naqx8",
+          "name": "Nas",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbinnâsi. Melikinnâsi. İlâhinnâs. Min şerrilvesvâsilhannâs. Ellezî yüvesvisü fî sudûrinnâsi. Minelcinneti vennâs.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Cinlerden ve insanlardan; insanların kalplerine vesvese veren sinsi vesvesecinin kötülüğünden, insanların Rabbine, insanların Melik'ine, insanların İlah'ına sığınırım.\" (1-6)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjxuyq9144wfd0gsb",
+          "name": "Istigfar",
+          "text": "Estagfirullah",
+          "meaning": "Allah’tan bağışlanma dilerim.",
+          "goal": 67
+        },
+        {
+          "id": "mjrjz7nton3evzjrj6",
+          "name": "Sübhânallahi",
+          "text": "Sübhânallahi ve bi-hamdihi, sübhânallahil azîm",
+          "meaning": "Kemâl sıfatlarla muttasıf ve noksan sıfatlardan beri olan Allah’ı hamd ile tesbih ederim.",
+          "goal": 100
+        },
+        {
+          "id": "mjrk0bb7ee8kfhx52a9",
+          "name": "(Allahümme mâ esba",
+          "text": "Allahümme mâ esbaha bi min nimetin ev bi-ehadin min halkıke, fe minke vahdeke, lâ şerike leke, fe lekel hamdü ve lekeşşükür)",
+          "meaning": "Ya Rabbi, bana ve diğer yarattıklarına verdiğin maddi ve manevi nimetlerin sabaha (akşama) kadar bizim yanımızda kalması yalnız Sendendir. Senin ortağın yoktur. Sana hamd ve şükrediyoruz.\n[Akşam okurken (Mâ esbaha) yerine (Mâ emsa) demelidir.]",
+          "goal": 1
+        },
+        {
+          "id": "mjrk1ezyps0gefpxzu8",
+          "name": "Bismillâhillezî",
+          "text": "Bismillâhillezî lâ-yedurru me’asmihî şey’ün fil-erdı velâ fissemâi ve hüves-semî’ul’alîm) ",
+          "meaning": "Allah’ın yüce ismine sığınana yerde ve gökte hiç bir şey zarar veremez, O, her şeyi işitir ve bilir.",
+          "goal": 3
+        },
+        {
+          "id": "mjrk2dqws1gdyt4ckab",
+          "name": "(Allahümme inni euzü",
+          "text": "(Allahümme inni euzü bike min en üşrike bike şeyen ve ene âlemü ve estağfirüke li-ma la âlemü inneke, ente allamülguyub)",
+          "meaning": "Allah’ım! Bilerek Sana ortak koşmaktan Sana sığınırım; bilmeden yaptıklarım için de Senden bağışlanma dilerim. Şüphesiz Sen gaybı en iyi bilensin.",
+          "goal": 1
+        },
+        {
+          "id": "mjrk3jkoubtyoycxcea",
+          "name": "Allahümme barik",
+          "text": "(Allahümme barik li fil-mevt ve fi ma badelmevt",
+          "meaning": "Allah’ım! Ölümde ve ölümden sonraki hâllerde benim için bereket ve hayır ihsan eyle.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk57r2a4pjz51jw3",
+          "name": "(Allahümmağfirli ve li-valideyye",
+          "text": "(Allahümmağfirli ve li-valideyye ve li-üstaziyye ve lil müminine vel müminat vel müslimine vel müslimat el ahya-i minhüm vel emvat bi-rahmetike ya erhamerrahimin)",
+          "meaning": "Allah’ım! Beni, anne babamı, hocalarımı, mümin erkekleri ve mümin kadınları, Müslüman erkekleri ve Müslüman kadınları; yaşayanlarını ve ölmüşlerini rahmetinle bağışla ey merhametlilerin en merhametlisi.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk6nnyti456nvjykn",
+          "name": "Salavat-ı Şerif",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allahım! Hz. Muhammed'e ve aline (evladu iyaline) salatu selam ve esenlikler eyle.\nAllah Teâlâ (C.C.) :\n“Ey îman edenler! Allah ve melekleri Peygamber’e çok salavât getirirler. Siz de O’na salavât getirin ve tam bir teslîmiyetle selâm verin.”  buyurmuştur. (el-Ahzâb, 56)\nPeygamber Efendimiz (Sallallahu Aleyhi Vesellem) şöyle buyurmuştur :\n“Kıyamet günü insanların bana en yakını, bana en çok salavât okuyanıdır.”  (Tirmizî, Vitr, 21)\n“Her kim bana bir defa salât ederse, Allâh’u Teâlâ’da ona on salât eder.” Müslim (408); Ebû Dâvûd (1530)\n“–Cuma günü bana çok salavât getirin! Zira o gün, meleklerin hazır ve şâhid olduğu bir gündür.”\n“Her kim Cuma günü Nebî (Sallâllâhu Aleyhi ve Sellem)e yüz kere salâvât getirirse, kıyâmet günü mahşer yerine yüzü çok güzel ve nurlu bir kimse olarak gelir. İnsanlar ona gıpta eder ve: ‘Bu zât acaba hangi ameli işliyordu?’ diye birbirilerine sorarlar.”\nBeyhakî, Şu‘abu’l-Îmân, c. 3, s. 212.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkafleusbe3yodm3a",
+          "name": "(Lâ havle",
+          "text": "(Lâ havle velâ kuvvete illâ billâhilaliyyilazîm)",
+          "meaning": "Allah’tan başka güç kuvvet sahibi yoktur. Her şeye kuvvet ve güç veren ancak zati ve sübuti sıfatların sahibi yüce Allah’tır.",
+          "goal": 250
+        },
+        {
+          "id": "mjrkbreswqvd61dgups",
+          "name": "salavat2",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allah’ım! Efendimiz Muhammed’e ve Efendimiz Muhammed’in âline salât ve selâm eyle.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkcwtbsy07bulpnda",
+          "name": "istivar",
+          "text": "Estagfirullah min külli mâ kerihallah",
+          "meaning": "Ya Rabbi, razı olmadığın, beğenmediğin şeylerden, yaptıklarımı af et, yapmadıklarımı da yapmaktan koru!",
+          "goal": 100
+        },
+        {
+          "id": "mjrkdzg7yrgz2q3e8u",
+          "name": "istigfar",
+          "text": "Allahümme ente rabbî lâilâhe illâ ente halaktenî ve ene abdüke ve ene alâ ahdike ve va’dike mestetatü eûzü bike min şerri mâ sanatü ebûü leke bi-ni’metike aleyye ve ebûü bi zenbî fağfirlî zünûbî feinnehû lâ yağfirüzzünûbe illâ ente. Lâ ilâhe illâ ente sübhâneke innî küntü minezzâlimîn.",
+          "meaning": "Allah’ım, sen benim rabbimsin, senden başka mabud yoktur, ancak sen varsın, beni yoktan yaratan sensin, ve ben senin kulunum, gücüm nispetinde sana verdiğim ahdimde ve sözümde duruyorum, işlemiş olduğum kötü şeylerin şerrinden sana sığınırım, bana olan nimetlerini ve günahlarımı da sana itiraf ederim, benim günahlarımı affet çünkü senden başka bağışlayıcı yoktur. Senden başka hiç bir ilâh yoktur, seni bütün noksanlıklardan, tenzîh ederim. Gerçekten ben, nefsime haksızlık edenlerdenim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkfepjq7fexpi9tno",
+          "name": "Kelime-i Tevhid",
+          "text": "Lâ ilâhe İllallâh, Muhammedun Resûlullah",
+          "meaning": "Allah'tan başka ilah yoktur. Hz. Muhammed (S.A.V.) O'nun elçisidir.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkglylq84110jw3cj",
+          "name": "estağfurullah el azim",
+          "text": "(Estagfirullahelazim ellezi la ilahe illa hüverrahmanürrahim el-hayy-ül-kayyumüllezi la-yemutü ve etubü ileyh Rabbigfir li)",
+          "meaning": "Kendisinden başka ilah olmayan, Rahmân ve Rahîm, Hayy ve Kayyûm olan, ölmeyen yüce Allah’tan bağışlanma diler ve O’na tövbe ederim. Rabbim beni bağışla.",
+          "goal": 25
+        },
+        {
+          "id": "mjrkinkbrcjram3zgoo",
+          "name": "Estagfirullah",
+          "text": "Estagfirullahel’azîm, ellezî lâ ilâhe illâ huv, el hayyel kayyûme ve etûbü ileyh.",
+          "meaning": "\"Kendisinden başka ilah olmayan, hakikî hayatla diri olan Hay, her şeyi ayakta tutan  Kayyum olan büyük Allah’dan beni bağışlamasını istiyor ve -bütün benliğimle- ona tövbe edip, yöneliyorum; nefsine / kendine zulmetmiş, üstelik nefsi için ne ölümü, ne hayatı ve ne de öldükten sonra dirilmeyi elinde tutamayan bir kulun tevbesiyle / yönelişiyle (tevbe ediyorum).\"",
+          "goal": 3
+        },
+        {
+          "id": "mjrkkqiy7wkv10ea6rn",
+          "name": "Euzü bi-kelimâ",
+          "text": "Euzü bi-kelimâtillahittâmmeti min şerri külli şeytânin ve hâmmetin ve min şerri külli aynin lâmmetin)",
+          "meaning": "Şeytanların, haşaratın ve kem gözlerin şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazar değene okunacak dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkm9vdvb344foobk",
+          "name": "Allahümme",
+          "text": "Allahümme, ya mukallibel kulüb, sebbit kalbi, alâ dinik)",
+          "meaning": "Ey büyük Allah’ım, kalbleri iyiden kötüye, kötüden iyiye çeviren, ancak sensin. Kalbimi, dininde sâbit kıl, dininden döndürme, Müslümanlıktan ayırma!\nDinde sebat edip son nefeste iman ile ölmek için:",
+          "goal": 1
+        },
+        {
+          "id": "mjrknenljrcg9zh8jms",
+          "name": "tövbe",
+          "text": "Estagfirullah ve etûbü ilellah min cemî’i mâ kerihallah, kavlen ve fi’len ve hâtıran ve nâzıran.",
+          "meaning": "Allahü teâlâdan magfiret dilerim ve Allahü teâlânın beğenmediği sözden, işden, düşünceden ve görüşden Allahü teâlâya tevbe ederim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkoj0xi1561a98yj",
+          "name": "Es Elullahel",
+          "text": "Es Elullahel azim rabbel arşil azim en Yeşfiyek",
+          "meaning": "Yüce arşın Rabbi olan büyük Allah’tan sana şifa vermesini dilerim.",
+          "goal": 7
+        },
+        {
+          "id": "mjrkq7droi7j2sgdrnq",
+          "name": "Euzü bikelimâti",
+          "text": "Euzü bikelimâtillahittammâti min şerri mâ haleka)",
+          "meaning": "Bütün yaratıkların şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazardan ve her türlü zarardan korunmak için okunan dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkrwfpdqho9uwfrjv",
+          "name": "Sübhânallahi vel",
+          "text": "Sübhânallahi velhamdü lillahi ve lâ ilâhe illallahü vallahü ekber)",
+          "meaning": "Allah’ı hamd ve tesbih ederim. Allah’tan başka ilah yoktur ve O en büyüktür.\n\nGünahları affettiren en kıymetli tesbih:",
+          "goal": 10
+        },
+        {
+          "id": "mjrktnug21q448ibyzsh",
+          "name": "Yunus  Aleyhisselam",
+          "text": "La ilahe illa ente sübhaneke inni küntü minezzalimin",
+          "meaning": "Senden başka ilah yoktur. Seni noksan sıfatlardan tenzih ederim. Şüphesiz ben nefsine zulmedenlerden oldum.",
+          "goal": 20
+        },
+        {
+          "id": "dua_95aa8577",
+          "name": "rızık",
+          "text": "Allahümmeğfir li, verhamni, ve âfini, verzukni",
+          "meaning": "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır",
+          "goal": 1
+        },
+        {
+          "id": "dua_9c294be7",
+          "name": "şeytan",
+          "text": "Vekul rabbi e’ûżu bike min hemezâti-şşeyâtîn.  Ve e’ûżu bike rabbi en yahdurûn  ",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_c6b92ab5",
+          "name": "sıkıntı",
+          "text": "Rabbena atina min ledünke rahmeten ve heyyi' lena min emrina raşeda",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_5a8aede8",
+          "name": "Gadap",
+          "text": "Allahümmagfir li-zenbî ve ezhib gayza kalbî ve ecirnî mineşşeytân",
+          "meaning": "Rabbî! Günâhımı afv eyle. Beni kalbimdeki gadabdan ve şeytânın vesvesesinden kurtar)",
+          "goal": 1
+        },
+        {
+          "id": "mjrkubmjg5dc11kfg9c",
+          "name": "silsiliyeyi Ali'ye ",
+          "text": "\n1- Ebubekr-i Sıddık\n2- Selman-ı Farisi\n3- Kasım bin Muhammed\n4- Cafer-i Sadık\n5- Bayezid-i Bistami\n6- Ebul Hasan Harkani\n7- Ebu Ali Farmedi\n8- Yusuf-i Hemedani\n9- Abdülhalık-i Goncdüvani\n10- Arif-i Rivegeri\n11- Mahmud-i Encirfagnevi\n12- Ali Ramiteni\n13- Muhammed Bâbâ Semmasi\n14- Seyyid Emir Gilâl\n15- Seyyid Muhammed Behaeddin Buhari\n16- Alâüddin-i Attâr\n17- Yakub-i Çerhi\n18- Ubeydullah-i Ahrâr\n19- Kâdi Muhammed Zâhid\n20- Derviş Muhammed\n21- Hâcegi Muhammed Emkenegi\n22- Muhammed Bakibillah\n23- İmam-ı Ahmed Rabbani\n24- Muhammed Masum Faruki\n25- Seyfeddin Faruki\n26- Seyyid Nur Muhammed\n27- Seyyid Mazhar-ı Can-ı Canan\n28- Seyyid Abdullah Dehlevi\n29- Mevlana Halid-i Bağdâdi\n30- Seyyid Abdullah Şemdini\n31- Seyyid Tâhâ-yı Hakkâri\n32- Seyyid Muhammed Sâlih\n33- Seyyid Sıbgatullah-i Hizâni\n34- Seyyid Fehim-i Arvâsi\n35- Seyyid Abdülhakim-i Arvâsi\n36- Hüseyin Hilmi Işık Efendi\n\nAbdülkadir-i Geylani\nAbdullah-ı Tercüman\nAkşemseddin -\nAziz Mahmud Hüdayi\nBişr-i Hafi\nEbül Vefa\nEbu Turab\nEmir Sultan\nHacı Bayram-ı Veli\nHacı Bektaş-ı Veli\nHasan Sezai\nHayat bin Kays el-Harrani\nİbrahim Ethem\nİbrahim Gülşeni\nİbrahim Havvas\nİsmail Fakirullah\nMalik bin Dinar\nMehmed Emin Tokadi\nMerkez Efendi\nÖmer bin Abdülaziz\nOsman Bedrettin\nRabia-tül-Adviyye\nSeyyidet Nefise\nVeysel Karani\nYunus Emre\nAhmet mekki\nEyüp Sultan\nİbn-i melek\nimami Birgi\nMevlana Celaleddin Rumi\nenver ören\nosman ünlü \nhandan hanim\nbehice hanim\nAybike hanim \n\nRabbim senden isteyipte verdiklerinin yüzü suyu hürmetine\n\n\n",
+          "meaning": "Silsile-i aliyye büyüklerinin ruhlarına hediye edilen okuma ve dualardır.",
+          "goal": 1
+        }
+      ]
+    },
+    {
+      "id": "list_0105b1cf",
+      "name": "1213",
+      "items": [
+        {
+          "id": "mjrjfqk08xzx07z0xn",
+          "name": "Fatiha",
+          "text": "Bismillahirrahmanirrahim \nElhamdulillâhi Rabbil'alemin. Errahmânir'rahim. Mâliki yevmiddin. İyyâke na'budü ve iyyâke neste'în, İhdinessırâtel müstakîm. Sırâtellezine en'amte aleyhim ğayrilmağdûbi aleyhim ve leddâllîn.",
+          "meaning": "Rahmân ve Rahîm olan Allah’ın adıyla (1). Hamd (bütün övgü ve övülme) Alemlerin Rabbi Allah'a mahsustur. O, Rahmandır ve Rahimdir. O Allah din (ceza ve hesap) gününün malikidir.(2-4) (Rabbimiz!) Ancak sana kulluk eder ve yalnız senden yardım isteriz.(5) Bizi doğru yola hidayet et. Kendilerine lütuf ve ikramda bulunduğun kimselerin yoluna; senin gazabına uğramışların ve (haktan) sapmışların yoluna değil.(6-7)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjgy40zpgntgv4jns",
+          "name": "Ayetel Kürsi ",
+          "text": "Bismillahirrahmanirrahim \nAllahü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te’huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil erd. Menzellezî yeşfeu indehû illâ biiznihi. ya’lemü mâ beyne eydîhim vemâ halfehüm velâ yühîtûne bişey’in min ilmihî illâ bimâ şâe vesia kürsiyyühüssemâvâti vel erd. Velâ yeûdühü hıfzuhumâ ve hüvel aliyyül azîm",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nAllah kendisinden başka hiçbir ilah olmayandır. Diridir, kayyumdur. Onu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey onundur. İzni olmaksızın onun katında şefaatte bulunacak kimdir? O, kulların önlerindekileri ve arkalarındakileri (yaptıklarını ve yapacaklarını) bilir. Onlar onun ilminden, kendisinin dilediği kadarından başka bir şey kavrayamazlar. Onun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek ona güç gelmez. O, yücedir, büyüktür. (Bakara - 255)",
+          "goal": 1
+        },
+        {
+          "id": "1",
+          "name": "Sübhanallah",
+          "text": "Sübhanallah",
+          "meaning": "Allah her türlü noksanlıktan uzaktır.",
+          "goal": 33
+        },
+        {
+          "id": "mjrjmbpglk4cmu4ofja",
+          "name": "Haşr Suresi 23",
+          "text": "Huvallâhullezî lâ ilâhe illâ huve, el melikul kuddûsus selâmul mu'minul muheyminul azîzul cebbârul mutekebbir(mutekebbiru), subhânallâhi ammâ yuşrikûn(yuşrikûne).",
+          "meaning": "O Allah ki, O’ndan başka ilah yoktur. Melik’tir, Kuddûs’tür, Selâm’dır, Mü’min’dir, Müheymin’dir, Azîz’dir, Cebbâr’dır, Mütekebbir’dir. Allah, onların ortak koştuklarından münezzehtir.",
+          "goal": 1
+        },
+        {
+          "id": "mjrjq6qump7hr86vyi",
+          "name": "Hasbiyallahü",
+          "text": "“Hasbiyallahü lâ ilahe illâ hü, aleyhi tevekkeltü ve hüve Rabbül-arşil-azîm” ",
+          "meaning": "“Bana, Allah yeter (kâfidir), O'ndan başka ilâh yoktur. Ben, Allah'a tevekkül ettim (güvendim). Ve O, azîm arşın Rabbidir.”",
+          "goal": 7
+        },
+        {
+          "id": "mjrjs6gbffqrifrewxi",
+          "name": " \"La ilahe illallahü vahdehü la-şerikeleh",
+          "text": " \"La ilahe illallahü vahdehü la-şerikeleh lehül-mülkü ve lehül-hamdü yuhyi ve yümit ve hüve ala külli şeyin kadir\"",
+          "meaning": "Allah’tan başka ilah yoktur. İbadete layık yalnız Allah’tır, O birdir, ortağı yoktur, kâinat Onun mülküdür, hamd Ona mahsustur, O her şeye kadirdir.",
+          "goal": 10
+        },
+        {
+          "id": "mjrjtmfomlsemffl8fn",
+          "name": "İhlas",
+          "text": "Bismillahirrahmanirrahim \nKul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"O, Allah'tır, bir tektir.\" (1)\n\"Allah Samed'dir. (Her şey O'na muhtaçtır, o, hiçbir şeye muhtaç değildir.)\" (2)\nOndan çocuk olmamıştır (Kimsenin babası değildir). Kendisi de doğmamıştır (kimsenin çocuğu değildir).\" (3)\n\"Hiçbir şey O'na denk ve benzer değildir.\" (4)",
+          "goal": 11
+        },
+        {
+          "id": "mjrjvasz200x8fvrtuj",
+          "name": "Felak",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbilfelak. Min şerri mâ halak. Ve min şerri ğasikın izâ vekab. Ve min şerrinneffâsâti fil'ukad. Ve min şerri hâsidin izâ hased.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Yarattığı şeylerin kötülüğünden, karanlığı çöktüğü zaman gecenin kötülüğünden, düğümlere üfleyenlerin kötülüğünden, haset ettiği zaman hasetçinin kötülüğünden, sabah aydınlığının Rabbine sığınırım.\" (1-5)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjwspp2y7dl6naqx8",
+          "name": "Nas",
+          "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbinnâsi. Melikinnâsi. İlâhinnâs. Min şerrilvesvâsilhannâs. Ellezî yüvesvisü fî sudûrinnâsi. Minelcinneti vennâs.",
+          "meaning": "Rahmân ve Rahîm olan Allah´ın adıyla\nDe ki: \"Cinlerden ve insanlardan; insanların kalplerine vesvese veren sinsi vesvesecinin kötülüğünden, insanların Rabbine, insanların Melik'ine, insanların İlah'ına sığınırım.\" (1-6)",
+          "goal": 1
+        },
+        {
+          "id": "mjrjxuyq9144wfd0gsb",
+          "name": "Istigfar",
+          "text": "Estagfirullah",
+          "meaning": "Allah’tan bağışlanma dilerim.",
+          "goal": 67
+        },
+        {
+          "id": "mjrjz7nton3evzjrj6",
+          "name": "Sübhânallahi",
+          "text": "Sübhânallahi ve bi-hamdihi, sübhânallahil azîm",
+          "meaning": "Kemâl sıfatlarla muttasıf ve noksan sıfatlardan beri olan Allah’ı hamd ile tesbih ederim.",
+          "goal": 100
+        },
+        {
+          "id": "mjrk0bb7ee8kfhx52a9",
+          "name": "(Allahümme mâ esba",
+          "text": "Allahümme mâ esbaha bi min nimetin ev bi-ehadin min halkıke, fe minke vahdeke, lâ şerike leke, fe lekel hamdü ve lekeşşükür)",
+          "meaning": "Ya Rabbi, bana ve diğer yarattıklarına verdiğin maddi ve manevi nimetlerin sabaha (akşama) kadar bizim yanımızda kalması yalnız Sendendir. Senin ortağın yoktur. Sana hamd ve şükrediyoruz.\n[Akşam okurken (Mâ esbaha) yerine (Mâ emsa) demelidir.]",
+          "goal": 1
+        },
+        {
+          "id": "mjrk1ezyps0gefpxzu8",
+          "name": "Bismillâhillezî",
+          "text": "Bismillâhillezî lâ-yedurru me’asmihî şey’ün fil-erdı velâ fissemâi ve hüves-semî’ul’alîm) ",
+          "meaning": "Allah’ın yüce ismine sığınana yerde ve gökte hiç bir şey zarar veremez, O, her şeyi işitir ve bilir.",
+          "goal": 3
+        },
+        {
+          "id": "mjrk2dqws1gdyt4ckab",
+          "name": "(Allahümme inni euzü",
+          "text": "(Allahümme inni euzü bike min en üşrike bike şeyen ve ene âlemü ve estağfirüke li-ma la âlemü inneke, ente allamülguyub)",
+          "meaning": "Allah’ım! Bilerek Sana ortak koşmaktan Sana sığınırım; bilmeden yaptıklarım için de Senden bağışlanma dilerim. Şüphesiz Sen gaybı en iyi bilensin.",
+          "goal": 1
+        },
+        {
+          "id": "mjrk3jkoubtyoycxcea",
+          "name": "Allahümme barik",
+          "text": "(Allahümme barik li fil-mevt ve fi ma badelmevt",
+          "meaning": "Allah’ım! Ölümde ve ölümden sonraki hâllerde benim için bereket ve hayır ihsan eyle.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk57r2a4pjz51jw3",
+          "name": "(Allahümmağfirli ve li-valideyye",
+          "text": "(Allahümmağfirli ve li-valideyye ve li-üstaziyye ve lil müminine vel müminat vel müslimine vel müslimat el ahya-i minhüm vel emvat bi-rahmetike ya erhamerrahimin)",
+          "meaning": "Allah’ım! Beni, anne babamı, hocalarımı, mümin erkekleri ve mümin kadınları, Müslüman erkekleri ve Müslüman kadınları; yaşayanlarını ve ölmüşlerini rahmetinle bağışla ey merhametlilerin en merhametlisi.",
+          "goal": 25
+        },
+        {
+          "id": "mjrk6nnyti456nvjykn",
+          "name": "Salavat-ı Şerif",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allahım! Hz. Muhammed'e ve aline (evladu iyaline) salatu selam ve esenlikler eyle.\nAllah Teâlâ (C.C.) :\n“Ey îman edenler! Allah ve melekleri Peygamber’e çok salavât getirirler. Siz de O’na salavât getirin ve tam bir teslîmiyetle selâm verin.”  buyurmuştur. (el-Ahzâb, 56)\nPeygamber Efendimiz (Sallallahu Aleyhi Vesellem) şöyle buyurmuştur :\n“Kıyamet günü insanların bana en yakını, bana en çok salavât okuyanıdır.”  (Tirmizî, Vitr, 21)\n“Her kim bana bir defa salât ederse, Allâh’u Teâlâ’da ona on salât eder.” Müslim (408); Ebû Dâvûd (1530)\n“–Cuma günü bana çok salavât getirin! Zira o gün, meleklerin hazır ve şâhid olduğu bir gündür.”\n“Her kim Cuma günü Nebî (Sallâllâhu Aleyhi ve Sellem)e yüz kere salâvât getirirse, kıyâmet günü mahşer yerine yüzü çok güzel ve nurlu bir kimse olarak gelir. İnsanlar ona gıpta eder ve: ‘Bu zât acaba hangi ameli işliyordu?’ diye birbirilerine sorarlar.”\nBeyhakî, Şu‘abu’l-Îmân, c. 3, s. 212.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkafleusbe3yodm3a",
+          "name": "(Lâ havle",
+          "text": "(Lâ havle velâ kuvvete illâ billâhilaliyyilazîm)",
+          "meaning": "Allah’tan başka güç kuvvet sahibi yoktur. Her şeye kuvvet ve güç veren ancak zati ve sübuti sıfatların sahibi yüce Allah’tır.",
+          "goal": 250
+        },
+        {
+          "id": "mjrkbreswqvd61dgups",
+          "name": "salavat2",
+          "text": "Allahümme Salli Ala Seyyidina Muhammedin ve Ala Ali Seyyidina Muhammed",
+          "meaning": "Allah’ım! Efendimiz Muhammed’e ve Efendimiz Muhammed’in âline salât ve selâm eyle.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkcwtbsy07bulpnda",
+          "name": "istivar",
+          "text": "Estagfirullah min külli mâ kerihallah",
+          "meaning": "Ya Rabbi, razı olmadığın, beğenmediğin şeylerden, yaptıklarımı af et, yapmadıklarımı da yapmaktan koru!",
+          "goal": 100
+        },
+        {
+          "id": "mjrkdzg7yrgz2q3e8u",
+          "name": "istigfar",
+          "text": "Allahümme ente rabbî lâilâhe illâ ente halaktenî ve ene abdüke ve ene alâ ahdike ve va’dike mestetatü eûzü bike min şerri mâ sanatü ebûü leke bi-ni’metike aleyye ve ebûü bi zenbî fağfirlî zünûbî feinnehû lâ yağfirüzzünûbe illâ ente. Lâ ilâhe illâ ente sübhâneke innî küntü minezzâlimîn.",
+          "meaning": "Allah’ım, sen benim rabbimsin, senden başka mabud yoktur, ancak sen varsın, beni yoktan yaratan sensin, ve ben senin kulunum, gücüm nispetinde sana verdiğim ahdimde ve sözümde duruyorum, işlemiş olduğum kötü şeylerin şerrinden sana sığınırım, bana olan nimetlerini ve günahlarımı da sana itiraf ederim, benim günahlarımı affet çünkü senden başka bağışlayıcı yoktur. Senden başka hiç bir ilâh yoktur, seni bütün noksanlıklardan, tenzîh ederim. Gerçekten ben, nefsime haksızlık edenlerdenim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkfepjq7fexpi9tno",
+          "name": "Kelime-i Tevhid",
+          "text": "Lâ ilâhe İllallâh, Muhammedun Resûlullah",
+          "meaning": "Allah'tan başka ilah yoktur. Hz. Muhammed (S.A.V.) O'nun elçisidir.",
+          "goal": 100
+        },
+        {
+          "id": "mjrkglylq84110jw3cj",
+          "name": "estağfurullah el azim",
+          "text": "(Estagfirullahelazim ellezi la ilahe illa hüverrahmanürrahim el-hayy-ül-kayyumüllezi la-yemutü ve etubü ileyh Rabbigfir li)",
+          "meaning": "Kendisinden başka ilah olmayan, Rahmân ve Rahîm, Hayy ve Kayyûm olan, ölmeyen yüce Allah’tan bağışlanma diler ve O’na tövbe ederim. Rabbim beni bağışla.",
+          "goal": 25
+        },
+        {
+          "id": "mjrkinkbrcjram3zgoo",
+          "name": "Estagfirullah",
+          "text": "Estagfirullahel’azîm, ellezî lâ ilâhe illâ huv, el hayyel kayyûme ve etûbü ileyh.",
+          "meaning": "\"Kendisinden başka ilah olmayan, hakikî hayatla diri olan Hay, her şeyi ayakta tutan  Kayyum olan büyük Allah’dan beni bağışlamasını istiyor ve -bütün benliğimle- ona tövbe edip, yöneliyorum; nefsine / kendine zulmetmiş, üstelik nefsi için ne ölümü, ne hayatı ve ne de öldükten sonra dirilmeyi elinde tutamayan bir kulun tevbesiyle / yönelişiyle (tevbe ediyorum).\"",
+          "goal": 3
+        },
+        {
+          "id": "mjrkkqiy7wkv10ea6rn",
+          "name": "Euzü bi-kelimâ",
+          "text": "Euzü bi-kelimâtillahittâmmeti min şerri külli şeytânin ve hâmmetin ve min şerri külli aynin lâmmetin)",
+          "meaning": "Şeytanların, haşaratın ve kem gözlerin şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazar değene okunacak dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkm9vdvb344foobk",
+          "name": "Allahümme",
+          "text": "Allahümme, ya mukallibel kulüb, sebbit kalbi, alâ dinik)",
+          "meaning": "Ey büyük Allah’ım, kalbleri iyiden kötüye, kötüden iyiye çeviren, ancak sensin. Kalbimi, dininde sâbit kıl, dininden döndürme, Müslümanlıktan ayırma!\nDinde sebat edip son nefeste iman ile ölmek için:",
+          "goal": 1
+        },
+        {
+          "id": "mjrknenljrcg9zh8jms",
+          "name": "tövbe",
+          "text": "Estagfirullah ve etûbü ilellah min cemî’i mâ kerihallah, kavlen ve fi’len ve hâtıran ve nâzıran.",
+          "meaning": "Allahü teâlâdan magfiret dilerim ve Allahü teâlânın beğenmediği sözden, işden, düşünceden ve görüşden Allahü teâlâya tevbe ederim.",
+          "goal": 1
+        },
+        {
+          "id": "mjrkoj0xi1561a98yj",
+          "name": "Es Elullahel",
+          "text": "Es Elullahel azim rabbel arşil azim en Yeşfiyek",
+          "meaning": "Yüce arşın Rabbi olan büyük Allah’tan sana şifa vermesini dilerim.",
+          "goal": 7
+        },
+        {
+          "id": "mjrkq7droi7j2sgdrnq",
+          "name": "Euzü bikelimâti",
+          "text": "Euzü bikelimâtillahittammâti min şerri mâ haleka)",
+          "meaning": "Bütün yaratıkların şerrinden Allah’ın kusursuz kelamlarına [âyetlerine yani Kur'ana] sığınırım. [Zira âyetlerinde gizli açık her ilim, her ihsan, her tedbir vardır.\nNazardan ve her türlü zarardan korunmak için okunan dua:",
+          "goal": 1
+        },
+        {
+          "id": "mjrkrwfpdqho9uwfrjv",
+          "name": "Sübhânallahi vel",
+          "text": "Sübhânallahi velhamdü lillahi ve lâ ilâhe illallahü vallahü ekber)",
+          "meaning": "Allah’ı hamd ve tesbih ederim. Allah’tan başka ilah yoktur ve O en büyüktür.\n\nGünahları affettiren en kıymetli tesbih:",
+          "goal": 10
+        },
+        {
+          "id": "mjrktnug21q448ibyzsh",
+          "name": "Yunus  Aleyhisselam",
+          "text": "La ilahe illa ente sübhaneke inni küntü minezzalimin",
+          "meaning": "Senden başka ilah yoktur. Seni noksan sıfatlardan tenzih ederim. Şüphesiz ben nefsine zulmedenlerden oldum.",
+          "goal": 20
+        },
+        {
+          "id": "dua_95aa8577",
+          "name": "rızık",
+          "text": "Allahümmeğfir li, verhamni, ve âfini, verzukni",
+          "meaning": "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır",
+          "goal": 1
+        },
+        {
+          "id": "dua_c6b92ab5",
+          "name": "sıkıntı",
+          "text": "Rabbena atina min ledünke rahmeten ve heyyi' lena min emrina raşeda",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_9c294be7",
+          "name": "şeytan",
+          "text": "Vekul rabbi e’ûżu bike min hemezâti-şşeyâtîn.  Ve e’ûżu bike rabbi en yahdurûn  ",
+          "meaning": "",
+          "goal": 1
+        },
+        {
+          "id": "dua_5a8aede8",
+          "name": "Gadap",
+          "text": "Allahümmagfir li-zenbî ve ezhib gayza kalbî ve ecirnî mineşşeytân",
+          "meaning": "Rabbî! Günâhımı afv eyle. Beni kalbimdeki gadabdan ve şeytânın vesvesesinden kurtar)",
+          "goal": 1
+        },
+        {
+          "id": "mjrkubmjg5dc11kfg9c",
+          "name": "silsiliyeyi Ali'ye ",
+          "text": "\n1- Ebubekr-i Sıddık\n2- Selman-ı Farisi\n3- Kasım bin Muhammed\n4- Cafer-i Sadık\n5- Bayezid-i Bistami\n6- Ebul Hasan Harkani\n7- Ebu Ali Farmedi\n8- Yusuf-i Hemedani\n9- Abdülhalık-i Goncdüvani\n10- Arif-i Rivegeri\n11- Mahmud-i Encirfagnevi\n12- Ali Ramiteni\n13- Muhammed Bâbâ Semmasi\n14- Seyyid Emir Gilâl\n15- Seyyid Muhammed Behaeddin Buhari\n16- Alâüddin-i Attâr\n17- Yakub-i Çerhi\n18- Ubeydullah-i Ahrâr\n19- Kâdi Muhammed Zâhid\n20- Derviş Muhammed\n21- Hâcegi Muhammed Emkenegi\n22- Muhammed Bakibillah\n23- İmam-ı Ahmed Rabbani\n24- Muhammed Masum Faruki\n25- Seyfeddin Faruki\n26- Seyyid Nur Muhammed\n27- Seyyid Mazhar-ı Can-ı Canan\n28- Seyyid Abdullah Dehlevi\n29- Mevlana Halid-i Bağdâdi\n30- Seyyid Abdullah Şemdini\n31- Seyyid Tâhâ-yı Hakkâri\n32- Seyyid Muhammed Sâlih\n33- Seyyid Sıbgatullah-i Hizâni\n34- Seyyid Fehim-i Arvâsi\n35- Seyyid Abdülhakim-i Arvâsi\n36- Hüseyin Hilmi Işık Efendi\n\nAbdülkadir-i Geylani\nAbdullah-ı Tercüman\nAkşemseddin -\nAziz Mahmud Hüdayi\nBişr-i Hafi\nEbül Vefa\nEbu Turab\nEmir Sultan\nHacı Bayram-ı Veli\nHacı Bektaş-ı Veli\nHasan Sezai\nHayat bin Kays el-Harrani\nİbrahim Ethem\nİbrahim Gülşeni\nİbrahim Havvas\nİsmail Fakirullah\nMalik bin Dinar\nMehmed Emin Tokadi\nMerkez Efendi\nÖmer bin Abdülaziz\nOsman Bedrettin\nRabia-tül-Adviyye\nSeyyidet Nefise\nVeysel Karani\nYunus Emre\nAhmet mekki\nEyüp Sultan\nİbn-i melek\nimami Birgi\nMevlana Celaleddin Rumi\nenver ören\nosman ünlü \nhandan hanim\nbehice hanim\nAybike hanim \n\nRabbim senden isteyipte verdiklerinin yüzü suyu hürmetine\n\n\n",
+          "meaning": "Silsile-i aliyye büyüklerinin ruhlarına hediye edilen okuma ve dualardır.",
+          "goal": 1
+        }
+      ]
+    }
+  ]
+}
