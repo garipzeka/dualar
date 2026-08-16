@@ -3515,15 +3515,19 @@
                     }
                 };
 
-                if (window.firebaseAuth) {
-                    const unsubscribe = window.onAuthStateChanged(window.firebaseAuth, (user) => {
-                        if (typeof unsubscribe === 'function') unsubscribe();
+                if (window.firebaseAuth && typeof window.onAuthStateChanged === 'function') {
+                    try {
+                        const unsubscribe = window.onAuthStateChanged(window.firebaseAuth, (user) => {
+                            if (typeof unsubscribe === 'function') unsubscribe();
+                            check();
+                        });
+                        setTimeout(() => {
+                            if (typeof unsubscribe === 'function') unsubscribe();
+                            check();
+                        }, 1000);
+                    } catch (e) {
                         check();
-                    });
-                    setTimeout(() => {
-                        if (typeof unsubscribe === 'function') unsubscribe();
-                        check();
-                    }, 1000);
+                    }
                 } else {
                     check();
                 }
@@ -4137,7 +4141,9 @@
                 setTimeout(() => overlay.style.display = 'none', 100);
             }
 
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } catch(e) { console.error('AudioContext error:', e); }
         }
 
         function toggleFullScreen() {
@@ -7662,10 +7668,15 @@
             document.addEventListener('backbutton', () => { handleAndroidBack(); });
         } catch (_) { }
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        const initApp = async () => {
             clearLocalStateCache();
             await load();
-        });
+        };
+        
+        // DOMContentLoaded beklemiyoruz, çünkü Firebase modülü (type="module") 
+        // internet yavaşken DOMContentLoaded event'ini blokluyor ve uygulamayı kilitliyor.
+        // Bu script body'nin en altında olduğu için DOM zaten hazır.
+        initApp();
 
         // ─── EĞİM İLE OTOMATİK KAYDIRMA (Tilt-to-Scroll) ───────────────────
         (function initTiltScroll() {
