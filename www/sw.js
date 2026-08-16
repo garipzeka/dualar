@@ -5,7 +5,8 @@ const ASSETS = [
   `${BASE_PATH}/index.html`,
   `${BASE_PATH}/manifest.json`,
   `${BASE_PATH}/icon-192.png`,
-  `${BASE_PATH}/icon-512.png`
+  `${BASE_PATH}/icon-512.png`,
+  `${BASE_PATH}/confetti.browser.min.js`
 ];
 
 self.addEventListener('install', (event) => {

@@ -1438,15 +1438,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        input[type="range"] {
-            accent-color: var(--accent);
-            margin: 10px 0;
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            appearance: none;
-            background: rgba(255, 255, 255, 0.2);
-        }
 
         .number-control-group {
             display: flex;
@@ -2333,25 +2324,6 @@
         </div>
     </div>
 
-    <div class="modal" id="libraryEditModal" style="display:none; z-index:8000;">
-        <div class="modal-content" style="max-width:480px;">
-            <div class="sheet-header">
-                <button class="icon-btn" onclick="closeLibraryEditModal()"><svg viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5" width="20" height="20">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    </svg></button>
-                <h3>Dua Düzenle (Depo)</h3>
-            </div>
-            <input type="text" id="libEditName" placeholder="Dua Adı" style="margin-bottom:8px;">
-            <textarea id="libEditText" rows="3" placeholder="Dua Metni" style="margin-bottom:8px;"></textarea>
-            <textarea id="libEditMeaning" rows="3" placeholder="Meali" style="margin-bottom:8px;"></textarea>
-            <textarea id="libEditArabic" rows="3" placeholder="Arapça Metni" style="margin-bottom:8px;"></textarea>
-            <textarea id="libEditSource" rows="1" placeholder="Kaynak (Opsiyonel)" style="margin-bottom:8px;"></textarea>
-            <input type="number" id="libEditGoal" placeholder="Hedef Sayı (Örn: 33)" min="1" style="margin-bottom:8px; display:none;">
-            <button class="btn-primary" onclick="saveLibraryEdit()">GÜNCELLE</button>
-            <button class="btn-primary" style="background:var(--muted); margin-top:10px" onclick="closeLibraryEditModal()">VAZGEÇ</button>
-        </div>
-    </div>
     
     </div>
     </div>
@@ -2948,15 +2920,6 @@
             }
         }
 
-        function saveLastCustomGoalToStorage(val) {
-            const num = parseInt(val);
-            if (!isNaN(num) && num > 0) {
-                try {
-                    localStorage.setItem('zikir_last_custom_goal', String(num));
-                    state.lastCustomGoal = num;
-                } catch(e) {}
-            }
-        }
 
         function getLastCustomGoalFromStorage() {
             try {
@@ -3006,7 +2969,6 @@
                 if (it) it.goal = num;
             }
 
-            saveLastCustomGoalToStorage(num);
             syncStateBackToActiveList();
             save();
             updateUI();
@@ -3323,8 +3285,15 @@
             });
 
             // Aktif listeyi restore et
-            if (progressData.activeListId && state.lists.some(l => l.id === progressData.activeListId)) {
-                state.activeListId = progressData.activeListId;
+            if (progressData.activeListId) {
+                if (state.lists.some(l => l.id === progressData.activeListId)) {
+                    state.activeListId = progressData.activeListId;
+                } else if (Array.isArray(sharedLists) && sharedLists.some(l => l.id === progressData.activeListId)) {
+                    const sl = sharedLists.find(l => l.id === progressData.activeListId);
+                    sl.virtualSharedList = true;
+                    state.selectedSharedList = sl;
+                    state.activeListId = progressData.activeListId;
+                }
             }
 
             // Kronometre süre istatistiğini restore et
@@ -3526,39 +3495,36 @@
 
         async function ensureLoggedIn() {
             return new Promise((resolve) => {
+                let isResolved = false;
                 const check = () => {
+                    if (isResolved) return;
+                    isResolved = true;
                     if (window.firebaseAuth && window.firebaseAuth.currentUser) {
                         const user = window.firebaseAuth.currentUser;
                         currentUser = user.uid;
                         currentEmail = user.email;
                         try { localStorage.removeItem('isGuestMode'); } catch (_) {}
-                        // Zaten giriş yapılmış: karşılama ekranını gösterme, doğrudan başlat
                         startAppWithFullscreen();
                         resolve(user);
                     } else {
-                        // Firebase is not loaded or no user logged in -> default to Guest automatically
                         try { localStorage.setItem('isGuestMode', 'true'); } catch (_) {}
                         currentUser = 'guest_user';
                         currentEmail = 'Misafir';
-                        // Misafir oturum: karşılama ekranını gösterme, doğrudan başlat
                         startAppWithFullscreen();
                         resolve({ uid: 'guest_user', email: 'guest' });
                     }
                 };
 
                 if (window.firebaseAuth) {
-                    // Wait for initial auth state if not resolved yet
                     const unsubscribe = window.onAuthStateChanged(window.firebaseAuth, (user) => {
                         unsubscribe();
                         check();
                     });
-                    // Timeout in case auth state takes too long
                     setTimeout(() => {
                         unsubscribe();
                         check();
                     }, 1000);
                 } else {
-                    // If firebaseAuth not even initialized, just go as guest immediately
                     check();
                 }
             });
@@ -5834,7 +5800,7 @@
 
         async function importSharedList(sharedListId) {
             if (!currentUser || currentUser === 'guest_user') return promptLogin('Buluttaki paylaşımlı listeleri hesabınıza kopyalamak için lütfen giriş yapın.');
-            const sl = sharedLists.find(l => l.id === sharedListId);
+            const sl = (Array.isArray(sharedLists) ? sharedLists : []).find(l => l.id === sharedListId);
             if (!sl) return showToast('Liste bulunamadı');
             
             ensureStateLists();
@@ -5871,7 +5837,7 @@
         let _previewListId = null;
 
         function previewPendingList(pendingListId) {
-            const pl = pendingListCache.find(l => l.id === pendingListId);
+            const pl = (Array.isArray(pendingListCache) ? pendingListCache : []).find(l => l.id === pendingListId);
             if (!pl) return showToast('Liste bulunamadı');
 
             _previewListId = pendingListId;
@@ -5991,32 +5957,6 @@
             document.getElementById('listPreviewModal').style.display = 'flex';
         }
 
-        function editLibraryPrayer(prayerId) {
-            const prayer = (prayerPool || []).find(p => String(p.id) === String(prayerId));
-            if (!prayer) return showToast('Dua bulunamadı');
-
-            _libEditPrayerId = prayerId;
-            document.getElementById('libEditName').value = prayer.name || '';
-            document.getElementById('libEditText').value = prayer.text || '';
-            document.getElementById('libEditMeaning').value = prayer.meaning || '';
-            document.getElementById('libEditArabic').value = getDuaArabicValue(prayer);
-            document.getElementById('libEditSource').value = getDuaSourceValue(prayer);
-            const goalEl = document.getElementById('libEditGoal');
-            if (goalEl) goalEl.style.display = 'none';
-            document.getElementById('libraryEditModal').style.display = 'flex';
-        }
-
-        function closeLibraryEditModal() {
-            document.getElementById('libraryEditModal').style.display = 'none';
-            _libEditPrayerId = null;
-        }
-
-        async function saveLibraryEdit() {
-            if (_privEditPrayerId) {
-                return savePrivateEdit();
-            }
-            showToast('Bu özellik kullanılamıyor');
-        }
 
 
         function renderActiveListRows() {
@@ -6206,77 +6146,6 @@
 
         let _privEditPrayerId = null;
 
-        function editPrivatePrayer(privId) {
-            const prayer = getPrivatePrayers().find(p => String(p.id) === String(privId));
-            if (!prayer) return showToast('Dua bulunamadı');
-
-            _privEditPrayerId = privId;
-            document.getElementById('libEditName').value = prayer.name || '';
-            document.getElementById('libEditText').value = prayer.text || '';
-            document.getElementById('libEditMeaning').value = prayer.meaning || '';
-            document.getElementById('libEditArabic').value = getDuaArabicValue(prayer);
-            document.getElementById('libEditSource').value = getDuaSourceValue(prayer);
-            
-            const goalEl = document.getElementById('libEditGoal');
-            if (goalEl) {
-                goalEl.style.display = 'block';
-                goalEl.value = prayer.goal || 33;
-            }
-            
-            _libEditPrayerId = null; 
-            document.getElementById('libraryEditModal').style.display = 'flex';
-        }
-
-        async function savePrivateEdit() {
-            const privId = _privEditPrayerId;
-            if (!privId) return;
-
-            const name = document.getElementById('libEditName').value.trim();
-            const text = document.getElementById('libEditText').value;
-            const meaning = document.getElementById('libEditMeaning').value;
-            const arabic = document.getElementById('libEditArabic').value;
-            const source = document.getElementById('libEditSource').value;
-            const goalEl = document.getElementById('libEditGoal');
-            let goal = goalEl ? parseInt(goalEl.value, 10) : 33;
-            if (Number.isNaN(goal) || goal < 1) goal = 33;
-
-            if (!name) return showToast('Dua adı gerekli');
-
-            if (state.customDepotPrayers) {
-                const idx = state.customDepotPrayers.findIndex(p => p.id === privId);
-                if (idx !== -1) {
-                    state.customDepotPrayers[idx].name = name;
-                    state.customDepotPrayers[idx].text = text;
-                    state.customDepotPrayers[idx].meaning = meaning;
-                    state.customDepotPrayers[idx].arabic = arabic;
-                    state.customDepotPrayers[idx].source = source;
-                    state.customDepotPrayers[idx].goal = goal;
-                    save();
-                }
-            }
-
-            const cIdx = window.cachedPrivatePrayers.findIndex(p => p.id === privId);
-            if (cIdx !== -1) {
-                window.cachedPrivatePrayers[cIdx].name = name;
-                window.cachedPrivatePrayers[cIdx].text = text;
-                window.cachedPrivatePrayers[cIdx].meaning = meaning;
-                window.cachedPrivatePrayers[cIdx].arabic = arabic;
-                window.cachedPrivatePrayers[cIdx].source = source;
-                window.cachedPrivatePrayers[cIdx].goal = goal;
-            }
-
-            if (window.firebaseDb && currentUser && currentUser !== 'guest_user') {
-                try {
-                    const ref = window.fsDoc(window.firebaseDb, 'custom_prayers', privId);
-                    window.fsUpdateDoc(ref, { name, text, meaning, arabic, source, goal }).catch(e => console.error(e));
-                } catch(e) {}
-            }
-
-            closeLibraryEditModal();
-            _privEditPrayerId = null;
-            renderDepotByCategory();
-            showToast('Kişisel dua güncellendi');
-        }
 
         // Bir duanın bulunduğu tüm listeleri (kişisel + bulut) döndürür
         function getContainingLists(p) {
@@ -6977,33 +6846,6 @@
             if (addedToListId) openListEditor(addedToListId); // Yeni duayı listede göster
         }
         
-        function editPrivatePrayer(privId) {
-            const prayers = getPrivatePrayers();
-            const prayer = prayers.find(p => p.id === privId);
-            if (!prayer) return;
-            
-            document.getElementById('privName').value = prayer.name || '';
-            document.getElementById('privText').value = prayer.text || '';
-            document.getElementById('privArabic').value = prayer.arabic || '';
-            document.getElementById('privMeaning').value = prayer.meaning || '';
-            document.getElementById('privSource').value = prayer.source || '';
-            document.getElementById('privGoal').value = prayer.goal || '';
-            document.getElementById('privCategory').value = prayer.category || 'genel';
-            
-            window._editingPrivId = privId;
-            
-            // Kapatılacak modallar varsa kapat
-            closeZikirlerimModal();
-            const listModal = document.getElementById('listModal');
-            if (listModal) listModal.style.display = 'none';
-            
-            // 'Dua Deposu' sekmesine geç ve üstteki 'Dua Ekle' formunu aç
-            if (typeof toggleDepotAddForm === 'function') toggleDepotAddForm(true);
-            switchListTab('depo');
-            
-            showToast('Düzenleme modundasınız. Değişiklikleri yapıp kaydedin.');
-        }
-
         async function submitPrayerToAdmin() {
             if (!currentUser || currentUser === 'guest_user') {
                 return promptLogin('Kendi dualarınızı buluta kaydetmek için lütfen Google hesabınızla giriş yapın.');
@@ -7128,7 +6970,7 @@
             if (!prayer) return;
             document.getElementById('btnDeletePrivatePrayer').style.display = 'block';
             
-            // Kapatılacak modallar varsa kapat
+            document.getElementById('privName').value = prayer.name || '';
             document.getElementById('privText').value = prayer.text || '';
             document.getElementById('privArabic').value = prayer.arabic || '';
             document.getElementById('privMeaning').value = prayer.meaning || '';
@@ -7311,83 +7153,6 @@
             // 'Dua Deposu' sekmesine geç ve üstteki 'Dua Ekle' formunu aç
             if (typeof toggleDepotAddForm === 'function') toggleDepotAddForm(true);
             switchListTab('depo');
-        }
-        async function submitSinglePrivatePrayer(privId) {
-            if (!currentUser || currentUser === 'guest_user') {
-                return promptLogin('Bu duayı topluluğa açmak (Admin\'e göndermek) için lütfen Google hesabınızla giriş yapın.');
-            }
-            if (!window.firebaseDb) return showToast('Bağlantı hatası');
-            
-            const prayer = getPrivatePrayers().find(p => String(p.id) === String(privId));
-            if (!prayer) return showToast('Dua bulunamadı');
-            showToast('Duanız onay için Admin\'e gönderiliyor... 📤');
-            
-            // Lokalde hemen güncelle
-            prayer._pendingAdmin = true;
-            prayer.status = 'bekliyor';
-            save();
-            renderPrivatePrayerList();
-            renderDepotByCategory();
-
-            try {
-                // Firebase Auth token al
-                let idToken = '';
-                try {
-                    const fbUser = window.firebaseAuth?.currentUser;
-                    if (fbUser) {
-                        idToken = await fbUser.getIdToken(true);
-                    }
-                } catch (tokenErr) {
-                    console.error('Token alınamadı:', tokenErr);
-                }
-                
-                const docId = String(privId);
-                const projectId = 'zikirmatik-7d7d4';
-                const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/custom_prayers/${docId}`;
-                
-                const firestoreDoc = {
-                    fields: {
-                        name: { stringValue: prayer.name || '' },
-                        text: { stringValue: prayer.text || '' },
-                        meaning: { stringValue: prayer.meaning || '' },
-                        category: { stringValue: prayer.category || 'genel' },
-                        tur: { stringValue: prayer.category || 'genel' },
-                        goal: { integerValue: String(prayer.goal || 33) },
-                        uid: { stringValue: currentUser },
-                        status: { stringValue: 'bekliyor' },
-                        _pendingAdmin: { booleanValue: true },
-                        _private: { booleanValue: true },
-                        createdAt: { stringValue: prayer.createdAt || new Date().toISOString() }
-                    }
-                };
-                
-                const headers = { 'Content-Type': 'application/json' };
-                if (idToken) {
-                    headers['Authorization'] = 'Bearer ' + idToken;
-                }
-                
-                const res = await fetch(url, {
-                    method: 'PATCH',
-                    headers: headers,
-                    body: JSON.stringify(firestoreDoc)
-                });
-                
-                if (!res.ok) {
-                    const errData = await res.json().catch(() => ({}));
-                    const errMsg = errData?.error?.message || errData?.error?.status || ('HTTP ' + res.status);
-                    console.error('[ADMIN GÖNDER] REST API hata:', errMsg, errData);
-                    throw new Error(errMsg);
-                }
-            } catch (e) {
-                console.error('[ADMIN GÖNDER] HATA:', e);
-                // Başarısız olursa lokali geri al
-                prayer._pendingAdmin = false;
-                prayer.status = 'private';
-                save();
-                renderPrivatePrayerList();
-                renderDepotByCategory();
-                showToast('Hata: ' + (e.message || 'bilinmeyen hata'));
-            }
         }
 
         function renderPrivatePrayerList() {
