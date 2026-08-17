@@ -4104,9 +4104,12 @@
                     }
                 }
 
-                // Bulutta olmayan kişisel listeleri telefon yedeğinden geri getir
-                // (yalnızca yedek buluttan daha yeni ise; eski yedek silinmiş listeyi diriltmez)
-                if (phoneIsNewer) {
+                // Bulutta olmayan kişisel listeleri telefon yedeğinden HER ZAMAN geri getir.
+                // restoreListsFromPhoneBackup yalnızca EKSİK listeleri ekler (var olanlara
+                // dokunmaz, çift eklemez). phoneIsNewer kapısı kaldırıldı: bulut daha yeni
+                // olsa bile telefonda durup bulutta olmayan bir liste kayboluyordu —
+                // güncelleme sonrası listelerin silinmesi bu yüzden yaşandı.
+                {
                     const restoredCount = restoreListsFromPhoneBackup();
                     if (restoredCount > 0 && canUseFirestore()) {
                         setTimeout(() => sendDataToServerAsync().catch(() => {}), 500);
@@ -4347,6 +4350,9 @@
         // Uygulama arka plana geçince veya kapanırken bekleyen bulut kaydını hemen gönder;
         // aksi halde 1 sn'lik debounce içinde yapılan liste/dua değişiklikleri kaybolabilir.
         function flushPendingCloudSave() {
+            // Uygulama kapanırken/arka plana geçerken telefon yedeğini de yaz:
+            // bulut kaydı başarısız olsa bile listeler kalıcı hafızada kalır.
+            try { saveProgressToPhone(); } catch (_) {}
             if (saveTimeout) {
                 clearTimeout(saveTimeout);
                 saveTimeout = null;
