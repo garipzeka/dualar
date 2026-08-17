@@ -4077,9 +4077,16 @@
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') flushPendingCloudSave();
         });
-        if (window.Capacitor && typeof window.Capacitor.addListener === 'function') {
-            window.Capacitor.addListener('appStateChange', (s) => { if (!s.isActive) flushPendingCloudSave(); }).catch(() => {});
-        }
+        // Capacitor Native: uygulama arka plana geçince bekleyen bulut kaydını gönder.
+        // DİKKAT: Yanlış API kullanımı (window.Capacitor.addListener) APK WebView'inde
+        // TypeError fırlatıp ana scripti durduruyordu; uygulama "Bağlantı kontrol
+        // ediliyor..." ekranında kilitleniyor ve butonlar çalışmıyordu.
+        // Doğru API: window.Capacitor.Plugins.App.addListener (Promise döner).
+        try {
+            if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App && typeof window.Capacitor.Plugins.App.addListener === 'function') {
+                window.Capacitor.Plugins.App.addListener('appStateChange', (s) => { if (!s.isActive) flushPendingCloudSave(); }).catch(() => {});
+            }
+        } catch (_) { }
 
         // ─── PRESENCE HEARTBEAT (çevrimiçi sayacı) ───
         // Uygulama arayüzünde sayaç gösterilmez; yalnızca yönetici aracında
@@ -5402,6 +5409,10 @@
         function closeZikirlerimModal() { }
         function toggleNewListRow() { }
         function createListFromZikirlerimInput() { }
+        // Eski modal kaldırıldı; hiçbir buton eksik fonksiyon çağrısıyla hata vermesin diye güvenli stub'lar:
+        function selectListFromZikirlerimModal(_id) { showList(); }
+        function selectCloudListFromZikirlerimModal(_id) { showList(); }
+        function selectSinglePrayerFromZikirlerimModal(_id) { showList(); }
 
         function renderZikirlerimModalRows() {
             // Eski modal kaldırıldı; içerik "Dualarım" ekranında. Artık no-op.
@@ -6235,7 +6246,9 @@
                     const isAdded = activeKeys.has(pId.toLowerCase()) || activeKeys.has((p.name||'').toLowerCase());
                     const isSelected = depotSelectedIds.has(pId);
                     
-                    const adminBtns = isAdmin && !p._isPrivate ? `<button class="mini-btn" onclick="event.stopPropagation(); editLibraryPrayer('${pId}')">✏️</button>` : '';
+                    // Not: "Depo Düzenle" (editLibraryPrayer) özelliği sunucusuz geçişte kaldırıldı;
+                    // kaldırılmış fonksiyonu çağıran buton artık render edilmez (admin hatası yaratırdı).
+                    const adminBtns = '';
                     const privBtns = p._isPrivate ? `<button class="mini-btn" onclick="event.stopPropagation(); editPrivatePrayer('${pId}')" title="Düzenle">✏️</button><button class="mini-btn" onclick="event.stopPropagation(); submitSinglePrivatePrayer('${pId}')" title="Topluluğa aç (Admin onayına gönder)">📤 Topluluğa Aç</button>` : '';
                     
                     const actionBtns = `
@@ -7660,7 +7673,7 @@
         // Capacitor (Android) geri tuşu dinleyicisi
         try {
             if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App && typeof window.Capacitor.Plugins.App.addListener === 'function') {
-                window.Capacitor.Plugins.App.addListener('backButton', () => { handleAndroidBack(); });
+                window.Capacitor.Plugins.App.addListener('backButton', () => { handleAndroidBack(); }).catch(() => {});
             }
         } catch (_) { }
         // Eski (Cordova uyumlu) dinleyici — gerekirse
