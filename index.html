@@ -2313,6 +2313,20 @@
 
     <!-- Eski "Zikirlerim & Dua Deposu" modalı kaldırıldı; tüm özellikler Dualarım ekranında. -->
 
+    <div class="modal" id="goalReviewModal" style="display:none; z-index:8600;">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="sheet-header">
+                <h3 style="margin:0;">Hedefleri Belirleyin</h3>
+            </div>
+            <div id="goalReviewMsg" style="font-size:0.82rem; opacity:0.85; margin:8px 0 12px; line-height:1.5;"></div>
+            <div id="goalReviewRows" style="max-height:46vh; overflow-y:auto;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
+                <button class="btn-primary" style="background:var(--muted);" onclick="closeGoalReview()">VAZGEÇ</button>
+                <button class="btn-primary" onclick="confirmGoalReview()">LİSTEYE EKLE</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="goalInputModal" style="display:none; z-index:8600;">
         <div class="modal-content" style="max-width:340px;">
             <div class="sheet-header">
@@ -2694,6 +2708,61 @@
         }
         function askGoalInput(title, message, currentValue) {
             return new Promise(resolve => openGoalInput(title, message, currentValue, resolve));
+        }
+
+        // ─── HEDEF İNCELEME MODALI (eklenecek tüm duaların hedefleri) ────────────
+        let _goalReviewCb = null;
+        let _goalReviewEntries = [];
+
+        function openGoalReview(entries, message, onConfirm) {
+            const m = document.getElementById('goalReviewModal');
+            if (!m) return onConfirm && onConfirm(null);
+            _goalReviewEntries = (Array.isArray(entries) ? entries : []).map(e => ({ ...e, goal: Math.max(1, Number(e.goal) || 33) }));
+            const msg = document.getElementById('goalReviewMsg');
+            if (msg) msg.textContent = message || '';
+            const rows = document.getElementById('goalReviewRows');
+            if (rows) {
+                rows.innerHTML = _goalReviewEntries.map((e, i) => `
+                    <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; margin-bottom:6px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);">
+                        <div style="flex:1; min-width:0; font-size:0.85rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(e.name)}</div>
+                        <input type="number" id="goalReviewVal_${i}" min="1" max="999999" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" value="${e.goal}" style="width:80px; padding:6px 8px; margin:0; text-align:center; font-weight:bold;" />
+                    </div>`).join('');
+            }
+            _goalReviewCb = onConfirm;
+            m.style.display = 'flex';
+        }
+
+        function closeGoalReview() {
+            const cb = _goalReviewCb;
+            _goalReviewCb = null;
+            _goalReviewEntries = [];
+            const m = document.getElementById('goalReviewModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb(null);
+        }
+
+        function confirmGoalReview() {
+            const results = [];
+            for (let i = 0; i < _goalReviewEntries.length; i++) {
+                const inp = document.getElementById('goalReviewVal_' + i);
+                const v = parseInt(String(inp ? inp.value : '').replace(/\D/g, ''), 10);
+                if (Number.isNaN(v) || v < 1) {
+                    showToast('Geçerli bir hedef girin: ' + _goalReviewEntries[i].name);
+                    if (inp) inp.focus();
+                    return;
+                }
+                results.push({ id: _goalReviewEntries[i].id, goal: v });
+            }
+            const cb = _goalReviewCb;
+            _goalReviewCb = null;
+            _goalReviewEntries = [];
+            const m = document.getElementById('goalReviewModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb(results);
+        }
+
+        function askGoalReview(entries, message) {
+            return new Promise(resolve => openGoalReview(entries, message, resolve));
         }
 
         async function ensureActiveListEditable(actionLabel = 'değişiklik') {
@@ -6335,14 +6404,16 @@
                 ...privPrayers.map(p => ({ ...p, _isPrivate: true }))
             ].filter(p => p && p.id);
 
-            // Hedef sor: kullanıcı eklerken hedef belirleyebilsin (tümüne uygulanır)
-            const firstSel = allPool.find(p => depotSelectedIds.has(String(p.id)));
-            const addGoal = await askGoalInput(
-                'Hedef Sayısı',
-                `"${targetList.name}" listesine eklenecek ${depotSelectedIds.size} dua için hedef kaç olsun? (tümüne uygulanır)`,
-                Math.max(1, Number(firstSel && firstSel.goal) || 33)
-            );
-            if (addGoal === null) return; // vazgeçildi
+            // Hedefleri listele: her dua için hedef aynı ekranda düzenlenebilir
+            const selEntries = [];
+            depotSelectedIds.forEach(pId => {
+                const prayer = allPool.find(p => String(p.id) === String(pId));
+                if (prayer) selEntries.push({ id: String(pId), name: prayer.name || 'Dua', goal: Math.max(1, Number(prayer.goal) || 33) });
+            });
+            const goalResults = await askGoalReview(selEntries, `"${targetList.name}" listesine eklenecek duaların hedeflerini düzenleyin:`);
+            if (goalResults === null) return; // vazgeçildi
+            const goalMap = {};
+            goalResults.forEach(r => { goalMap[r.id] = r.goal; });
 
             for (const pId of depotSelectedIds) {
                 const prayer = allPool.find(p => String(p.id) === String(pId));
@@ -6354,7 +6425,7 @@
                         id: generateId(),
                         prayerId: String(pId),
                         name: prayer.name || '',
-                        goal: addGoal,
+                        goal: goalMap[String(pId)] || 33,
                         count: 0
                     };
                     if (prayer._isPrivate) {
@@ -8048,6 +8119,7 @@
                 if (state.readerMode) { toggleReaderMode(); return; }
 
                 // Açık modalları kapat (üstte açılan önce)
+                if (_modalVisible('goalReviewModal')) { closeGoalReview(); return; }
                 if (_modalVisible('goalInputModal')) { closeGoalInput(); return; }
                 if (_modalVisible('textInputModal')) { closeTextPrompt(); return; }
                 if (_modalVisible('prayerPickerModal')) { closePrayerPickerModal(); return; }
