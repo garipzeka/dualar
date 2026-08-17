@@ -2434,17 +2434,35 @@
             const poolItem = pool.find(p => String(p.id) === pId)
                 || (legacyRef ? pool.find(p => String(p.id) === legacyRef) : undefined)
                 || (legacyRef ? pool.find(p => String(p.name || '').toLowerCase().trim() === legacyRef.toLowerCase().trim()) : undefined);
+            // Kişisel dualar GitHub havuzunda yoktur; Firebase'de saklanır.
+            // (Liste öğelerinde yalnızca ID + sayaç tutulur — gizlilik ilkesi gereği
+            // metinler telefona asla yazılmaz, her görüntülemede buradan çözülür.)
+            const privItem = poolItem ? null : findPrivatePrayerById(pId);
             return {
                 id: it.id || pId || generateId(),
-                prayerId: poolItem?.id || pId,
-                name: poolItem?.name || it.name || it.title || (it.text ? (it.text.substring(0, 15) + '...') : 'Dua'),
-                text: poolItem?.text || it.text || '',
-                meaning: poolItem?.meaning || it.meaning || '',
-                arabic: poolItem?.arabic || poolItem?.arapca || it.arabic || it.arapca || '',
-                source: poolItem?.source || poolItem?.kaynak || it.source || it.kaynak || '',
-                goal: Math.max(1, Number(it.goal) || Number(poolItem?.goal) || 33),
+                prayerId: (poolItem?.id) || (privItem?.id) || pId,
+                name: poolItem?.name || privItem?.name || it.name || it.title || (it.text ? (it.text.substring(0, 15) + '...') : 'Dua'),
+                text: poolItem?.text || privItem?.text || it.text || '',
+                meaning: poolItem?.meaning || privItem?.meaning || it.meaning || '',
+                arabic: poolItem?.arabic || poolItem?.arapca || privItem?.arabic || privItem?.arapca || it.arabic || it.arapca || '',
+                source: poolItem?.source || poolItem?.kaynak || privItem?.source || privItem?.kaynak || it.source || it.kaynak || '',
+                goal: Math.max(1, Number(it.goal) || Number(poolItem?.goal) || Number(privItem?.goal) || 33),
                 count: Math.max(0, Number(it.count) || 0)
             };
+        }
+
+        // Kişisel duayı ID ile bulur (yerel önbellek + Firebase'den çekilen kopya).
+        function findPrivatePrayerById(id) {
+            const key = String(id || '');
+            if (!key) return null;
+            if (Array.isArray(state.customDepotPrayers)) {
+                const hit = state.customDepotPrayers.find(p => p && String(p.id) === key);
+                if (hit) return hit;
+            }
+            if (Array.isArray(window.cachedPrivatePrayers)) {
+                return window.cachedPrivatePrayers.find(p => p && String(p.id) === key) || null;
+            }
+            return null;
         }
 
         function prepareMinimalStateForSaving(st) {
@@ -6130,13 +6148,24 @@
             for (const pId of depotSelectedIds) {
                 const prayer = allPool.find(p => String(p.id) === String(pId));
                 if (prayer) {
-                    targetList.items.push({
+                    // Kişisel dualar havuzda olmadığından metinleri de öğeye kopyalanır
+                    // (gizlilik ilkesi gereği kayıt sırasında prepareMinimalStateForSaving
+                    // tarafından atılır; sadece bellekte taşınır).
+                    const item = {
                         id: generateId(),
                         prayerId: String(pId),
                         name: prayer.name || '',
                         goal: prayer.goal !== undefined ? Number(prayer.goal) : 33,
                         count: 0
-                    });
+                    };
+                    if (prayer._isPrivate) {
+                        item.text = prayer.text || '';
+                        item.meaning = prayer.meaning || '';
+                        item.arabic = prayer.arabic || '';
+                        item.source = prayer.source || '';
+                        item._private = true;
+                    }
+                    targetList.items.push(item);
                     count++;
                 }
             }
