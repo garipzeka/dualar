@@ -384,6 +384,30 @@
         .list-item.drag-target-top { border-top: 2px solid var(--accent); }
         .list-item.drag-target-bottom { border-bottom: 2px solid var(--accent); }
 
+        /* Sıralama numarası (1, 2, 3...) */
+        .list-item .order-num {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+            color: var(--text);
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        [data-theme="light"] .list-item .order-num { background: rgba(0, 0, 0, 0.10); }
+
+        /* Daha dar / kompakt liste kartları */
+        .list-item.compact { padding: 9px 10px; margin-bottom: 6px; gap: 8px; }
+        .list-item.compact .list-info-title { font-size: 0.85rem; }
+        .list-item.compact .list-badge { font-size: 0.66rem; padding: 1px 6px; }
+        @media (max-width: 480px) {
+            .list-item.compact { padding: 8px 10px; gap: 8px; }
+        }
+
         .list-item:hover {
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(255, 255, 255, 0.16);
@@ -2207,7 +2231,7 @@
                         <textarea id="privArabic" rows="2" placeholder="Arapçası (isteğe bağlı)" style="margin-bottom:8px;resize:vertical; direction: rtl; font-family: 'Amiri', 'Traditional Arabic', serif;"></textarea>
                         <textarea id="privMeaning" rows="2" placeholder="Meali (isteğe bağlı)" style="margin-bottom:8px;resize:vertical;"></textarea>
                         <input type="text" id="privSource" placeholder="Kaynak (Örn: Tirmizi, Deavat 15)" style="margin-bottom:8px;" />
-                        <input type="number" id="privGoal" placeholder="Hedef Sayı (Örn: 33)" min="1" style="margin-bottom:8px;" />
+                        <input type="number" id="privGoal" placeholder="Hedef Sayı (Örn: 33)" min="1" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="margin-bottom:8px;" />
                         <select id="privCategory" style="margin-bottom:14px;">
                             <option value="genel">Genel</option>
                             <option value="sureler">Sureler</option>
@@ -2300,7 +2324,7 @@
             </div>
             <input type="text" id="editName" placeholder="Zikir Adı">
             <label style="font-size:0.8rem; opacity:0.7; margin-bottom:5px; display:block;">Hedef Sayısı</label>
-            <input type="number" id="editGoal" placeholder="Hedef" value="33">
+            <input type="number" id="editGoal" placeholder="Hedef" value="33" min="1" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
             <textarea id="editNote" rows="2" placeholder="Zikir Metni"></textarea>
             <textarea id="editMeaning" rows="2" placeholder="Meali"></textarea>
             <textarea id="editArabic" rows="2" placeholder="Arapça Metni"></textarea>
@@ -6080,8 +6104,9 @@
                 html += activeItems.map((rawIt, i) => {
                     const it = resolveDuaItem(rawIt);
                     return `
-                    <div class="list-item" data-idx="${i}">
+                    <div class="list-item compact" data-idx="${i}">
                         <span class="drag-grip" title="Basılı tutup sürükleyerek taşı">⋮⋮</span>
+                        <span class="order-num">${i + 1}</span>
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(it.name)}</div>
                             <div class="list-info-meta">
@@ -6092,7 +6117,6 @@
                         <div class="list-actions">
                             <button class="mini-btn" onclick="moveDua(${i},-1)" title="Yukarı taşı">▲</button>
                             <button class="mini-btn" onclick="moveDua(${i},1)" title="Aşağı taşı">▼</button>
-                            <button class="mini-btn" onclick="editDua(${i})" title="Hedef Değiştir">✏️ Hedef</button>
                             <button class="mini-btn" style="color:#e74c3c; border-color:rgba(231,76,60,0.3);" onclick="deleteDuaAt(${i})" title="Sil">🗑️</button>
                         </div>
                     </div>`;
@@ -6491,17 +6515,17 @@
             }
             box.innerHTML = items.map((rawIt, i) => {
                 const it = resolveDuaItem(rawIt);
-                return `<div class="list-item" data-idx="${i}" style="margin-bottom:6px;">
+                return `<div class="list-item compact" data-idx="${i}" style="margin-bottom:6px;">
                     <span class="drag-grip" title="Basılı tutup sürükleyerek taşı">⋮⋮</span>
+                    <span class="order-num">${i + 1}</span>
                     <div class="list-info">
                         <div class="list-info-title">${escapeHtml(it.name)}</div>
                         <div class="list-info-meta"><span class="list-badge">Hedef: ${rawIt.goal || it.goal || 33}</span>${rawIt.count > 0 ? `<span style="opacity:0.6">• ${rawIt.count} okundu</span>` : ''}</div>
                     </div>
                     <div class="list-actions" style="gap:4px;">
-                        <button class="mini-btn" onclick="editorMoveDua('${listId}',${i},-1)">▲</button>
-                        <button class="mini-btn" onclick="editorMoveDua('${listId}',${i},1)">▼</button>
-                        <button class="mini-btn" onclick="editDuaInEditor('${listId}',${i})">✏️</button>
-                        <button class="mini-btn" style="color:#e74c3c;border-color:rgba(231,76,60,.3);" onclick="editorRemoveDua('${listId}',${i})">🗑️</button>
+                        <button class="mini-btn" onclick="editorMoveDua('${listId}',${i},-1)" title="Yukarı taşı">▲</button>
+                        <button class="mini-btn" onclick="editorMoveDua('${listId}',${i},1)" title="Aşağı taşı">▼</button>
+                        <button class="mini-btn" style="color:#e74c3c;border-color:rgba(231,76,60,.3);" onclick="editorRemoveDua('${listId}',${i})" title="Sil">🗑️</button>
                     </div>
                 </div>`;
             }).join('');
@@ -6529,22 +6553,6 @@
             renderListEditorRows(listId);
             if (listId === state.activeListId) updateUI();
             showToast('Dua listeden çıkarıldı');
-        }
-
-        function editDuaInEditor(listId, idx) {
-            const lst = (state.lists || []).find(l => l.id === listId);
-            if (!lst || !lst.items || !lst.items[idx]) return;
-            // Mevcut editDua fonksiyonunu kullan
-            if (listId === state.activeListId) {
-                editDua(idx);
-            } else {
-                const it = lst.items[idx];
-                const resolved = resolveDuaItem(it);
-                const newGoal = prompt(`"${resolved.name}" için hedef sayısı:`, it.goal || 33);
-                if (newGoal === null) return;
-                const g = parseInt(newGoal, 10);
-                if (!isNaN(g) && g > 0) { it.goal = g; save(); renderListEditorRows(listId); showToast('Hedef güncellendi'); }
-            }
         }
 
         function editListTitle() {
