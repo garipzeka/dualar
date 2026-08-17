@@ -404,8 +404,31 @@
         .list-item.compact { padding: 9px 10px; margin-bottom: 6px; gap: 8px; }
         .list-item.compact .list-info-title { font-size: 0.85rem; }
         .list-item.compact .list-badge { font-size: 0.66rem; padding: 1px 6px; }
+        /* Kişisel liste düzenleme kartları TEK SATIRDA: sürükleme + sıra + ad + hedef + butonlar yan yana */
+        .list-item.compact .list-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
+        .list-item.compact .list-info-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .list-item.compact .list-info-meta {
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+        .list-item.compact .list-actions {
+            flex-wrap: nowrap;
+        }
         @media (max-width: 480px) {
-            .list-item.compact { padding: 8px 10px; gap: 8px; }
+            .list-item.compact { padding: 8px 10px; gap: 8px; flex-direction: row; align-items: center; }
+            .list-item.compact .list-info { width: auto; flex-direction: row; align-items: center; gap: 6px; min-width: 0; }
+            .list-item.compact .list-info-meta { margin-top: 0; }
+            .list-item.compact .list-actions { width: auto; justify-content: flex-end; }
         }
 
         .list-item:hover {
@@ -2596,6 +2619,15 @@
             clone.savedAt = new Date().toISOString();
             clone.stats = capStats(clone.stats);
             clone.itemStats = capStats(clone.itemStats);
+            // Sistem listeleri (Sade Sayaç, Genel Liste) kullanıcının kendi listeleri değildir:
+            // uygulama arayüzünde zaten gizlidirler. Buluta yazılmazlar; böylece yöneticiden
+            // silinince telefonun bir sonraki kaydında GERİ GELMEZLER.
+            if (Array.isArray(clone.lists)) {
+                clone.lists = clone.lists.filter(l => {
+                    const lid = String((l && (l.id || l.list_id)) || '');
+                    return lid !== 'list_sayac' && lid !== 'list_default' && lid !== 'list_single_prayer';
+                });
+            }
             if (Array.isArray(clone.lists)) {
                 clone.lists.forEach(list => {
                     if (Array.isArray(list.items)) {
@@ -2864,7 +2896,15 @@
             if (!Array.isArray(state.lists)) {
                 state.lists = [];
             }
-            
+
+            // Kullanıcının bilerek sildiği listeler burada da temizlenir:
+            // başka bir cihazın eski kopyası (örn. telefon yedeğinden geri yazılan)
+            // gelse bile silinen ID'ler asla gösterilmez ve bir sonraki kayıtta buluta gitmez.
+            const deletedIds = new Set(Array.isArray(state.deletedListIds) ? state.deletedListIds.map(String) : []);
+            if (deletedIds.size > 0) {
+                state.lists = state.lists.filter(l => !deletedIds.has(String((l && (l.id || l.list_id)) || '')));
+            }
+
             // Not: "Genel Liste" (list_default) artık özel korumalı değildir;
             // kullanıcı isterse silebilir/adını değiştirebilir. Silinirse otomatik geri getirilmez.
 
@@ -2888,8 +2928,10 @@
                 });
             if (state.selectedSharedList && state.activeListId === state.selectedSharedList.id) {
                 state.selectedSharedList.virtualSharedList = true;
-            } else if (!state.activeListId || !state.lists.some(l => l.id === state.activeListId)) {
-                state.activeListId = state.lists[0].id;
+            } else if (!state.activeListId || !state.lists.some(l => l && l.id === state.activeListId)) {
+                // Kullanıcının hiç listesi kalmamışsa (örn. yönetici silmiş / bulut temizlenmiş)
+                // ÇÖKME: "Sade Sayaç" sanal listesine dönülür; updateUI gerektiğinde onu yeniden kurar.
+                state.activeListId = state.lists.length > 0 ? state.lists[0].id : 'list_sayac';
             }
             syncActiveListIntoState();
         }
@@ -2898,10 +2940,14 @@
             ensureStateLists();
             let activeList = (state.selectedSharedList && state.selectedSharedList.id === state.activeListId)
                 ? state.selectedSharedList
-                : state.lists.find(l => l.id === state.activeListId);
+                : state.lists.find(l => l && l.id === state.activeListId);
             if (!activeList) {
                 activeList = state.selectedSharedList || state.lists[0];
-                state.activeListId = activeList.id;
+                if (activeList) {
+                    state.activeListId = activeList.id;
+                } else {
+                    state.activeListId = 'list_sayac';
+                }
             }
             return activeList;
         }
@@ -3060,10 +3106,18 @@
                     const isActive = lst.id === state.activeListId;
                     const isShared = !!(lst.copiedFromSharedListId || lst.virtualSharedList);
                     const sharedBadge = isShared ? '<span style="background:rgba(16,185,129,0.2);color:var(--accent);font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">Paylaşımlı</span>' : '';
+                    // Bulut yedek durumu: rozet yalnızca GERÇEKTEN başarılı bir bulut kaydı
+                    // sonrasında "Yedekli" gösterir. Yazma hatası varsa uyarı rozeti çıkar,
+                    // giriş yoksa "Telefonda" kalır (yanlış pozitif "Yedekli" asla görünmez).
+                    const backupBadge = cloudSyncOk()
+                        ? '<span title="Bu liste Firebase bulutuna kaydedildi" style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Yedekli</span>'
+                        : (canUseFirestore()
+                            ? '<span title="Son kayıt buluta iletilemedi — bağlantıyı kontrol edin" style="background:rgba(231,76,60,0.2);color:#e74c3c;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">⚠️ Yedeklenemedi</span>'
+                            : '<span title="Giriş yapılmadığı için yalnızca bu telefonda" style="background:rgba(255,255,255,0.1);color:var(--text);opacity:0.75;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:600;">📱 Telefonda</span>');
                     return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : ''}margin-bottom:8px;">
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
-                            <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${sharedBadge}</div>
+                            <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${backupBadge}${sharedBadge}</div>
                         </div>
                         <div class="list-actions">
                             ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
@@ -3093,6 +3147,12 @@
 
         function createListFromInput() {
             ensureStateLists();
+            // Liste buluta kaydedilemeyecekse kullanıcıyı ÖNCEDEN uyar:
+            // misafir kullanıcılar Firestore'a hiç bağlanmaz ve liste yalnızca telefonda kalır.
+            if (!canUseFirestore()) {
+                promptLogin('🔒 Liste buluta kaydedilemiyor.<br><br>Giriş yapmadan oluşturulan listeler yalnızca bu telefonda kalır, başka cihaza aktarılamaz ve yöneticide görünmez. Kalıcı olması için giriş yapın.');
+                return;
+            }
             const input = document.getElementById('newListName');
             const name = String(input?.value || '').trim() || `Liste ${state.lists.length + 1}`;
             const list = createEmptyList(name);
@@ -3125,8 +3185,14 @@
             if (!list) return;
             if (!confirm(`"${list.name}" listesi silinsin mi?`)) return;
             state.lists = state.lists.filter(l => l.id !== listId);
+            // Kalıcı silme: silinen liste ID'si hatırlanır. Telefon yedeğinden restore
+            // edilirken veya başka cihazdan geri yazılırken bu ID'ler asla geri getirilmez.
+            // Böylece kullanıcı listeyi sildiğinde Firebase'den de otomatik olarak silinmiş olur
+            // ve bir sonraki kayıtta "kaybolmuş" sanılıp geri yüklenmez.
+            if (!Array.isArray(state.deletedListIds)) state.deletedListIds = [];
+            if (!state.deletedListIds.includes(listId)) state.deletedListIds.push(listId);
             if (state.activeListId === listId) {
-                state.activeListId = state.lists[0].id;
+                state.activeListId = state.lists.length > 0 ? state.lists[0].id : 'list_sayac';
             }
             syncActiveListIntoState();
             renderListManager();
@@ -3490,11 +3556,15 @@
                     ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
                     : new Set();
                 const githubListeIdleri = new Set([...rawServerIds, ...serverIds]);
+                // Kullanıcının bilerek sildiği listeler asla geri getirilmez:
+                // deletedListIds, silme anında state'e işlenip buluta da yazılır;
+                // böylece başka cihazın telefon yedeğindeki eski kopya bile geri yüklenmez.
+                const deletedIds = new Set(Array.isArray(state.deletedListIds) ? state.deletedListIds.map(String) : []);
                 let restored = 0;
                 backup.lists.forEach(sl => {
                     const id = String(sl.id || '');
-                    if (!id || id === 'list_sayac' || id === 'list_default' || existingIds.has(id) || githubListeIdleri.has(id)) return;
-                    const items = (Array.isArray(sl.items) ? sl.items : []).map(it => {
+                    if (!id || id === 'list_sayac' || id === 'list_default' || existingIds.has(id) || githubListeIdleri.has(id) || deletedIds.has(id)) return;
+                    const items = (Array.isArray(sl.items) ? sl.items : []).filter(it => it && typeof it === 'object').map(it => {
                         const pId = String(it.prayerId || it.id || '');
                         const poolItem = poolMap.get(pId);
                         const base = {
@@ -3550,8 +3620,12 @@
 
                 // Her dua için count'u restore et (ID bazlı eşleştirme)
                 if (Array.isArray(savedList.items) && Array.isArray(stateList.items)) {
-                    const savedMap = new Map(savedList.items.map(it => [String(it.prayerId || it.id), it]));
+                    // Yedekte bozuk (null) kayıt varsa atla — geri yükleme asla çökmesin.
+                    const savedMap = new Map(savedList.items
+                        .filter(it => it && typeof it === 'object')
+                        .map(it => [String(it.prayerId || it.id), it]));
                     stateList.items.forEach(it => {
+                        if (!it || typeof it !== 'object') return;
                         const savedItem = savedMap.get(String(it.prayerId || it.id)) ||
                                          savedMap.get(String(it.id));
                         if (savedItem) {
@@ -3572,7 +3646,7 @@
 
             // Aktif listeyi restore et
             if (progressData.activeListId) {
-                if (state.lists.some(l => l.id === progressData.activeListId)) {
+                if (state.lists.some(l => l && l.id === progressData.activeListId)) {
                     state.activeListId = progressData.activeListId;
                 } else if (Array.isArray(sharedLists) && sharedLists.some(l => l.id === progressData.activeListId)) {
                     const sl = sharedLists.find(l => l.id === progressData.activeListId);
@@ -3671,11 +3745,11 @@
         }
 
         function showSyncError(msg) {
-            // Disabled: Notification hidden
+            try { showToast(msg || 'Bulut kayıt hatası'); } catch (_) { }
         }
 
         function showSyncStatus(saved) {
-            // Disabled: 'Kaydediliyor...' hidden
+            // Kaydediliyor bildirimi bilinçli olarak gizli tutulur; yalnızca hatalar gösterilir.
         }
 
         // YÜKLEME
@@ -4051,6 +4125,9 @@
 
                 if (dbState) {
                     state = dbState;
+                    // Kullanıcının verisi Firebase'den geldi → bulut kaydı gerçekten var demektir.
+                    // Rozet "Yedekli" gösterir; sonraki kayıt başarısız olursa uyarıya döner.
+                    _cloudSyncOk = true;
                 }
                 // Not: "Genel Liste" (list_default) burada asla yeniden oluşturulmaz.
                 // Kullanıcı onu silmişse geri getirilmez; yeni kullanıcılar için varsayılan
@@ -4094,8 +4171,12 @@
                         }
                         // Dua sayaçları (daha yüksek olan kazanır)
                         if (Array.isArray(savedList.items) && Array.isArray(stateList.items)) {
-                            const savedMap = new Map(savedList.items.map(it => [String(it.prayerId || it.id), it]));
+                            // Yedekte bozuk (null) kayıt varsa atla — birleştirme asla çökmesin.
+                            const savedMap = new Map(savedList.items
+                                .filter(it => it && typeof it === 'object')
+                                .map(it => [String(it.prayerId || it.id), it]));
                             stateList.items.forEach(it => {
+                                if (!it || typeof it !== 'object') return;
                                 const savedItem = savedMap.get(String(it.prayerId || it.id)) ||
                                                  savedMap.get(String(it.id));
                                 if (savedItem) {
@@ -4124,7 +4205,7 @@
                         }
                         stateList.itemStats = fsItemStats;
                     });
-                    if (!dbState && localProgress.activeListId && state.lists.some(l => l.id === localProgress.activeListId)) {
+                    if (!dbState && localProgress.activeListId && state.lists.some(l => l && l.id === localProgress.activeListId)) {
                         state.activeListId = localProgress.activeListId;
                     }
                 }
@@ -4152,6 +4233,7 @@
                     state.lists.forEach(list => {
                         if (Array.isArray(list.items)) {
                             list.items.forEach(it => {
+                                if (!it || typeof it !== 'object') return;
                                 const fresh = poolMap.get(String(it.id));
                                 if (fresh) {
                                     it.name = fresh.name || it.name;
@@ -4191,7 +4273,8 @@
                     if (defaultList) {
                         if (!Array.isArray(defaultList.items)) defaultList.items = [];
                         prayerPool.forEach(p => {
-                            const exists = defaultList.items.find(it => (it.id === p.id) || (it.name === p.name));
+                            // Bozuk (null) kayıtları atla — eşitleme asla çökmesin.
+                            const exists = defaultList.items.find(it => it && typeof it === 'object' && ((it.id === p.id) || (it.name === p.name)));
                             if (!exists) {
                                 defaultList.items.push({
                                     id: String(p.id || generateId()),
@@ -4237,8 +4320,11 @@
 
             } catch (err) {
                 console.warn('[diag] load failed', err);
-                if (String(err.message) !== 'login_required') {
-                    showSyncError("Bulut bağlantısı yok • Veriler yalnızca sunucuda");
+                // "Bulut bağlantısı yok" gibi yanıltıcı bir mesaj yerine GERÇEK hatayı göster:
+                // buraya yalnızca beklenmeyen hatalar düşer (veri biçimi, ağ, zaman aşımı vb.).
+                const yuklemeHatasi = (err && (err.message || err)) || 'Beklenmeyen hata';
+                if (String(yuklemeHatasi) !== 'login_required') {
+                    showSyncError("Veriler yüklenemedi: " + yuklemeHatasi);
                 }
             }
 
@@ -4345,30 +4431,45 @@
             }, 1000);
         }
 
+        // Bulut senkron durumu: yalnızca gerçekten başarılı kayıt sonrası "Yedekli" rozeti gösterilir.
+        // Misafir kullanıcılar veya yazma hatası olan oturumlarda rozet asla "Yedekli" demez.
+        let _cloudSyncOk = false;
+        function cloudSyncOk() { return !!(_cloudSyncOk && canUseFirestore()); }
+
         async function sendDataToServer() {
             clearLocalStateCache();
-            if (!canUseFirestore()) return;
+            if (!canUseFirestore()) {
+                _cloudSyncOk = false;
+                return;
+            }
             try {
                 const minimalState = prepareMinimalStateForSaving(state);
                 await window.fsSetDoc(window.fsDoc(window.firebaseDb, "users", currentUser), { state: minimalState }, { merge: true });
+                _cloudSyncOk = true;
                 showSyncStatus(true);
             } catch (err) {
                 console.error(err);
-                showSyncError("Bulut kayıt hatası");
+                _cloudSyncOk = false;
+                showSyncError("Bulut kayıt hatası: " + (err && err.message ? err.message : String(err)));
             }
         }
 
         async function sendDataToServerAsync() {
             clearTimeout(saveTimeout);
             clearLocalStateCache();
-            if (!canUseFirestore()) return;
+            if (!canUseFirestore()) {
+                _cloudSyncOk = false;
+                return;
+            }
             try {
                 const minimalState = prepareMinimalStateForSaving(state);
                 await window.fsSetDoc(window.fsDoc(window.firebaseDb, "users", currentUser), { state: minimalState }, { merge: true });
+                _cloudSyncOk = true;
                 showSyncStatus(true);
             } catch (err) {
                 console.error(err);
-                showSyncError("Bulut kayıt hatası");
+                _cloudSyncOk = false;
+                showSyncError("Bulut kayıt hatası: " + (err && err.message ? err.message : String(err)));
             }
         }
 
@@ -6855,7 +6956,7 @@
             if (!lst) return;
             
             state.lists = state.lists.filter(l => l.id !== _editingListId);
-            if (state.activeListId === _editingListId) state.activeListId = state.lists[0].id;
+            if (state.activeListId === _editingListId) state.activeListId = state.lists.length > 0 ? state.lists[0].id : 'list_sayac';
             syncActiveListIntoState();
             save(true);
             updateUI();

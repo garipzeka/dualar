@@ -1173,18 +1173,27 @@ def open_firebase_lists():
     chk_github.pack(anchor="w", pady=(6, 0))
     chk_github.configure(command=lambda: calistir())
 
+    # ── Arama kutusu: e-posta veya UID ile filtrele ──
+    frame_ara = tb.Frame(frame_ust)
+    frame_ara.pack(anchor="w", pady=(6, 0))
+    tb.Label(frame_ara, text="🔍 Ara (e-posta / UID):", font=("Helvetica", 10, "bold")).pack(side=LEFT)
+    entry_ara = tb.Entry(frame_ara, width=40)
+    entry_ara.pack(side=LEFT, padx=(6, 0))
+    entry_ara.bind("<KeyRelease>", lambda e: calistir())
+    entry_ara.bind("<Return>", lambda e: calistir())
+
     # ── Üst: TÜM listeler tablosu ──
     frame_list = tb.Frame(win, padding=(15, 5, 15, 5))
     frame_list.pack(fill=BOTH, expand=True)
 
     cols = ("kullanici", "liste_adi", "liste_id", "dua_sayisi", "boyut")
     tree = tb.Treeview(frame_list, columns=cols, show="headings", selectmode="browse", bootstyle=INFO, height=11)
-    tree.heading("kullanici", text="Kullanıcı (UID)")
+    tree.heading("kullanici", text="Kullanıcı (E-posta / UID)")
     tree.heading("liste_adi", text="Liste Adı")
     tree.heading("liste_id", text="Liste ID")
     tree.heading("dua_sayisi", text="Dua Sayısı")
     tree.heading("boyut", text="Boyut")
-    tree.column("kullanici", width=220)
+    tree.column("kullanici", width=260)
     tree.column("liste_adi", width=210)
     tree.column("liste_id", width=200)
     tree.column("dua_sayisi", width=90, anchor="center")
@@ -1223,6 +1232,23 @@ def open_firebase_lists():
 
     satir_map = {}  # tree satır iid → (uid, liste_objesi)
     sistem_liste_idleri = {"list_sayac", "list_default", "list_single_prayer"}
+
+    # UID → e-posta önbelleği (auth.get_user pahalı; aynı kullanıcının birden çok listesi var)
+    email_cache = {}
+    def kullanici_etiketi(uid):
+        """Kullanıcı UID'si için e-posta + UID etiketi üretir (e-posta yoksa yalnızca UID)."""
+        if uid in email_cache:
+            return email_cache[uid]
+        etiket = str(uid)
+        try:
+            if uid and uid != "guest":
+                rec = auth.get_user(uid)
+                if rec and rec.email:
+                    etiket = f"{rec.email}  ({uid})"
+        except Exception:
+            pass
+        email_cache[uid] = etiket
+        return etiket
 
     def boyut_formatla(b):
         if b >= 1024 * 1024:
@@ -1268,8 +1294,14 @@ def open_firebase_lists():
                         continue  # kullanıcı GitHub kopyalarını gizlemek istiyorsa atla
                     if lid in github_liste_idleri:
                         ad += "  ⚠️(GitHub'da da var)"
+                    # E-posta/UID araması: etiket içinde aranan metin varsa göster
+                    arama = entry_ara.get().strip().lower()
+                    if arama:
+                        etiket = kullanici_etiketi(doc.id).lower()
+                        if arama not in etiket and arama not in str(doc.id).lower():
+                            continue
                     iid = tree.insert("", tk.END, values=(
-                        doc.id,
+                        kullanici_etiketi(doc.id),
                         ad,
                         lid,
                         len(items) if isinstance(items, list) else 0,
