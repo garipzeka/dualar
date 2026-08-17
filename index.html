@@ -2313,6 +2313,20 @@
 
     <!-- Eski "Zikirlerim & Dua Deposu" modalı kaldırıldı; tüm özellikler Dualarım ekranında. -->
 
+    <div class="modal" id="goalInputModal" style="display:none; z-index:8600;">
+        <div class="modal-content" style="max-width:340px;">
+            <div class="sheet-header">
+                <h3 id="goalInputTitle" style="margin:0;">Hedef Sayısı</h3>
+            </div>
+            <div id="goalInputMsg" style="font-size:0.85rem; opacity:0.85; margin:10px 0 12px; line-height:1.5;"></div>
+            <input type="number" id="goalInputValue" min="1" max="999999" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Örn: 33" style="font-size:1.3rem; text-align:center; padding:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();saveGoalInput();}" />
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
+                <button class="btn-primary" style="background:var(--muted);" onclick="closeGoalInput()">VAZGEÇ</button>
+                <button class="btn-primary" onclick="saveGoalInput()">TAMAM</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="textInputModal" style="display:none; z-index:8600;">
         <div class="modal-content" style="max-width:380px;">
             <div class="sheet-header">
@@ -2645,6 +2659,41 @@
         }
         function openTextPromptAsync(title, message, currentValue) {
             return new Promise(resolve => openTextPrompt(title, message, currentValue, resolve));
+        }
+
+        // ─── HEDEF GİRİŞ MODALI (yalnızca rakam) ───────────────────────────────
+        let _goalCb = null;
+        function openGoalInput(title, message, currentValue, onSave) {
+            const m = document.getElementById('goalInputModal');
+            if (!m) return onSave && onSave(null);
+            const t = document.getElementById('goalInputTitle');
+            if (t) t.textContent = title || 'Hedef Sayısı';
+            const msg = document.getElementById('goalInputMsg');
+            if (msg) msg.textContent = message || '';
+            const inp = document.getElementById('goalInputValue');
+            inp.value = (currentValue && currentValue > 0) ? String(currentValue) : '';
+            _goalCb = onSave;
+            m.style.display = 'flex';
+            setTimeout(() => { inp.focus(); inp.select(); }, 80);
+        }
+        function closeGoalInput() {
+            const cb = _goalCb;
+            _goalCb = null;
+            const m = document.getElementById('goalInputModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb(null); // iptal → null (bekleyen Promise'lar da çözülür)
+        }
+        function saveGoalInput() {
+            const inp = document.getElementById('goalInputValue');
+            const v = parseInt(String(inp ? inp.value : '').replace(/\D/g, ''), 10);
+            const cb = _goalCb;
+            _goalCb = null;
+            const m = document.getElementById('goalInputModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb((!Number.isNaN(v) && v > 0) ? v : null);
+        }
+        function askGoalInput(title, message, currentValue) {
+            return new Promise(resolve => openGoalInput(title, message, currentValue, resolve));
         }
 
         async function ensureActiveListEditable(actionLabel = 'değişiklik') {
@@ -6286,6 +6335,15 @@
                 ...privPrayers.map(p => ({ ...p, _isPrivate: true }))
             ].filter(p => p && p.id);
 
+            // Hedef sor: kullanıcı eklerken hedef belirleyebilsin (tümüne uygulanır)
+            const firstSel = allPool.find(p => depotSelectedIds.has(String(p.id)));
+            const addGoal = await askGoalInput(
+                'Hedef Sayısı',
+                `"${targetList.name}" listesine eklenecek ${depotSelectedIds.size} dua için hedef kaç olsun? (tümüne uygulanır)`,
+                Math.max(1, Number(firstSel && firstSel.goal) || 33)
+            );
+            if (addGoal === null) return; // vazgeçildi
+
             for (const pId of depotSelectedIds) {
                 const prayer = allPool.find(p => String(p.id) === String(pId));
                 if (prayer) {
@@ -6296,7 +6354,7 @@
                         id: generateId(),
                         prayerId: String(pId),
                         name: prayer.name || '',
-                        goal: prayer.goal !== undefined ? Number(prayer.goal) : 33,
+                        goal: addGoal,
                         count: 0
                     };
                     if (prayer._isPrivate) {
@@ -7990,6 +8048,7 @@
                 if (state.readerMode) { toggleReaderMode(); return; }
 
                 // Açık modalları kapat (üstte açılan önce)
+                if (_modalVisible('goalInputModal')) { closeGoalInput(); return; }
                 if (_modalVisible('textInputModal')) { closeTextPrompt(); return; }
                 if (_modalVisible('prayerPickerModal')) { closePrayerPickerModal(); return; }
                 if (_modalVisible('zikirlerimModal')) { closeZikirlerimModal(); return; }
