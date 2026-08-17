@@ -2313,6 +2313,19 @@
 
     <!-- Eski "Zikirlerim & Dua Deposu" modalı kaldırıldı; tüm özellikler Dualarım ekranında. -->
 
+    <div class="modal" id="deleteDuaConfirmModal" style="display:none; z-index:8500;">
+        <div class="modal-content" style="max-width:360px;">
+            <div class="sheet-header">
+                <h3 style="margin:0;">🗑️ Dua Silinsin mi?</h3>
+            </div>
+            <div id="deleteDuaConfirmText" style="font-size:0.88rem; opacity:0.9; margin:10px 0 16px; line-height:1.5;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <button class="btn-primary" style="background:var(--muted);" onclick="closeDeleteDuaConfirm()">İPTAL</button>
+                <button class="btn-primary" style="background:#e74c3c; color:white; border:none;" onclick="confirmDeleteDua()">🗑️ SİL</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="goalReviewModal" style="display:none; z-index:8600;">
         <div class="modal-content" style="max-width:420px;">
             <div class="sheet-header">
@@ -6738,16 +6751,41 @@
             if (listId === state.activeListId) updateUI();
         }
 
+        // ─── DUA SİLME ONAYI (yanlışlıkla silmeyi önler) ────────────────────────
+        let _deleteDuaCb = null;
+        function openDeleteDuaConfirm(message, onConfirm) {
+            const m = document.getElementById('deleteDuaConfirmModal');
+            if (!m) return onConfirm && onConfirm();
+            const t = document.getElementById('deleteDuaConfirmText');
+            if (t) t.textContent = message || 'Bu dua listeden silinsin mi?';
+            _deleteDuaCb = onConfirm;
+            m.style.display = 'flex';
+        }
+        function closeDeleteDuaConfirm() {
+            _deleteDuaCb = null;
+            const m = document.getElementById('deleteDuaConfirmModal');
+            if (m) m.style.display = 'none';
+        }
+        function confirmDeleteDua() {
+            const cb = _deleteDuaCb;
+            closeDeleteDuaConfirm();
+            if (cb) cb();
+        }
+
         function editorRemoveDua(listId, idx) {
             const lst = (state.lists || []).find(l => l.id === listId);
-            if (!lst || !lst.items) return;
-            lst.items.splice(idx, 1);
-            if (lst.active >= lst.items.length) lst.active = Math.max(0, lst.items.length - 1);
-            if (listId === state.activeListId) { state.items = lst.items; state.active = lst.active; }
-            save(true);
-            renderListEditorRows(listId);
-            if (listId === state.activeListId) updateUI();
-            showToast('Dua listeden çıkarıldı');
+            if (!lst || !lst.items || !lst.items[idx]) return;
+            const it = resolveDuaItem(lst.items[idx]);
+            openDeleteDuaConfirm(`"${it.name}" duası bu listeden silinsin mi?`, () => {
+                if (!lst.items[idx]) return; // onay beklerken liste değişmiş olabilir
+                lst.items.splice(idx, 1);
+                if (lst.active >= lst.items.length) lst.active = Math.max(0, lst.items.length - 1);
+                if (listId === state.activeListId) { state.items = lst.items; state.active = lst.active; }
+                save(true);
+                renderListEditorRows(listId);
+                if (listId === state.activeListId) updateUI();
+                showToast('Dua listeden çıkarıldı');
+            });
         }
 
         function editListTitle() {
@@ -7564,13 +7602,17 @@
 
         async function deleteDuaAt(i) {
             if (!(await ensureActiveListEditable('dua silme'))) return;
-            if (!Array.isArray(state.items)) return;
-            state.items.splice(i, 1);
-            if (state.active >= state.items.length) state.active = Math.max(0, state.items.length - 1);
-            syncStateBackToActiveList();
-            save();
-            showList();
-            updateUI();
+            if (!Array.isArray(state.items) || !state.items[i]) return;
+            const it = resolveDuaItem(state.items[i]);
+            openDeleteDuaConfirm(`"${it.name}" duası bu listeden silinsin mi?`, () => {
+                if (!state.items[i]) return; // onay beklerken liste değişmiş olabilir
+                state.items.splice(i, 1);
+                if (state.active >= state.items.length) state.active = Math.max(0, state.items.length - 1);
+                syncStateBackToActiveList();
+                save();
+                showList();
+                updateUI();
+            });
         }
 
         async function moveDua(i, dir) {
@@ -8119,6 +8161,7 @@
                 if (state.readerMode) { toggleReaderMode(); return; }
 
                 // Açık modalları kapat (üstte açılan önce)
+                if (_modalVisible('deleteDuaConfirmModal')) { closeDeleteDuaConfirm(); return; }
                 if (_modalVisible('goalReviewModal')) { closeGoalReview(); return; }
                 if (_modalVisible('goalInputModal')) { closeGoalInput(); return; }
                 if (_modalVisible('textInputModal')) { closeTextPrompt(); return; }
