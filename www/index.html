@@ -2313,6 +2313,20 @@
 
     <!-- Eski "Zikirlerim & Dua Deposu" modalı kaldırıldı; tüm özellikler Dualarım ekranında. -->
 
+    <div class="modal" id="textInputModal" style="display:none; z-index:8600;">
+        <div class="modal-content" style="max-width:380px;">
+            <div class="sheet-header">
+                <h3 id="textInputTitle" style="margin:0;">Yeni Ad</h3>
+            </div>
+            <div id="textInputMsg" style="font-size:0.85rem; opacity:0.85; margin:10px 0 12px; line-height:1.5;"></div>
+            <input type="text" id="textInputValue" maxlength="60" placeholder="Liste adı..." style="font-size:1.05rem; padding:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();saveTextPrompt();}" />
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px;">
+                <button class="btn-primary" style="background:var(--muted);" onclick="closeTextPrompt()">VAZGEÇ</button>
+                <button class="btn-primary" onclick="saveTextPrompt()">TAMAM</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="editModal" style="display:none; z-index:8000;">
         <div class="modal-content" style="max-width: 460px;">
             <div class="sheet-header">
@@ -2598,7 +2612,42 @@
             return { ...safe, id: generateId(), count: Number(safe.count) || 0 };
         }
 
-        function ensureActiveListEditable(actionLabel = 'değişiklik') {
+        // ─── METİN GİRİŞ MODALI (native prompt yerine uygulama içi) ─────────────
+        let _textPromptCb = null;
+        function openTextPrompt(title, message, currentValue, onSave) {
+            const m = document.getElementById('textInputModal');
+            if (!m) return onSave && onSave(null);
+            const t = document.getElementById('textInputTitle');
+            if (t) t.textContent = title || '';
+            const msg = document.getElementById('textInputMsg');
+            if (msg) msg.textContent = message || '';
+            const inp = document.getElementById('textInputValue');
+            inp.value = currentValue || '';
+            _textPromptCb = onSave;
+            m.style.display = 'flex';
+            setTimeout(() => { inp.focus(); inp.select(); }, 80);
+        }
+        function closeTextPrompt() {
+            const cb = _textPromptCb;
+            _textPromptCb = null;
+            const m = document.getElementById('textInputModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb(null); // iptal → null (bekleyen Promise'lar da çözülür)
+        }
+        function saveTextPrompt() {
+            const inp = document.getElementById('textInputValue');
+            const val = String(inp ? inp.value : '').trim();
+            const cb = _textPromptCb;
+            _textPromptCb = null;
+            const m = document.getElementById('textInputModal');
+            if (m) m.style.display = 'none';
+            if (cb) cb(val || null);
+        }
+        function openTextPromptAsync(title, message, currentValue) {
+            return new Promise(resolve => openTextPrompt(title, message, currentValue, resolve));
+        }
+
+        async function ensureActiveListEditable(actionLabel = 'değişiklik') {
             ensureStateLists();
             const selected = getActiveList();
             
@@ -2608,8 +2657,7 @@
 
             const baseReason = 'ortak ve salt okunur';
             const suggestedName = `${selected.name || 'Liste'} - Kopyam`;
-            const newNameRaw = prompt(`Bu liste ${baseReason}. ${actionLabel} yapmak için listeyi farklı isimle kaydedin:`, suggestedName);
-            const newName = String(newNameRaw || '').trim();
+            const newName = await openTextPromptAsync('Listeyi Kopyala', `Bu liste ${baseReason}. ${actionLabel} yapmak için listeyi farklı isimle kaydedin:`, suggestedName);
             if (!newName) {
                 showToast('İşlem iptal edildi: liste adı gerekli');
                 return false;
@@ -2788,29 +2836,29 @@
                 .replace(/\s*\(Özel Liste\)\s*$/, '')
                 .replace(/\s*\(Kopya\)\s*$/, '')
                 .trim() || 'Bulut Liste';
-            const newNameRaw = prompt('Kopya liste adı:', baseName + ' (Kopyam)');
-            const newName = String(newNameRaw || '').trim();
-            if (!newName) return showToast('İşlem iptal edildi');
-            const newList = {
-                id: 'list_' + generateId(),
-                name: newName,
-                items: (Array.isArray(sl.items) ? sl.items : []).map(cloneDuaItemForPersonalList),
-                active: 0,
-                stats: {},
-                itemStats: {},
-                copiedFromSharedListId: sl.id,
-                copiedFromSharedListName: sl.name || '',
-                copiedAt: new Date().toISOString()
-            };
-            state.lists.unshift(newList); // kopya en üstte görünsün
-            state.selectedSharedList = null;
-            state.activeListId = newList.id;
-            syncActiveListIntoState();
-            save(true);
-            if (typeof renderListManager === 'function') renderListManager();
-            if (typeof renderZikirlerimModalRows === 'function') renderZikirlerimModalRows();
-            updateUI();
-            showToast('Bulut listesi kişisel listelerine kopyalandı 📋');
+            openTextPrompt('Listeyi Kopyala', 'Kopya liste adını girin:', baseName + ' (Kopyam)', (newName) => {
+                if (!newName) return showToast('İşlem iptal edildi');
+                const newList = {
+                    id: 'list_' + generateId(),
+                    name: newName,
+                    items: (Array.isArray(sl.items) ? sl.items : []).map(cloneDuaItemForPersonalList),
+                    active: 0,
+                    stats: {},
+                    itemStats: {},
+                    copiedFromSharedListId: sl.id,
+                    copiedFromSharedListName: sl.name || '',
+                    copiedAt: new Date().toISOString()
+                };
+                state.lists.unshift(newList); // kopya en üstte görünsün
+                state.selectedSharedList = null;
+                state.activeListId = newList.id;
+                syncActiveListIntoState();
+                save(true);
+                if (typeof renderListManager === 'function') renderListManager();
+                if (typeof renderZikirlerimModalRows === 'function') renderZikirlerimModalRows();
+                updateUI();
+                showToast('Bulut listesi kişisel listelerine kopyalandı 📋');
+            });
         }
 
         function setActiveListById(listId, options = {}) {
@@ -2912,14 +2960,13 @@
             ensureStateLists();
             const list = state.lists.find(l => l.id === listId);
             if (!list) return;
-            const nextName = prompt('Yeni liste adı:', list.name || '');
-            if (nextName === null) return;
-            const trimmed = String(nextName).trim();
-            if (!trimmed) return showToast('Liste adı boş olamaz');
-            list.name = trimmed;
-            renderListManager();
-            save(true);
-            showToast('Liste adı güncellendi');
+            openTextPrompt('Liste Adını Değiştir', 'Yeni liste adını girin:', list.name || '', (trimmed) => {
+                if (!trimmed) return showToast('Liste adı boş olamaz');
+                list.name = trimmed;
+                renderListManager();
+                save(true);
+                showToast('Liste adı güncellendi');
+            });
         }
 
         function deleteList(listId) {
@@ -5479,10 +5526,10 @@
             editModal.dataset.editIndex = '';
         }
 
-        function saveEditModal() {
+        async function saveEditModal() {
             const editModal = document.getElementById('editModal');
             if (!editModal) return;
-            if (!ensureActiveListEditable('dua düzenlemesi')) return;
+            if (!(await ensureActiveListEditable('dua düzenlemesi'))) return;
 
             const idx = parseInt(editModal.dataset.editIndex, 10);
             if (Number.isNaN(idx) || !state.items[idx]) {
@@ -5728,7 +5775,7 @@
         }
         async function addNew() {
             ensureStateLists();
-            if (!ensureActiveListEditable(editingIdx !== null ? 'dua düzenlemesi' : 'dua ekleme')) return;
+            if (!(await ensureActiveListEditable(editingIdx !== null ? 'dua düzenlemesi' : 'dua ekleme'))) return;
             const rawName = document.getElementById('newName').value;
             const name = String(rawName || '').trim() || prompt('Dua adı girin:') || '';
             if (!name.trim()) return showToast('Dua adı gerekli');
@@ -5891,7 +5938,7 @@
         }
 
         async function addPrayerFromPicker(pId) {
-            if (!ensureActiveListEditable('dua ekleme')) return;
+            if (!(await ensureActiveListEditable('dua ekleme'))) return;
             const prayer = (prayerPool || []).find(p => String(p.id) === String(pId));
             if (!prayer) return showToast('Dua bulunamadı');
 
@@ -6225,7 +6272,7 @@
                 targetList = (state.lists || []).find(l => l.id === _editingListId);
             }
             if (!targetList || targetList.virtualSharedList) {
-                if (!ensureActiveListEditable('dua ekleme')) return;
+                if (!(await ensureActiveListEditable('dua ekleme'))) return;
                 syncActiveListIntoState();
                 targetList = getActiveList();
             }
@@ -6433,41 +6480,38 @@
                 return;
             }
 
-            const isShared = lst.virtualSharedList;
-            
-            if (isShared) {
+            const isShared = lst.virtualSharedList;            if (isShared) {
                 const baseReason = 'ortak ve salt okunur';
                 const suggestedName = `${lst.name || 'Liste'} - Kopyam`;
-                const newNameRaw = prompt(`Bu liste ${baseReason}. Üzerinde değişiklik (ekleme/çıkarma) yapmak için lütfen farklı isimle kaydedin:`, suggestedName);
-                const newName = String(newNameRaw || '').trim();
-                if (!newName) {
-                    showToast('İşlem iptal edildi');
-                    return;
-                }
-                
-                const personalCopy = {
-                    id: 'list_' + generateId(),
-                    name: newName,
-                    items: (Array.isArray(lst.items) ? lst.items : []).map(cloneDuaItemForPersonalList),
-                    active: Math.max(0, Math.min(Number(lst.active) || 0, Math.max(0, (lst.items || []).length - 1))),
-                    stats: {},
-                    itemStats: {},
-                    copiedFromSharedListId: lst.copiedFromSharedListId || lst.id,
-                    copiedFromSharedListName: lst.name || 'Genel Liste',
-                    copiedAt: new Date().toISOString()
-                };
-
-                state.lists.unshift(personalCopy); // yeni kişisel kopya en üstte görünsün
-                if (state.activeListId === listId) {
-                    state.selectedSharedList = null;
-                    state.activeListId = personalCopy.id;
-                    syncActiveListIntoState();
-                }
-                save(true);
-                showToast(`${lst.name} kopyalandı; değişiklikler yeni listede yapılacak`);
-                
-                renderListManager();
-                openListEditor(personalCopy.id);
+                openTextPrompt('Listeyi Kopyala', `Bu liste ortak ve salt okunur. Üzerinde değişiklik (ekleme/çıkarma) yapmak için lütfen farklı isimle kaydedin:`, suggestedName, (newName) => {
+                    if (!newName) {
+                        showToast('İşlem iptal edildi');
+                        return;
+                    }
+                    
+                    const personalCopy = {
+                        id: 'list_' + generateId(),
+                        name: newName,
+                        items: (Array.isArray(lst.items) ? lst.items : []).map(cloneDuaItemForPersonalList),
+                        active: Math.max(0, Math.min(Number(lst.active) || 0, Math.max(0, (lst.items || []).length - 1))),
+                        stats: {},
+                        itemStats: {},
+                        copiedFromSharedListId: lst.copiedFromSharedListId || lst.id,
+                        copiedFromSharedListName: lst.name || 'Genel Liste',
+                        copiedAt: new Date().toISOString()
+                    };
+                    state.lists.unshift(personalCopy); // yeni kişisel kopya en üstte görünsün
+                    if (state.activeListId === listId) {
+                        state.selectedSharedList = null;
+                        state.activeListId = personalCopy.id;
+                        syncActiveListIntoState();
+                    }
+                    save(true);
+                    showToast(`${lst.name} kopyalandı; değişiklikler yeni listede yapılacak`);
+                    
+                    renderListManager();
+                    openListEditor(personalCopy.id);
+                });
                 return;
             }
 
@@ -6559,13 +6603,14 @@
             if (!_editingListId) return;
             const lst = (state.lists || []).find(l => l.id === _editingListId);
             if (!lst) return;
-            const next = prompt(`"${lst.name}" için yeni liste adını girin:`, lst.name);
-            if (!next || !next.trim()) return;
-            lst.name = next.trim();
-            const titleEl = document.getElementById('listEditorTitle');
-            if (titleEl) titleEl.textContent = lst.name;
-            save(true);
-            showToast('Liste adı güncellendi');
+            openTextPrompt('Liste Adını Değiştir', `"${lst.name}" için yeni liste adını girin:`, lst.name, (next) => {
+                if (!next) return;
+                lst.name = next;
+                const titleEl = document.getElementById('listEditorTitle');
+                if (titleEl) titleEl.textContent = lst.name;
+                save(true);
+                showToast('Liste adı güncellendi');
+            });
         }
         function deleteActiveEditList() {
             if (!_editingListId) return;
@@ -7366,8 +7411,8 @@
             }
         }
 
-        function deleteDuaAt(i) {
-            if (!ensureActiveListEditable('dua silme')) return;
+        async function deleteDuaAt(i) {
+            if (!(await ensureActiveListEditable('dua silme'))) return;
             if (!Array.isArray(state.items)) return;
             state.items.splice(i, 1);
             if (state.active >= state.items.length) state.active = Math.max(0, state.items.length - 1);
@@ -7377,8 +7422,8 @@
             updateUI();
         }
 
-        function moveDua(i, dir) {
-            if (!ensureActiveListEditable('sıralama değişikliği')) return;
+        async function moveDua(i, dir) {
+            if (!(await ensureActiveListEditable('sıralama değişikliği'))) return;
             const target = i + dir;
             if (target < 0 || target >= state.items.length) return;
             const temp = state.items[i];
@@ -7923,6 +7968,7 @@
                 if (state.readerMode) { toggleReaderMode(); return; }
 
                 // Açık modalları kapat (üstte açılan önce)
+                if (_modalVisible('textInputModal')) { closeTextPrompt(); return; }
                 if (_modalVisible('prayerPickerModal')) { closePrayerPickerModal(); return; }
                 if (_modalVisible('zikirlerimModal')) { closeZikirlerimModal(); return; }
                 if (_modalVisible('listPreviewModal')) { closeListPreview(); return; }
