@@ -6321,11 +6321,20 @@
             depotSelectedIds.clear();
             updateDepotSelectionUI();
             renderDepotByCategory();
-            // Düzenlenen liste açıksa satırları anında tazele ki eklenen dualar görünsün
-            if (_editingListId === targetList.id && typeof renderListEditorRows === 'function') {
+            if (typeof renderListManager === 'function') renderListManager();
+
+            // Depodan ekleme yapıldıysa liste düzenleme ekranına geri dön;
+            // düzenleyici açıkken kaydırma konumu korunur.
+            if (_editingListId && _editingListId === targetList.id) {
+                const editorRows = document.getElementById('listEditorRows');
+                const savedScroll = editorRows ? editorRows.scrollTop : 0;
+                switchListTab('listelerim'); // düzenleyiciyi kapatıp listeler sekmesine döner
+                openListEditor(targetList.id); // düzenleyiciyi yeniden açar
+                if (editorRows) editorRows.scrollTop = savedScroll;
+            } else if (typeof renderListEditorRows === 'function') {
+                // Düzenleyici açık değilse satırları tazele
                 renderListEditorRows(targetList.id);
             }
-            if (typeof renderListManager === 'function') renderListManager();
             showToast(`${count} dua "${targetList.name}" listesine eklendi 🌿`);
         }
 
@@ -6367,6 +6376,19 @@
             // Aktif liste öğelerini topla (eklenmiş mi kontrolü)
             syncActiveListIntoState();
             const activeKeys = new Set((state.items || []).map(it => String(it.prayerId || it.id || '').toLowerCase()));
+            // Depodan ekleme genellikle düzenlenen listeden yapılır: düzenlenen listedeki
+            // dualar da "ekli" sayılmalı, yoksa önceden eklenen dualar eklenmemiş görünür.
+            if (_editingListId) {
+                const editLst = (state.lists || []).find(l => l.id === _editingListId);
+                if (editLst && Array.isArray(editLst.items)) {
+                    editLst.items.forEach(it => {
+                        const k = String(it.prayerId || it.id || '');
+                        if (k) activeKeys.add(k.toLowerCase());
+                        const nm = String(it.name || '');
+                        if (nm) activeKeys.add(nm.toLowerCase());
+                    });
+                }
+            }
 
             // Havuz + kişisel duaları birleştir
             const allPool = [
@@ -6443,7 +6465,7 @@
                                     const badge = (p._isPrivate && p.status === 'reddedildi') ? ' <span style="font-size:0.65rem;color:#e74c3c;background:rgba(231,76,60,0.1);padding:2px 4px;border-radius:4px;">❌ reddedildi</span>' :
                                                   (p._isPrivate && (p.status === 'onaylandi' || p.status === 'onaylandı' || p.status === 'public')) ? ' <span style="font-size:0.65rem;color:#2ecc71;background:rgba(46,204,113,0.1);padding:2px 4px;border-radius:4px;">✅ onaylandı</span>' :
                                                   (p._isPrivate && (p._pendingAdmin || p.status === 'bekliyor' || p.status === 'pending')) ? ' <span style="font-size:0.65rem;color:#f39c12;background:rgba(243,156,18,0.1);padding:2px 4px;border-radius:4px;">⏳ bekliyor</span>' : '';
-                                    return `<div class="list-info-title">${escapeHtml(p.name || 'Dua')}${p._isPrivate ? ' <span style="font-size:0.65rem;opacity:0.6;">[kişisel]</span>' : ''}${badge}${isAdded ? ' <span style="font-size:0.65rem;color:#2ecc71;font-weight:bold;">(Listede)</span>' : ''}</div>`;
+                                    return `<div class="list-info-title">${escapeHtml(p.name || 'Dua')}${p._isPrivate ? ' <span style="font-size:0.65rem;opacity:0.6;">[kişisel]</span>' : ''}${badge}${isAdded ? ' <span style="font-size:0.65rem;color:#2ecc71;font-weight:bold;background:rgba(46,204,113,0.15);padding:2px 8px;border-radius:12px;">✓ Listede Ekli</span>' : ''}</div>`;
                                 })()}
                                 ${p.text ? `<div style="font-size:0.78rem;opacity:0.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${escapeHtml(p.text)}</div>` : ''}
                                 ${listLine}
