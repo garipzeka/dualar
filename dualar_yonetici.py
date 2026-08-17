@@ -1134,6 +1134,330 @@ def open_firebase_approvals():
     fetch_istatistik()
     fetch_prayers()
 
+def open_firebase_lists():
+    """Firebase'deki TÜM listeleri listeler; satıra tıklayınca listenin içeriği altta görünür.
+    Format: users/{uid} → state.lists[] → her liste {id, name, items:[{id, prayerId, name, goal, count}], active, stats, itemStats}"""
+    try:
+        if not firebase_admin._apps:
+            cred = credentials.Certificate("serviceAccountKey.json")
+            firebase_admin.initialize_app(cred)
+        db = firestore.client()
+    except Exception as e:
+        messagebox.showerror("Bağlantı Hatası", f"Firebase'e bağlanılamadı:\n{e}")
+        return
+
+    win = tb.Toplevel(root)
+    win.title("📋 Firebase Listeleri ve Yedek Formatı")
+    win.geometry("1120x780")
+
+    frame_ust = tb.Frame(win, padding=15)
+    frame_ust.pack(fill=X)
+    tb.Label(frame_ust, text="📋 Firebase'deki Tüm Listeler (users → state.lists)", font=("Helvetica", 13, "bold")).pack(anchor="w")
+    lbl_durum = tb.Label(frame_ust, text="Veriler çekiliyor, lütfen bekleyin...", font=("Helvetica", 10))
+    lbl_durum.pack(anchor="w", pady=(5, 0))
+
+    # GitHub (dualar.json) sunucu listesi id'leri — Firebase'deki kopyaları işaretlemek/gizlemek için
+    github_liste_idleri = set()
+    try:
+        with open(JSON_FILE, "r", encoding="utf-8") as f:
+            gd = json.load(f)
+        for gl in (gd.get("lists") or []):
+            gid = str(gl.get("id") or gl.get("list_id") or "")
+            if gid:
+                github_liste_idleri.add(gid)
+    except Exception:
+        pass
+
+    gizle_github = tk.BooleanVar(value=False)
+    chk_github = tb.Checkbutton(frame_ust, text="☁️ GitHub ile aynı olan listeleri gizle", variable=gizle_github, bootstyle=INFO)
+    chk_github.pack(anchor="w", pady=(6, 0))
+    chk_github.configure(command=lambda: calistir())
+
+    # ── Üst: TÜM listeler tablosu ──
+    frame_list = tb.Frame(win, padding=(15, 5, 15, 5))
+    frame_list.pack(fill=BOTH, expand=True)
+
+    cols = ("kullanici", "liste_adi", "liste_id", "dua_sayisi", "boyut")
+    tree = tb.Treeview(frame_list, columns=cols, show="headings", selectmode="browse", bootstyle=INFO, height=11)
+    tree.heading("kullanici", text="Kullanıcı (UID)")
+    tree.heading("liste_adi", text="Liste Adı")
+    tree.heading("liste_id", text="Liste ID")
+    tree.heading("dua_sayisi", text="Dua Sayısı")
+    tree.heading("boyut", text="Boyut")
+    tree.column("kullanici", width=220)
+    tree.column("liste_adi", width=210)
+    tree.column("liste_id", width=200)
+    tree.column("dua_sayisi", width=90, anchor="center")
+    tree.column("boyut", width=90, anchor="center")
+    tree.pack(fill=BOTH, expand=True)
+
+    # ── Orta: seçili listenin İÇERİĞİ ──
+    frame_icerik = tb.Frame(win, padding=(15, 5, 15, 5))
+    frame_icerik.pack(fill=BOTH, expand=True)
+    lbl_icerik = tb.Label(frame_icerik, text="İçerik — yukarıdan bir listeye tıklayın:", font=("Helvetica", 10, "bold"))
+    lbl_icerik.pack(anchor="w")
+    cols_icerik = ("sira", "dua_adi", "dua_id", "hedef", "sayi")
+    tree_icerik = tb.Treeview(frame_icerik, columns=cols_icerik, show="headings", selectmode="browse", bootstyle=SUCCESS, height=7)
+    tree_icerik.heading("sira", text="#")
+    tree_icerik.heading("dua_adi", text="Dua Adı")
+    tree_icerik.heading("dua_id", text="Dua ID (prayerId)")
+    tree_icerik.heading("hedef", text="Hedef")
+    tree_icerik.heading("sayi", text="Sayı")
+    tree_icerik.column("sira", width=40, anchor="center")
+    tree_icerik.column("dua_adi", width=330)
+    tree_icerik.column("dua_id", width=170)
+    tree_icerik.column("hedef", width=70, anchor="center")
+    tree_icerik.column("sayi", width=70, anchor="center")
+    tree_icerik.pack(fill=BOTH, expand=True)
+
+    # ── Alt: seçili listenin HAM JSON'u ──
+    frame_alt = tb.Frame(win, padding=(15, 5, 15, 5))
+    frame_alt.pack(fill=BOTH, expand=True)
+    lbl_format = tb.Label(frame_alt, text="Seçili listenin HAM JSON'u (Firestore formatı):", font=("Helvetica", 10, "bold"))
+    lbl_format.pack(anchor="w")
+    txt = tb.Text(frame_alt, font=("Courier New", 8), wrap="none", state="disabled", height=7)
+    txt.pack(fill=BOTH, expand=True, pady=(2, 0))
+    scroll_x = tb.Scrollbar(frame_alt, orient="horizontal", command=txt.xview)
+    scroll_x.pack(fill=X)
+    txt.configure(xscrollcommand=scroll_x.set)
+
+    satir_map = {}  # tree satır iid → (uid, liste_objesi)
+    sistem_liste_idleri = {"list_sayac", "list_default", "list_single_prayer"}
+
+    def boyut_formatla(b):
+        if b >= 1024 * 1024:
+            return f"{b / (1024 * 1024):.2f} MB"
+        if b >= 1024:
+            return f"{b / 1024:.1f} KB"
+        return f"{b} B"
+
+    def calistir():
+        try:
+            lbl_durum.config(text="Veriler çekiliyor, lütfen bekleyin...", bootstyle=INFO)
+            win.update_idletasks()
+            satir_map.clear()
+            tree.delete(*tree.get_children())
+            tree_icerik.delete(*tree_icerik.get_children())
+            txt.config(state="normal"); txt.delete("1.0", tk.END); txt.config(state="disabled")
+
+            docs = list(db.collection("users").stream())
+            toplam_liste = 0
+            liste_ekleyen = 0
+            for doc in docs:
+                d = doc.to_dict() or {}
+                lists = (d.get("state") or {}).get("lists")
+                if not isinstance(lists, list) or len(lists) == 0:
+                    continue
+                # TÜM listeler gösterilir (sistem listeleri dahil, adında etiketlenir)
+                kullanici_listeleri = [l for l in lists if isinstance(l, dict)]
+                if len(kullanici_listeleri) == 0:
+                    continue
+                liste_ekleyen += 1
+                toplam_liste += len(kullanici_listeleri)
+                for lst in kullanici_listeleri:
+                    try:
+                        boyut = len(json.dumps(lst, ensure_ascii=False).encode("utf-8"))
+                    except Exception:
+                        boyut = 0
+                    items = lst.get("items")
+                    lid = str(lst.get("id") or "")
+                    ad = str(lst.get("name") or "(isimsiz)")
+                    if lid in sistem_liste_idleri:
+                        ad += "  (sistem)"
+                    if gizle_github.get() and lid in github_liste_idleri:
+                        continue  # kullanıcı GitHub kopyalarını gizlemek istiyorsa atla
+                    if lid in github_liste_idleri:
+                        ad += "  ⚠️(GitHub'da da var)"
+                    iid = tree.insert("", tk.END, values=(
+                        doc.id,
+                        ad,
+                        lid,
+                        len(items) if isinstance(items, list) else 0,
+                        boyut_formatla(boyut)
+                    ))
+                    satir_map[iid] = (doc.id, lst)
+            lbl_durum.config(text=f"Güncellendi ✓ — {liste_ekleyen} kullanıcı, {toplam_liste} liste bulundu", bootstyle=SUCCESS)
+            if tree.get_children():
+                tree.selection_set(tree.get_children()[0])
+                secim_goster(None)
+        except Exception as e:
+            lbl_durum.config(text=f"Hata: {e}", bootstyle=DANGER)
+
+    def secim_goster(event=None):
+        """Satıra tıklayınca seçili listenin içeriğini ve ham JSON'unu altta göster."""
+        sel = tree.selection()
+        if not sel:
+            return
+        kayit = satir_map.get(sel[0])
+        if not kayit:
+            return
+        uid, lst = kayit
+        # İçerik tablosunu doldur
+        tree_icerik.delete(*tree_icerik.get_children())
+        items = lst.get("items")
+        liste_adi = str(lst.get("name") or "(isimsiz)")
+        if isinstance(items, list) and len(items) > 0:
+            for i, it in enumerate(items, 1):
+                tree_icerik.insert("", tk.END, values=(
+                    i,
+                    str(it.get("name") or "(isimsiz)"),
+                    str(it.get("prayerId") or it.get("id") or ""),
+                    it.get("goal", ""),
+                    it.get("count", 0)
+                ))
+            lbl_icerik.config(text=f"İçerik — {liste_adi} ({len(items)} dua):")
+        else:
+            lbl_icerik.config(text=f"İçerik — {liste_adi}: (listede dua yok)")
+        # Ham JSON
+        txt.config(state="normal")
+        txt.delete("1.0", tk.END)
+        txt.insert("1.0", json.dumps(lst, ensure_ascii=False, indent=2))
+        txt.config(state="disabled")
+    tree.bind("<<TreeviewSelect>>", secim_goster)
+
+    def json_detayi_goster():
+        """Seçili listenin ham JSON'unu ayrı pencerede göster (kopyalamak kolay olsun)."""
+        sel = tree.selection()
+        if not sel:
+            messagebox.showinfo("Bilgi", "Önce listeden bir satır seçin.")
+            return
+        kayit = satir_map.get(sel[0])
+        if not kayit:
+            return
+        uid, lst = kayit
+        detay = tb.Toplevel(win)
+        detay.title(f"Ham JSON — {lst.get('name')} ({uid})")
+        detay.geometry("780x640")
+        txt2 = tb.Text(detay, wrap="none", font=("Courier New", 9))
+        txt2.pack(fill=BOTH, expand=True, padx=10, pady=10)
+        txt2.insert("1.0", json.dumps(lst, ensure_ascii=False, indent=2))
+        txt2.config(state="disabled")
+        sb = tb.Scrollbar(detay, orient="horizontal", command=txt2.xview)
+        sb.pack(fill=X, padx=10)
+        txt2.configure(xscrollcommand=sb.set)
+
+    def sil_liste():
+        """Seçili listeyi Firebase'den (users/{uid}/state.lists) kalıcı olarak siler."""
+        sel = tree.selection()
+        if not sel:
+            messagebox.showinfo("Bilgi", "Önce listeden bir satır seçin.")
+            return
+        kayit = satir_map.get(sel[0])
+        if not kayit:
+            return
+        uid, lst = kayit
+        liste_adi = str(lst.get("name") or "(isimsiz)")
+        liste_id = str(lst.get("id") or "")
+        if not messagebox.askyesno(
+            "🗑️ Liste Silinsin mi?",
+            f"'{liste_adi}' ({liste_id}) listesi, {uid} kullanıcısının Firebase verisinden silinsin mi?\n\nBu işlem geri alınamaz!"
+        ):
+            return
+        try:
+            doc_ref = db.collection("users").document(uid)
+            doc_snap = doc_ref.get()
+            if not doc_snap.exists:
+                messagebox.showerror("Hata", "Kullanıcı dokümanı bulunamadı.")
+                return
+            d = doc_snap.to_dict() or {}
+            state_doc = d.get("state")
+            if not isinstance(state_doc, dict):
+                state_doc = {}
+            lists = state_doc.get("lists")
+            if not isinstance(lists, list):
+                messagebox.showinfo("Bilgi", "Kullanıcıda liste verisi yok.")
+                return
+            yeni_listeler = [l for l in lists if not (isinstance(l, dict) and str(l.get("id") or "") == liste_id)]
+            if len(yeni_listeler) == len(lists):
+                messagebox.showinfo("Bilgi", "Liste zaten yok (muhtemelen silinmiş).")
+                return
+            state_doc["lists"] = yeni_listeler
+            d["state"] = state_doc
+            doc_ref.set(d)
+            log_action(f"Firebase listesi silindi: '{liste_adi}' ({liste_id}) — kullanıcı {uid}")
+            messagebox.showinfo("Başarılı", f"'{liste_adi}' listesi Firebase'den silindi.")
+            calistir()
+        except Exception as e:
+            messagebox.showerror("Hata", f"Silme başarısız:\n{e}")
+
+    def temizle_github_kopyalari():
+        """GitHub'da bulunan listelerin Firebase kopyalarını tek tıkla tespit edip temizler."""
+        if len(github_liste_idleri) == 0:
+            messagebox.showinfo("Bilgi", "GitHub liste id'si bulunamadı (dualar.json okunamadı?).")
+            return
+        # Önce tara: kaç kopya var, onay diyaloğunda göster
+        try:
+            bulunan = []  # (uid, liste_adi, liste_id)
+            for doc in db.collection("users").stream():
+                d = doc.to_dict() or {}
+                lists = (d.get("state") or {}).get("lists")
+                if not isinstance(lists, list):
+                    continue
+                for lst in lists:
+                    if isinstance(lst, dict) and str(lst.get("id") or "") in github_liste_idleri:
+                        bulunan.append((doc.id, str(lst.get("name") or "(isimsiz)"), str(lst.get("id") or "")))
+        except Exception as e:
+            messagebox.showerror("Hata", f"Tarama başarısız:\n{e}")
+            return
+
+        if len(bulunan) == 0:
+            messagebox.showinfo("Bilgi", "GitHub kopyası liste bulunamadı — temizlenecek bir şey yok.")
+            return
+
+        ozet = "\n".join(f"  • {ad} ({lid}) — kullanıcı {uid[:14]}..." for uid, ad, lid in bulunan[:20])
+        if len(bulunan) > 20:
+            ozet += f"\n  ... ve {len(bulunan) - 20} kopya daha"
+        if not messagebox.askyesno(
+            "🧹 GitHub Kopyaları Temizlensin mi?",
+            f"{len(bulunan)} GitHub kopyası liste bulundu:\n\n{ozet}\n\n"
+            f"Bu listeler Firebase'den kalıcı olarak silinsin mi?\n"
+            f"(İçerikleri GitHub'da zaten duruyor, veri kaybı olmaz.)"
+        ):
+            return
+
+        silinen = 0
+        hatali = 0
+        try:
+            for doc in db.collection("users").stream():
+                uid = doc.id
+                d = doc.to_dict() or {}
+                state_doc = d.get("state")
+                if not isinstance(state_doc, dict):
+                    continue
+                lists = state_doc.get("lists")
+                if not isinstance(lists, list):
+                    continue
+                yeni = [l for l in lists if not (isinstance(l, dict) and str(l.get("id") or "") in github_liste_idleri)]
+                if len(yeni) == len(lists):
+                    continue
+                state_doc["lists"] = yeni
+                d["state"] = state_doc
+                try:
+                    db.collection("users").document(uid).set(d)
+                    silinen += len(lists) - len(yeni)
+                except Exception:
+                    hatali += 1
+        except Exception as e:
+            messagebox.showerror("Hata", f"Temizleme başarısız:\n{e}")
+            return
+
+        log_action(f"GitHub kopyası {silinen} liste Firebase'den temizlendi")
+        mesaj = f"{silinen} GitHub kopyası liste Firebase'den temizlendi."
+        if hatali:
+            mesaj += f" ({hatali} kullanıcıda yazma hatası)"
+        messagebox.showinfo("Başarılı", mesaj)
+        calistir()
+
+    frame_btn = tb.Frame(win, padding=(15, 0, 15, 15))
+    frame_btn.pack(fill=X)
+    tb.Button(frame_btn, text="🔄 Yenile", command=calistir, bootstyle=INFO).pack(side=LEFT, padx=5)
+    tb.Button(frame_btn, text="🧹 GitHub Kopyalarını Temizle", command=temizle_github_kopyalari, bootstyle=WARNING).pack(side=LEFT, padx=5)
+    tb.Button(frame_btn, text="🗑️ Seçileni Sil", command=sil_liste, bootstyle=DANGER).pack(side=LEFT, padx=5)
+    tb.Button(frame_btn, text="📄 Ham JSON Pencerede Aç", command=json_detayi_goster, bootstyle=INFO).pack(side=LEFT, padx=5)
+    tb.Button(frame_btn, text="❌ Kapat", command=win.destroy, bootstyle=SECONDARY).pack(side=LEFT, padx=5)
+
+    calistir()
+
 def open_firebase_stats():
     """Kapsamlı Firebase istatistik ekranı: kullanıcı sayıları, dua deposu, veri boyutu."""
     try:
@@ -1252,6 +1576,52 @@ def open_firebase_stats():
                 satirlar.append(f"💾 Kullanıcı durum verileri boyutu: {boyut_formatla(users_boyut)}")
             except Exception as e:
                 satirlar.append(f"📱 users koleksiyonu okunamadı: {e}")
+            
+            # 2a) Kullanıcıların Firebase'e eklediği LİSTELER (users → state.lists)
+            try:
+                liste_docs = list(db.collection("users").stream())
+                toplam_liste = 0
+                toplam_oge = 0
+                liste_ekleyen = 0
+                liste_boyut = 0
+                liste_isim_sayac = {}
+                sistem_liste_idleri = {"list_sayac", "list_default", "list_single_prayer"}
+                for doc in liste_docs:
+                    try:
+                        d = doc.to_dict() or {}
+                    except Exception:
+                        d = {}
+                    lists = (d.get("state") or {}).get("lists")
+                    if not isinstance(lists, list):
+                        continue
+                    kullanici_listeleri = [l for l in lists if isinstance(l, dict) and l.get("id") not in sistem_liste_idleri]
+                    if len(kullanici_listeleri) == 0:
+                        continue
+                    liste_ekleyen += 1
+                    toplam_liste += len(kullanici_listeleri)
+                    try:
+                        liste_boyut += len(json.dumps(kullanici_listeleri, ensure_ascii=False).encode("utf-8"))
+                    except Exception:
+                        pass
+                    for lst in kullanici_listeleri:
+                        items = lst.get("items")
+                        if isinstance(items, list):
+                            toplam_oge += len(items)
+                        lname = str(lst.get("name") or "(isimsiz)").strip()
+                        liste_isim_sayac[lname] = liste_isim_sayac.get(lname, 0) + 1
+                satirlar.append("")
+                satirlar.append("📋 KULLANICILARIN EKLEDİĞİ LİSTELER (users → state.lists, sistem listeleri hariç)")
+                satirlar.append(f"   Toplam liste sayısı: {toplam_liste}")
+                satirlar.append(f"   Liste ekleyen kullanıcı: {liste_ekleyen} (en az 1 listesi olan)")
+                satirlar.append(f"   Kişi başı ortalama liste: {toplam_liste / max(liste_ekleyen, 1):.2f}")
+                satirlar.append(f"   Listelerdeki toplam dua öğesi: {toplam_oge}")
+                satirlar.append(f"   💾 Listelerin toplam boyutu: {boyut_formatla(liste_boyut)}")
+                if liste_isim_sayac:
+                    satirlar.append("   ── En çok eklenen listeler (ad → kaç kullanıcıda var) ──")
+                    for lname, adet in sorted(liste_isim_sayac.items(), key=lambda x: -x[1])[:15]:
+                        satirlar.append(f"      {lname}: {adet} kullanıcı")
+            except Exception as e:
+                satirlar.append(f"📋 Listeler okunamadı: {e}")
             
             # 2b) Şu an çevrimiçi kullanıcılar (presence heartbeat)
             try:
@@ -1385,6 +1755,7 @@ combo_filtre = tb.Combobox(frame_havuz_ust, state="readonly", font=("Helvetica",
 combo_filtre.pack(side=LEFT, padx=5)
 combo_filtre.bind("<<ComboboxSelected>>", lambda e: guncelle_sol_tablo())
 
+tb.Button(frame_havuz_ust, text="📋 Firebase Listeleri", command=open_firebase_lists, bootstyle=SUCCESS).pack(side=RIGHT, padx=5)
 tb.Button(frame_havuz_ust, text="📊 Firebase İstatistikleri", command=open_firebase_stats, bootstyle=WARNING).pack(side=RIGHT, padx=5)
 tb.Button(frame_havuz_ust, text="☁️ Firebase Yönetimi", command=open_firebase_approvals, bootstyle=INFO).pack(side=RIGHT, padx=5)
 

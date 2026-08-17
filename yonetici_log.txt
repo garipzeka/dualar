@@ -6,3 +6,19 @@
 [16.08.2026 09:18:29] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
 [16.08.2026 11:20:04] Yönetici girişi başarılı
 [16.08.2026 11:20:05] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:09:30] Yönetici girişi başarılı
+[17.08.2026 10:09:31] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:10:19] 1 dua kalıcı olarak silindi
+[17.08.2026 10:14:49] Yönetici girişi başarılı
+[17.08.2026 10:14:50] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:18:23] Yönetici girişi başarılı
+[17.08.2026 10:18:24] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:22:41] Yönetici girişi başarılı
+[17.08.2026 10:22:42] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:28:58] Yönetici girişi başarılı
+[17.08.2026 10:28:59] GitHub karşılaştırma: GitHub: 45 dua  |  Yerel depo: 45 dua
+[17.08.2026 10:29:15] Firebase listesi silindi: 'Sabah' (list_1cec4488) — kullanıcı qvjFEkzB0qezEBGspJgu4Ii8ut73
+[17.08.2026 10:29:26] Firebase listesi silindi: 'Akşam' (default) — kullanıcı qvjFEkzB0qezEBGspJgu4Ii8ut73
+[17.08.2026 10:29:41] Firebase listesi silindi: 'Genel Liste' (list_default) — kullanıcı qvjFEkzB0qezEBGspJgu4Ii8ut73
+[17.08.2026 10:29:55] Firebase listesi silindi: 'Sade Sayaç' (list_sayac) — kullanıcı qvjFEkzB0qezEBGspJgu4Ii8ut73
+[17.08.2026 10:30:07] Firebase listesi silindi: 'Genel Liste' (list_default) — kullanıcı Uq0E9jHAV3Ygr7WloJyVNA78kdt1

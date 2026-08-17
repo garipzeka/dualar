@@ -922,24 +922,19 @@
             line-height: var(--dua-line-height, 1.6);
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
             white-space: pre-wrap;
-            /* Uzun kelimeler / Arapça metin ekranı taşırmasın */
-            overflow-wrap: break-word;
-            word-break: break-word;
+            /* Kelimeler asla ortasından bölünmesin: sığmayan kelime bütün olarak alt satıra iner. */
+            overflow-wrap: normal;
+            word-break: normal;
             max-width: 100%;
             transition: all 0.2s ease-out;
             margin: auto 0;
         }
 
-        /* Oto Sığdırma AÇIKken tek kelimelik zikirler ortasından bölünmesin:
-           kelime sığmıyorsa yazı boyutu küçültülür, kelime tek satırda kalır. */
+        /* Oto Sığdırma AÇIKken kelimeler asla ortasından bölünmesin:
+           sığmayan (uzun) kelime için yazı boyutu küçültülür, kelime bütün kalır. */
         .dua-text-style.dua-text-autofit {
             overflow-wrap: normal;
             word-break: normal;
-        }
-        /* Çok uzun tek kelime min. boyutta bile sığmıyorsa son çare: bölünür ama ekran taşmaz. */
-        .dua-text-style.dua-text-autofit.dua-text-allow-break {
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
 
         .dua-back {
@@ -2819,6 +2814,15 @@
         // GERÇEK listeler gösterilir; dua havuzundan ad/metin bilgileri eşlenir.
         // (Eskiden dualar tür/kategoriye göre gruplanıp "X Duaları" sanal listeleri
         // üretiliyordu — sunucuda böyle listeler olmadığı için kaldırıldı.)
+        // Sunucu (GitHub) listelerine ÖZEL, kişisel listelerle asla çakışmayan id üretir.
+        // Kişisel listeler "list_*" ile başlar; sunucu listeleri "cloud_" öneki alır.
+        // Böylece kişisel bir listenin id'si bir sunucu listesinin id'siyle eşleşip
+        // removeServerListsFromPersonal tarafından YANLIŞLIKLA SİLİNEMEZ veya
+        // restoreListsFromPhoneBackup tarafından geri yüklenmekten alıkonamaz.
+        function serverListSafeId(sl) {
+            return 'cloud_' + String((sl && (sl.id || sl.list_id)) || '');
+        }
+
         function buildSharedListsFromServer(serverLists, pool) {
             const out = [];
             const poolArr = Array.isArray(pool) ? pool : [];
@@ -2830,7 +2834,7 @@
                     return { ...base, count: 0, goal: Number(it.goal) || Number(base.goal) || 33 };
                 }).filter(x => x);
                 out.push({
-                    id: sl.id || sl.list_id,
+                    id: serverListSafeId(sl),
                     name: sl.name || sl.list_name || 'Bulut Liste',
                     items,
                     isSystem: false,
@@ -2841,13 +2845,15 @@
         }
 
         // Bulut (sunucu) listeleri kişisel "Listelerim" bölümüne karışmasın:
-        // yalnızca bulut bölümünde görünsünler. Eski sürümlerde kaydedilmiş
-        // kopyaları (örn. sunucu id'si "default" → Akşam) burada temizlenir.
+        // yalnızca bulut bölümünde görünsünler. Sunucu listeleri "cloud_" önekiyle
+        // saklandığı için bu önek kişisel liste id'lerinde ("list_*") asla bulunmaz;
+        // yalnızca gerçek eski bulut kopyaları temizlenir, kullanıcının kişisel
+        // listeleri (id'si sunucu listesiyle aynı olsa bile) ASLA silinmez.
         function removeServerListsFromPersonal() {
             if (!Array.isArray(state.lists)) return;
             const serverLists = window._serverSharedLists;
             if (!serverLists || serverLists.length === 0) return;
-            const serverIds = new Set(serverLists.map(sl => String(sl.id || sl.list_id || '')));
+            const serverIds = new Set(serverLists.map(serverListSafeId).filter(Boolean));
             if (serverIds.size === 0) return;
             state.lists = state.lists.filter(l => !serverIds.has(String(l.id)));
         }
@@ -2940,11 +2946,17 @@
             
             // Mark it as a virtual shared list so the UI knows it's read-only
             sl.virtualSharedList = true;
+            const prevActiveListId = state.activeListId;
             state.selectedSharedList = sl;
             state.activeListId = sl.id;
             state.isSinglePrayerMode = false;
             
             syncActiveListIntoState();
+            // Liste seçilince her zaman 1. dua/zikirden başla (kaldığı yerden devam etme)
+            if (prevActiveListId !== sl.id) {
+                sl.active = 0;
+                state.active = 0;
+            }
             updateUI();
             renderListManager();
             renderActiveListRows();
@@ -3008,9 +3020,15 @@
             // Kişisel bir listeye geçilirken eski bulut (sanall) liste seçimini temizle;
             // aksi halde bayat seçim render'larda kafa karışıklığına yol açabilir.
             if (target !== state.selectedSharedList) state.selectedSharedList = null;
+            const prevActiveListId = state.activeListId;
             state.activeListId = target.id;
             state.isSinglePrayerMode = false;
             syncActiveListIntoState();
+            // Liste seçilince her zaman 1. dua/zikirden başla (kaldığı yerden devam etme)
+            if (prevActiveListId !== target.id) {
+                target.active = 0;
+                state.active = 0;
+            }
             if (!options.silentUI) {
                 updateUI();
                 renderListManager();
@@ -3462,13 +3480,20 @@
                 if (!state || !Array.isArray(state.lists)) return 0;
                 const existingIds = new Set(state.lists.map(l => String(l.id || '')));
                 const poolMap = new Map((Array.isArray(prayerPool) ? prayerPool : []).map(p => [String(p.id || ''), p]));
-                const serverIds = Array.isArray(window._serverSharedLists)
+                // GitHub'da zaten bulunan bir liste (örn. Akşam/Sabah), telefon yedeğinden
+                // geri yüklenip Firebase'de tekrar yer kaplamasın: kullanıcı bilerek silmişse
+                // silinmiş kalır. Yalnızca gerçekten kaybolmuş kişisel listeler geri getirilir.
+                const rawServerIds = Array.isArray(window._serverSharedLists)
                     ? new Set(window._serverSharedLists.map(s => String(s.id || s.list_id || '')))
                     : new Set();
+                const serverIds = Array.isArray(window._serverSharedLists)
+                    ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
+                    : new Set();
+                const githubListeIdleri = new Set([...rawServerIds, ...serverIds]);
                 let restored = 0;
                 backup.lists.forEach(sl => {
                     const id = String(sl.id || '');
-                    if (!id || id === 'list_sayac' || id === 'list_default' || existingIds.has(id) || serverIds.has(id)) return;
+                    if (!id || id === 'list_sayac' || id === 'list_default' || existingIds.has(id) || githubListeIdleri.has(id)) return;
                     const items = (Array.isArray(sl.items) ? sl.items : []).map(it => {
                         const pId = String(it.prayerId || it.id || '');
                         const poolItem = poolMap.get(pId);
@@ -4622,15 +4647,17 @@
         }
 
         function fitTextToScreen() {
-            let currentSize = 4.5; const minSize = 1.3; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
+            let currentSize = 4.5; const minSize = 0.5; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
             if (!textEl || !container) return;
             if (container.clientWidth <= 0) return; // Gizliyken (örn. Sade Sayaç) ölçüm yapılamaz
-            // Oto sığdırma modunda kelimeler ortasından bölünmesin (tek kelimelik zikirler tek satırda kalır)
+            // Oto sığdırma modunda kelimeler ASLA ortasından bölünmesin:
+            // sığmayan uzun tek kelime için yazı boyutu iyice küçültülür, kelime bütün kalır.
             textEl.classList.add('dua-text-autofit');
-            textEl.classList.remove('dua-text-allow-break');
             const originalTransition = textEl.style.transition; textEl.style.transition = 'none';
-            while (currentSize > minSize) {
+            while (currentSize >= minSize) {
                 document.documentElement.style.setProperty('--dua-font-size', currentSize + 'rem');
+                // Arapça görünümünde inline boyut CSS değişkenini ezer; sığdırma için inline boyut da küçültülür
+                textEl.style.fontSize = currentSize + 'rem';
                 // Dikey taşmayı (scrollHeight vs container) ve Yatay taşmayı (scrollWidth vs container genisliği) kontrol et
                 // dua-scroll-wrapper'da sağ-sol 10'ar px padding var, bu yüzden container.clientWidth - 20 yapıyoruz.
                 if (textEl.scrollHeight <= container.clientHeight && textEl.scrollWidth <= (container.clientWidth - 20)) { 
@@ -4638,10 +4665,8 @@
                 }
                 currentSize -= 0.1;
             }
-            // Min boyutta da yatay taşma varsa (çok uzun tek kelime) son çare olarak bölmeye izin ver, ekran taşmasın
-            if (textEl.scrollWidth > (container.clientWidth - 20)) {
-                textEl.classList.add('dua-text-allow-break');
-            }
+            // Kelime bölme artık kullanılmıyor: en küçük boyutta bile sığmayan (pratikte imkânsız)
+            // tek bir kelime ekran kenarından taşabilir ama asla ortasından bölünmez.
             textEl.style.transition = originalTransition;
         }
 
@@ -4922,11 +4947,10 @@
             const autoFitBtn = document.getElementById('autoFitBtn');
             if (autoFitBtn) autoFitBtn.classList.toggle('active', state.autoFitEnabled);
 
-            // Oto sığdırma açıkken kelime bölünmesin (duaText'e autofit sınıfını uygula)
+            // Oto sığdırma açıkken kelimeler bölünmesin (duaText'e autofit sınıfını uygula)
             const duaTextFitEl = document.getElementById('duaText');
             if (duaTextFitEl) {
                 duaTextFitEl.classList.toggle('dua-text-autofit', !!state.autoFitEnabled);
-                if (!state.autoFitEnabled) duaTextFitEl.classList.remove('dua-text-allow-break');
             }
             
             const flipCardEl = document.getElementById('flipCard');
@@ -4988,7 +5012,7 @@
                 return;
             }
 
-            overlay.style.cssText = 'display:block; position:fixed; top:115px; left:18px; right:18px; bottom:95px; z-index:9000; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:24px; border-radius:24px; background:linear-gradient(180deg,#ffffff 0%,#dff6ff 100%); color:#0f172a; border:3px solid var(--accent); box-shadow:0 20px 70px rgba(0,0,0,.55); font-family:Inter,sans-serif; font-size:1.2rem; line-height:1.75; font-weight:800; text-align:center; opacity:0; transform:perspective(900px) rotateY(-90deg) scale(0.96); transform-origin:center center; transition:transform .38s cubic-bezier(.2,.8,.2,1), opacity .25s ease; backface-visibility:hidden;';
+            overlay.style.cssText = 'display:block; position:fixed; top:115px; left:18px; right:18px; bottom:95px; z-index:9000; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:24px; border-radius:24px; background:linear-gradient(180deg,#ffffff 0%,#dff6ff 100%); color:#0f172a; border:3px solid var(--accent); box-shadow:0 20px 70px rgba(0,0,0,.55); font-family:Inter,sans-serif; font-size:1.2rem; line-height:1.75; font-weight:800; text-align:center; overflow-wrap:normal; word-break:normal; opacity:0; transform:perspective(900px) rotateY(-90deg) scale(0.96); transform-origin:center center; transition:transform .38s cubic-bezier(.2,.8,.2,1), opacity .25s ease; backface-visibility:hidden;';
             overlay.innerHTML = '<div style="color:#16a34a;font-size:.9rem;font-weight:900;letter-spacing:3px;margin-bottom:14px;">MEAL</div><div>' + (meaningText ? escapeHtml(meaningText).replace(/\n/g, '<br>') : 'Meal bulunmuyor.') + '</div><div style="margin-top:18px;font-size:.75rem;opacity:.55;">Kapatmak için tekrar dokunun</div>';
             if (card) card.classList.add('flipped');
             if (titleEl) titleEl.textContent = 'MEAL';
@@ -6911,8 +6935,10 @@
                         
                         // Sync to user state
                         window._serverSharedLists.forEach(sl => {
-                            const targetId = sl.id || sl.list_id;
-                            const userList = (state.lists || []).find(l => l.copiedFromSharedListId === targetId || l.id === targetId);
+                            const targetId = serverListSafeId(sl);
+                            // Eski kopyalar (cloud_ önekinden önce) bare id ile kaydedilmiş olabilir
+                            const rawId = String((sl.id || sl.list_id) || '');
+                            const userList = (state.lists || []).find(l => l.copiedFromSharedListId === targetId || l.copiedFromSharedListId === rawId || l.id === targetId);
                             if (userList) {
                                 userList.name = sl.name;
                                 const syncedItems = [];
@@ -7972,7 +7998,7 @@
             }
             ensureStateLists();
             const serverIds = Array.isArray(window._serverSharedLists)
-                ? new Set(window._serverSharedLists.map(s => String(s.id || s.list_id || '')))
+                ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
                 : new Set();
             let added = 0, updated = 0;
             data.lists.forEach(sl => {
