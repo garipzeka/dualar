@@ -1837,11 +1837,11 @@
                     
                     <!-- 4. AKSİYON BUTONLARI BAR (ZİKİRLERİM & SIFIRLA) -->
                     <div id="actionButtonsBar" style="display: flex; gap: 12px; align-items: center; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5px;">
-                        <button class="btn-primary" style="flex: 2; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--accent); color: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="showList()">
-                            📋 DUALARIM
+                        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--accent); color: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="showList()">
+                            📋 LİSTELERİM
                         </button>
-                        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 0.9rem; font-weight: bold; background: rgba(231,76,60,0.8); color: #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 6px;" onclick="showResetConfirmModal()">
-                            🔄 Sıfırla
+                        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--accent); color: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openDepotTab()">
+                            🗂️ DUA DEPOSU
                         </button>
                     </div>
             </div>
@@ -1904,11 +1904,11 @@
                     📿 ZİKİR ÇEK
                 </button>
                 <div style="display: flex; gap: 12px;">
-                    <button class="modern-secondary-btn" style="flex: 2;" onclick="showList()">
-                        📋 Dualarım
+                    <button class="modern-secondary-btn" style="flex: 1;" onclick="showList()">
+                        📋 Listelerim
                     </button>
-                    <button class="modern-secondary-btn" style="flex: 1; color: #f87171;" onclick="showResetConfirmModal()">
-                        🔄 Sıfırla
+                    <button class="modern-secondary-btn" style="flex: 1;" onclick="openDepotTab()">
+                        🗂️ Dua Deposu
                     </button>
                 </div>
             </div>
@@ -2707,6 +2707,7 @@
             sl.virtualSharedList = true;
             state.selectedSharedList = sl;
             state.activeListId = sl.id;
+            state.isSinglePrayerMode = false;
             
             syncActiveListIntoState();
             updateUI();
@@ -2762,10 +2763,18 @@
                 ? state.selectedSharedList
                 : state.lists.find(l => l.id === listId);
             if (!target) return false;
+            // Kişisel dualar telefonda değil, kullanıcının bulut hesabında saklanır.
+            // Giriş yapılmamışsa (misafir) bu dualar çözülemez ve liste boş görünür;
+            // bu yüzden önce Google girişi istenir.
+            if (!(currentUser && currentUser !== 'guest_user') && listContainsPrivatePrayers(target)) {
+                promptLogin('🔒 Bu listede kişisel dualar var.<br><br>Kişisel dualarınız telefonunuzda saklanmaz, yalnızca Google hesabınızın bulut alanında tutulur. Listeyi görüntülemek için giriş yapın.');
+                return false;
+            }
             // Kişisel bir listeye geçilirken eski bulut (sanall) liste seçimini temizle;
             // aksi halde bayat seçim render'larda kafa karışıklığına yol açabilir.
             if (target !== state.selectedSharedList) state.selectedSharedList = null;
             state.activeListId = target.id;
+            state.isSinglePrayerMode = false;
             syncActiveListIntoState();
             if (!options.silentUI) {
                 updateUI();
@@ -2804,7 +2813,7 @@
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${sharedBadge}</div>
                         </div>
                         <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}')">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
+                            ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
                             <button class="mini-btn" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
                         </div>
                     </div>`;
@@ -2820,7 +2829,7 @@
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${cloudBadge}</div>
                         </div>
                         <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveSharedList('${lst.id}')">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
+                            ${!isActive ? `<button class="mini-btn" onclick="setActiveSharedList('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
                             <button class="mini-btn" onclick="copyCloudList('${lst.id}')">📋 Kopyala</button>
                         </div>
                     </div>`;
@@ -3512,42 +3521,61 @@
         }
 
         async function ensureLoggedIn() {
+            // Firebase SDK (type="module" script) normal script'ten SONRA yüklendiği için
+            // buraya ulaşıldığında window.firebaseAuth henüz tanımlı olmayabilir.
+            // Firebase hazır olana dek bekle; yoksa oturum hiç restore edilmez ve
+            // giriş yapmış kullanıcı bile misafir olarak açılır.
+            if (!window.firebaseAuth) {
+                await new Promise(resolve => {
+                    let done = false;
+                    const finish = () => { if (!done) { done = true; resolve(); } };
+                    window.addEventListener('firebaseLoaded', finish, { once: true });
+                    setTimeout(finish, 10000); // güvenlik ağı: Firebase yüklenemezse devam et
+                });
+            }
+
             return new Promise((resolve) => {
                 let isResolved = false;
-                const check = () => {
+                const applyUser = (user) => {
                     if (isResolved) return;
                     isResolved = true;
-                    if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-                        const user = window.firebaseAuth.currentUser;
+                    if (user) {
                         currentUser = user.uid;
-                        currentEmail = user.email;
+                        currentEmail = user.email || user.displayName || 'Google Kullanıcısı';
                         try { localStorage.removeItem('isGuestMode'); } catch (_) {}
-                        startAppWithFullscreen();
-                        resolve(user);
                     } else {
                         try { localStorage.setItem('isGuestMode', 'true'); } catch (_) {}
                         currentUser = 'guest_user';
                         currentEmail = 'Misafir';
-                        startAppWithFullscreen();
-                        resolve({ uid: 'guest_user', email: 'guest' });
                     }
+                    startAppWithFullscreen();
+                    resolve(user || { uid: 'guest_user', email: 'guest' });
                 };
+
+                // Oturum zaten geri yüklenmişse direkt kullan (her açılışta otomatik giriş).
+                if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+                    applyUser(window.firebaseAuth.currentUser);
+                    return;
+                }
 
                 if (window.firebaseAuth && typeof window.onAuthStateChanged === 'function') {
                     try {
                         const unsubscribe = window.onAuthStateChanged(window.firebaseAuth, (user) => {
                             if (typeof unsubscribe === 'function') unsubscribe();
-                            check();
+                            applyUser(user);
                         });
+                        // Güvenlik ağı: onAuthStateChanged hiç tetiklenmezse (nadir) mevcut duruma bak.
+                        // 1 saniye yetersiz — oturum geri yüklemesi token doğrulaması nedeniyle uzayabilir,
+                        // erken misafir kararı verilmesin diye uzun tutulur.
                         setTimeout(() => {
                             if (typeof unsubscribe === 'function') unsubscribe();
-                            check();
-                        }, 1000);
+                            applyUser(window.firebaseAuth ? window.firebaseAuth.currentUser : null);
+                        }, 8000);
                     } catch (e) {
-                        check();
+                        applyUser(window.firebaseAuth ? window.firebaseAuth.currentUser : null);
                     }
                 } else {
-                    check();
+                    applyUser(null);
                 }
             });
         }
@@ -4149,8 +4177,10 @@
         function startAppWithFullscreen() {
             try {
                 // Tarayıcı konsolunda "API can only be initiated by a user gesture" hatası çıkmaması için kontrol ekliyoruz.
-                // Sadece kullanıcı ekrana dokunduysa tam ekran yapmaya çalışır.
-                const canRequestFS = !navigator.userActivation || navigator.userActivation.hasBeenActive;
+                // requestFullscreen yalnızca ANLIK kullanıcı hareketiyle (isActive) çalışır; hasBeenActive her zaman
+                // true olduğundan koruma sağlamaz. Async çağrılarda (zamanlayıcı, giriş sonrası) tam ekran atlanır,
+                // gerçek buton dokunuşunda çalışır.
+                const canRequestFS = !navigator.userActivation || navigator.userActivation.isActive;
                 
                 if (canRequestFS) {
                     const docEl = document.documentElement;
@@ -5207,7 +5237,11 @@
                 if (typeof confetti === 'function') confetti({ particleCount: 15, spread: 60, origin: { x, y }, colors: ['#ff0', '#0ff', '#f0f', '#2ecc71'], shapes: ['circle', 'star'], disableForReducedMotion: true, scalar: 0.8, startVelocity: 25, gravity: 0.8, ticks: 100 });
             }
 
-            const isSadeSayac = (state.isSinglePrayerMode || state.items.length === 1);
+            // Tekli dua modu yalnızca gerçekten list_single_prayer aktifken geçerlidir.
+            // (state.isSinglePrayerMode bayrağı startSinglePrayer ile açılıp kapatılmayan
+            // eski bir bayraktır; aktif listeye göre karar vermek daha güvenlidir —
+            // aksi halde kişisel listelerde otomatik geçiş çalışmaz.)
+            const isSadeSayac = (state.activeListId === 'list_single_prayer' || state.items.length === 1);
             
             if (isSadeSayac) {
                 if (it.count === it.goal) {
@@ -6317,9 +6351,27 @@
             }).join('');
         }
 
+        // Listede kişisel (bulut) dua var mı? (priv_ önekli id veya _private bayrak)
+        function listContainsPrivatePrayers(lst) {
+            if (!lst || !Array.isArray(lst.items)) return false;
+            return lst.items.some(it => {
+                if (!it || typeof it !== 'object') return false;
+                if (it._private) return true;
+                const pid = String(it.prayerId || it.id || '');
+                return pid.startsWith('priv_');
+            });
+        }
+
         function openListEditor(listId) {
             const lst = (state.lists || []).find(l => l.id === listId);
             if (!lst) return;
+
+            // Misafir kullanıcı kişisel dualı bir listeyi düzenlemeye çalışırsa da içerik boş görünür;
+            // önce giriş iste.
+            if (!(currentUser && currentUser !== 'guest_user') && listContainsPrivatePrayers(lst)) {
+                promptLogin('🔒 Bu listede kişisel dualar var.<br><br>Kişisel dualarınız telefonunuzda saklanmaz, yalnızca Google hesabınızın bulut alanında tutulur. Listeyi düzenlemek için giriş yapın.');
+                return;
+            }
 
             const isShared = lst.virtualSharedList;
             
@@ -7234,6 +7286,14 @@
             closeAll();
             if (typeof closeZikirlerimModal === 'function') closeZikirlerimModal();
             setActiveListById('list_sayac');
+        }
+
+        function openDepotTab() {
+            // Dualarım modalını açıp Dua Deposu sekmesine geçer (ana ekrandaki buton için)
+            showList();
+            setTimeout(() => {
+                switchListTab('depo');
+            }, 50);
         }
 
         async function showList() {
