@@ -355,6 +355,35 @@
             transition: all 0.2s ease;
         }
 
+        /* ─── Sürükle-bırak (drag & drop) ─────────────────────────────────── */
+        .drag-grip {
+            flex-shrink: 0;
+            width: 18px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.85rem;
+            letter-spacing: -2px;
+            cursor: grab;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .list-item:hover .drag-grip { color: rgba(255, 255, 255, 0.7); }
+        .list-item.dragging { cursor: grabbing; }
+        .list-item.dragging .drag-grip { cursor: grabbing; color: var(--accent); }
+        .list-item.dragging {
+            opacity: 0.85;
+            background: rgba(16, 185, 129, 0.12);
+            border-color: var(--accent);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+            z-index: 10;
+        }
+        .list-item.drag-target-top { border-top: 2px solid var(--accent); }
+        .list-item.drag-target-bottom { border-bottom: 2px solid var(--accent); }
+
         .list-item:hover {
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(255, 255, 255, 0.16);
@@ -374,6 +403,9 @@
             flex: 1;
             min-width: 0;
         }
+
+        [data-theme="light"] .drag-grip { color: rgba(0, 0, 0, 0.35); }
+        [data-theme="light"] .list-item:hover .drag-grip { color: rgba(0, 0, 0, 0.6); }
 
         .list-info-title {
             font-weight: 600;
@@ -5283,9 +5315,12 @@
                     showToast(getCongratsText());
 
                     if (state.autoAdvance) {
-                        // Liste sonu: tüm sayaçlar sıfırlanır, başa dönülür
+                        // Liste sonu: tüm sayaçlar sıfırlanır ve ana ekrana (Sade Sayaç) dönülür
                         state.items.forEach(i => i.count = 0);
-                        state.active = 0;
+                        syncStateBackToActiveList();
+                        save(true);
+                        goToHomeScreen();
+                        return;
                     } else {
                         // Otomatik geçiş kapalı: konum korunur, yalnız bu duanın sayacı sıfırlanır
                         it.count = 0;
@@ -6045,7 +6080,8 @@
                 html += activeItems.map((rawIt, i) => {
                     const it = resolveDuaItem(rawIt);
                     return `
-                    <div class="list-item">
+                    <div class="list-item" data-idx="${i}">
+                        <span class="drag-grip" title="Basılı tutup sürükleyerek taşı">⋮⋮</span>
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(it.name)}</div>
                             <div class="list-info-meta">
@@ -6455,7 +6491,8 @@
             }
             box.innerHTML = items.map((rawIt, i) => {
                 const it = resolveDuaItem(rawIt);
-                return `<div class="list-item" style="margin-bottom:6px;">
+                return `<div class="list-item" data-idx="${i}" style="margin-bottom:6px;">
+                    <span class="drag-grip" title="Basılı tutup sürükleyerek taşı">⋮⋮</span>
                     <div class="list-info">
                         <div class="list-info-title">${escapeHtml(it.name)}</div>
                         <div class="list-info-meta"><span class="list-badge">Hedef: ${rawIt.goal || it.goal || 33}</span>${rawIt.count > 0 ? `<span style="opacity:0.6">• ${rawIt.count} okundu</span>` : ''}</div>
@@ -7344,6 +7381,148 @@
             showList();
         }
 
+        // ─── SÜRÜKLE-BIRAK İLE YENİDEN SIRALAMA ────────────────────────────────
+        let _dragState = null;
+        let _dragInitDone = false;
+
+        function initDragReorder() {
+            if (_dragInitDone) return;
+            _dragInitDone = true;
+            ['listRows', 'listEditorRows'].forEach(containerId => {
+                const cont = document.getElementById(containerId);
+                if (!cont) return;
+                cont.addEventListener('pointerdown', _dragPointerDown);
+                cont.addEventListener('pointermove', _dragPointerMove);
+                cont.addEventListener('pointerup', _dragPointerUp);
+                cont.addEventListener('pointercancel', _dragCancel);
+            });
+        }
+
+        function _dragPointerDown(e) {
+            if (_dragState) return;
+            // Butonlara dokunulduğunda sürükleme başlatma (tıklama serbest kalsın)
+            if (e.target.closest && e.target.closest('button, input, textarea, select, a')) return;
+            const card = e.target.closest ? e.target.closest('.list-item[data-idx]') : null;
+            if (!card) return;
+            const container = card.parentElement;
+            if (!container) return;
+            const src = parseInt(card.getAttribute('data-idx'), 10);
+            if (isNaN(src)) return;
+            _dragState = {
+                container, src, startX: e.clientX, startY: e.clientY,
+                moved: false, target: src, offsetY: 0,
+                listId: container.id === 'listEditorRows' && typeof _editingListId === 'string' ? _editingListId : null
+            };
+            card.setPointerCapture(e.pointerId);
+        }
+
+        function _dragPointerMove(e) {
+            const d = _dragState;
+            if (!d || e.target.closest && e.target.closest('button, input, textarea, select, a')) return;
+            const dx = e.clientX - d.startX;
+            const dy = e.clientY - d.startY;
+            if (!d.moved) {
+                if (Math.abs(dy) < 8 && Math.abs(dx) < 8) return;
+                d.moved = true;
+                e.preventDefault();
+                document.body.style.userSelect = 'none';
+                document.body.style.webkitUserSelect = 'none';
+            }
+            const card = d.container.querySelector('.list-item.dragging') || d.container.querySelector('.list-item[data-idx="' + d.src + '"]');
+            if (!card) return;
+            card.classList.add('dragging');
+            card.style.transform = 'translateY(' + dy + 'px)';
+            d.offsetY = dy;
+
+            // Hedef indeksi: sürüklenen kartın ortası hangi kartın ortasına yakınsa
+            const cards = Array.from(d.container.querySelectorAll('.list-item[data-idx]'));
+            const srcCard = cards.find(c => c !== card && parseInt(c.getAttribute('data-idx'), 10) === d.src) || card;
+            const cardCenter = srcCard.getBoundingClientRect().top + srcCard.getBoundingClientRect().height / 2 + dy;
+            // Hedef: sürüklenen kartın ortasına EN YAKIN kartın indeksi
+            let target = d.src;
+            let bestDist = Infinity;
+            cards.forEach(c => {
+                const idx = parseInt(c.getAttribute('data-idx'), 10);
+                if (idx === d.src) return;
+                const mid = c.getBoundingClientRect().top + c.getBoundingClientRect().height / 2;
+                const dist = Math.abs(cardCenter - mid);
+                if (dist < bestDist) { bestDist = dist; target = idx; }
+            });
+
+            // Görsel hedef göstergesi
+            cards.forEach(c => { c.classList.remove('drag-target-top', 'drag-target-bottom'); });
+            if (target !== d.src) {
+                const tc = cards.find(c => parseInt(c.getAttribute('data-idx'), 10) === target);
+                if (tc) {
+                    tc.classList.add(target < d.src ? 'drag-target-top' : 'drag-target-bottom');
+                    if (target !== d.target) {
+                        d.target = target;
+                        tc.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                }
+            } else if (d.target !== d.src) {
+                d.target = d.src;
+            }
+        }
+
+        function _dragPointerUp(e) {
+            const d = _dragState;
+            if (!d) return;
+            _dragState = null;
+            document.body.style.userSelect = '';
+            document.body.style.webkitUserSelect = '';
+            d.container.querySelectorAll('.list-item').forEach(c => {
+                c.classList.remove('dragging', 'drag-target-top', 'drag-target-bottom');
+                c.style.transform = '';
+            });
+            if (!d.moved || d.target === d.src) return;
+
+            const listId = d.listId;
+            const target = d.target;
+            const src = d.src;
+
+            // ── Düzenleme paneli: state.lists içindeki listenin sırası değişir ──
+            if (listId) {
+                const lst = (state.lists || []).find(l => l.id === listId);
+                if (!lst || !Array.isArray(lst.items)) return;
+                if (src < 0 || src >= lst.items.length || target < 0 || target >= lst.items.length) return;
+                const it = lst.items.splice(src, 1)[0];
+                lst.items.splice(target, 0, it);
+                if (listId === state.activeListId) {
+                    state.items = lst.items;
+                    if (state.active === src) state.active = target;
+                    else if (state.active > src && state.active <= target) state.active--;
+                    else if (state.active < src && state.active >= target) state.active++;
+                }
+                save(true);
+                renderListEditorRows(listId);
+                if (listId === state.activeListId) updateUI();
+                return;
+            }
+
+            // ── Aktif liste görünümü (listRows) ──
+            if (!Array.isArray(state.items)) return;
+            if (src < 0 || src >= state.items.length || target < 0 || target >= state.items.length) return;
+            const it = state.items.splice(src, 1)[0];
+            state.items.splice(target, 0, it);
+            syncStateBackToActiveList();
+            save(true);
+            if (typeof renderActiveListRows === 'function') renderActiveListRows();
+            updateUI();
+        }
+
+        function _dragCancel() {
+            const d = _dragState;
+            if (!d) return;
+            _dragState = null;
+            document.body.style.userSelect = '';
+            document.body.style.webkitUserSelect = '';
+            d.container.querySelectorAll('.list-item').forEach(c => {
+                c.classList.remove('dragging', 'drag-target-top', 'drag-target-bottom');
+                c.style.transform = '';
+            });
+        }
+
         function hapticVibrate(durationOrPattern) {
             try {
                 if (navigator.vibrate) navigator.vibrate(durationOrPattern);
@@ -7772,6 +7951,7 @@
 
         const initApp = async () => {
             clearLocalStateCache();
+            initDragReorder();
             await load();
         };
         
