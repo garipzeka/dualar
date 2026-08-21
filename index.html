@@ -6727,12 +6727,12 @@
                         ? `<div style="font-size:0.7rem;opacity:0.55;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📋 ${escapeHtml(uniqueLists.slice(0, 3).join(', '))}${uniqueLists.length > 3 ? ` <span style="opacity:0.8;">+${uniqueLists.length - 3} liste</span>` : ''}</div>`
                         : '';
 
-                    return `<div class="list-item" style="margin-bottom:6px; cursor:pointer; transition:all 0.15s; ${isSelected ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.12);' : (isAdded ? 'border-left:3px solid rgba(46,204,113,0.5);background:rgba(46,204,113,0.04);' : '')}" onclick="toggleDepotSelection('${pId}')">
-                        <div class="list-info" style="flex-direction:row; align-items:center; gap:8px;">
+                    return `<div class="list-item" style="margin-bottom:6px; ${_editingListId ? 'padding:6px 12px;' : ''} cursor:pointer; transition:all 0.15s; ${isSelected ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.12);' : (isAdded ? 'border-left:3px solid rgba(46,204,113,0.5);background:rgba(46,204,113,0.04);' : '')}" onclick="toggleDepotSelection('${pId}')">
+                        <div class="list-info" style="display:flex; flex-direction:row; align-items:center; gap:10px;">
                             <div style="width:20px;height:20px;border-radius:6px;border:2px solid ${isSelected ? 'var(--accent)' : 'rgba(255,255,255,0.3)'};background:${isSelected ? 'var(--accent)' : 'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                                 ${isSelected ? '<span style="color:white;font-weight:bold;font-size:0.8rem;">✓</span>' : ''}
                             </div>
-                            <div>
+                            <div style="flex:1; min-width:0;">
                                 ${(() => {
                                     const badge = (p._isPrivate && p.status === 'reddedildi') ? ' <span style="font-size:0.65rem;color:#e74c3c;background:rgba(231,76,60,0.1);padding:2px 4px;border-radius:4px;">❌ reddedildi</span>' :
                                                   (p._isPrivate && (p.status === 'onaylandi' || p.status === 'onaylandı' || p.status === 'public')) ? ' <span style="font-size:0.65rem;color:#2ecc71;background:rgba(46,204,113,0.1);padding:2px 4px;border-radius:4px;">✅ onaylandı</span>' :
