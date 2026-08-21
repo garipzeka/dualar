@@ -3140,20 +3140,20 @@
                             <button class="mini-btn" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
                             <button class="mini-btn" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
                         </div>
-                    </div>\`;
+                    </div>`;
                 }).join('');
             }
             if (cloudLists.length > 0) {
                 html += cloudLists.map((lst) => {
                     const isActive = state.selectedSharedList && state.selectedSharedList.id === lst.id && state.activeListId === lst.id;
                     const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Bulut</span>';
-                    return \`<div class="list-item" style="\${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : 'opacity:0.9;'}margin-bottom:8px;">
+                    return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : 'opacity:0.9;'}margin-bottom:8px;">
                         <div class="list-info">
-                            <div class="list-info-title">\${escapeHtml(lst.name)}\${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
-                            <div class="list-info-meta"><span class="list-badge">\${lst.items.length} dua</span>\${cloudBadge}</div>
+                            <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
+                            <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${cloudBadge}</div>
                         </div>
                         <div class="list-actions">
-                            \${!isActive ? \`<button class="mini-btn" onclick="setActiveSharedList('\${lst.id}'); closeList()">Seç</button>\` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
+                            ${!isActive ? `<button class="mini-btn" onclick="setActiveSharedList('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
                             <button class="mini-btn" onclick="copyCloudList('${lst.id}')">📋 Kopyala</button>
                             <button class="mini-btn" onclick="openStats('${lst.id}', true)">📊 İstatistik</button>
                         </div>
