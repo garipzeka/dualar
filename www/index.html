@@ -2898,6 +2898,35 @@
             if (!serverLists || serverLists.length === 0) return;
             const serverIds = new Set(serverLists.map(serverListSafeId).filter(Boolean));
             if (serverIds.size === 0) return;
+            
+            // Stats ve sayaç bilgilerini sharedLists'e aktar
+            if (typeof sharedLists !== 'undefined' && Array.isArray(sharedLists)) {
+                state.lists.forEach(l => {
+                    const lId = String(l.id);
+                    if (serverIds.has(lId)) {
+                        const shared = sharedLists.find(sl => sl.id === lId);
+                        if (shared) {
+                            shared.stats = mergeMax(shared.stats || {}, l.stats || {});
+                            shared.itemStats = shared.itemStats || {};
+                            if (l.itemStats) {
+                                Object.keys(l.itemStats).forEach(date => {
+                                    shared.itemStats[date] = mergeMax(shared.itemStats[date] || {}, l.itemStats[date]);
+                                });
+                            }
+                            if (Array.isArray(l.items) && Array.isArray(shared.items)) {
+                                const lMap = new Map(l.items.filter(it => it && it.prayerId).map(it => [String(it.prayerId), it]));
+                                shared.items.forEach(sharedIt => {
+                                    const match = lMap.get(String(sharedIt.prayerId || sharedIt.id));
+                                    if (match) {
+                                        sharedIt.count = Math.max(Number(sharedIt.count) || 0, Number(match.count) || 0);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+
             state.lists = state.lists.filter(l => !serverIds.has(String(l.id)));
         }
 
@@ -3597,6 +3626,13 @@
                 if (!state || !Array.isArray(state.lists)) return;
                 // Sadece ID tabanlı ilerleme bilgisi kaydet, metin/anlam asla kaydedilmez
                 const listsToSave = [...state.lists];
+                if (typeof sharedLists !== 'undefined' && Array.isArray(sharedLists)) {
+                    sharedLists.forEach(sl => {
+                        if (!listsToSave.some(l => l.id === sl.id)) {
+                            listsToSave.push(sl);
+                        }
+                    });
+                }
                 if (state.selectedSharedList && !listsToSave.some(l => l.id === state.selectedSharedList.id)) {
                     listsToSave.push(state.selectedSharedList);
                 }
@@ -5542,9 +5578,9 @@
 
         // Stats Render
         const originalOpenStats = window.openStats;
-        window.openStats = function() {
+        window.openStats = function(targetListId, isShared) {
             if (originalOpenStats) {
-                originalOpenStats();
+                originalOpenStats(targetListId, isShared);
             } else {
                 const statsSheet = document.getElementById('statsSheet');
                 if (statsSheet) statsSheet.classList.add('open');
@@ -7978,17 +8014,28 @@
                 version: 2,
                 exportedAt: new Date().toISOString(),
                 activeListId: state.activeListId || '',
-                lists: (state.lists || []).filter(l => l.id !== 'list_sayac' && l.id !== 'list_default').map(l => ({
-                    id: String(l.id || ''),
-                    name: String(l.name || ''),
-                    active: Math.max(0, Number(l.active) || 0),
-                    items: (Array.isArray(l.items) ? l.items : []).map(it => ({
-                        prayerId: String(it.prayerId || it.id || ''),
-                        goal: Math.max(1, Number(it.goal) || 33)
-                    })).filter(it => it.prayerId),
-                    stats: (l.stats && typeof l.stats === 'object') ? l.stats : {},
-                    itemStats: (l.itemStats && typeof l.itemStats === 'object') ? l.itemStats : {}
-                })).filter(l => l.id),
+                lists: (() => {
+                    const allLists = [...(state.lists || [])];
+                    if (typeof sharedLists !== 'undefined' && Array.isArray(sharedLists)) {
+                        sharedLists.forEach(sl => {
+                            if (!allLists.some(l => l.id === sl.id)) allLists.push(sl);
+                        });
+                    }
+                    if (state.selectedSharedList && !allLists.some(l => l.id === state.selectedSharedList.id)) {
+                        allLists.push(state.selectedSharedList);
+                    }
+                    return allLists.filter(l => l.id !== 'list_sayac' && l.id !== 'list_default').map(l => ({
+                        id: String(l.id || ''),
+                        name: String(l.name || ''),
+                        active: Math.max(0, Number(l.active) || 0),
+                        items: (Array.isArray(l.items) ? l.items : []).map(it => ({
+                            prayerId: String(it.prayerId || it.id || ''),
+                            goal: Math.max(1, Number(it.goal) || 33)
+                        })).filter(it => it.prayerId),
+                        stats: (l.stats && typeof l.stats === 'object') ? l.stats : {},
+                        itemStats: (l.itemStats && typeof l.itemStats === 'object') ? l.itemStats : {}
+                    })).filter(l => l.id);
+                })(),
                 timeStats: (state.timeStats && typeof state.timeStats === 'object') ? state.timeStats : {},
                 settings: {
                     theme: state.theme,
