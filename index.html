@@ -8408,76 +8408,70 @@
             let allRows = [];
             
             let allListsToProcess = [];
-            let isSingleList = false;
             
-            if (targetListId) {
-                let targetList = null;
-                if (isShared && typeof sharedLists !== 'undefined') {
-                    targetList = sharedLists.find(l => l.id === targetListId);
-                } else if (state.lists) {
-                    targetList = state.lists.find(l => l.id === targetListId);
-                }
-                
-                if (targetList) {
-                    allListsToProcess.push(targetList);
-                    isSingleList = true;
-                    const titleEl = document.getElementById('statsSheetTitle');
-                    if (titleEl) titleEl.textContent = targetList.name + " İstatistikleri";
-                } else {
-                    return;
-                }
-            } else {
-                // Fallback: tüm listeleri al
-                if (Array.isArray(state.lists)) {
-                    allListsToProcess = [...state.lists];
-                }
-                if (state.selectedSharedList && !allListsToProcess.find(l => l.id === state.selectedSharedList.id)) {
-                    allListsToProcess.push(state.selectedSharedList);
-                }
-                const titleEl = document.getElementById('statsSheetTitle');
-                if (titleEl) titleEl.textContent = "İstatistikler";
+            // Fallback: tüm listeleri al
+            if (Array.isArray(state.lists)) {
+                allListsToProcess = [...state.lists];
+            }
+            if (typeof sharedLists !== 'undefined' && Array.isArray(sharedLists)) {
+                sharedLists.forEach(sl => {
+                    if (!allListsToProcess.some(l => l.id === sl.id)) {
+                        allListsToProcess.push(sl);
+                    }
+                });
+            }
+            if (state.selectedSharedList && !allListsToProcess.some(l => l.id === state.selectedSharedList.id)) {
+                allListsToProcess.push(state.selectedSharedList);
             }
             
-            // Zaman istatistiklerini ve sıfırlama butonunu gizle/göster
+            const titleEl = document.getElementById('statsSheetTitle');
+            if (titleEl) titleEl.textContent = "Genel İstatistikler Tablosu";
+            
+            // Zaman istatistiklerini ve sıfırlama butonunu göster
             const ttCard = document.getElementById('statsTimeTodayCard');
             const taCard = document.getElementById('statsTimeAllCard');
             const resetBtn = document.getElementById('statsResetBtn');
-            if (isSingleList) {
-                if (ttCard) ttCard.style.display = 'none';
-                if (taCard) taCard.style.display = 'none';
-                if (resetBtn) resetBtn.style.display = 'none';
-            } else {
-                if (ttCard) ttCard.style.display = '';
-                if (taCard) taCard.style.display = '';
-                if (resetBtn) resetBtn.style.display = '';
-            }
+            if (ttCard) ttCard.style.display = '';
+            if (taCard) taCard.style.display = '';
+            if (resetBtn) resetBtn.style.display = '';
 
+            let orderIndex = 1;
             allListsToProcess.forEach(lst => {
-                    // Sadece Sade Sayaç MADDESİNİ istatistikten ve toplamdan gizle, listenin tamamını değil
-                    // (Kullanıcı Sade Sayaç listesine kendi duasını eklemiş olabilir)
-                    
-                    if (Array.isArray(lst.items)) {
-                        lst.items.forEach(it => {
-                            const itemName = String(it.name || '').trim();
-                            if (itemName === 'Sade Sayaç') {
-                                return; // Yalnızca adı "Sade Sayaç" olanları gizle (kullanıcı adını değiştirip dua girdiyse gizleme)
-                            }
-
-                            let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
-                            for (let date in (lst.itemStats || {})) {
-                                const val = lst.itemStats[date][it.id] || 0;
-                                itToplam += val;
-                                if (date === today) itBugun = val;
-                                if (date.startsWith(monthPrefix)) itAy += val;
-                                if (date.startsWith(yearPrefix)) itYil += val;
-                            }
-                            
+                if (lst.id === 'list_default' || lst.id === 'list_sayac') return; // Sistem listelerini gizle
+                
+                if (Array.isArray(lst.items)) {
+                    lst.items.forEach(it => {
+                        const itemName = String(it.name || '').trim();
+                        if (itemName === 'Sade Sayaç') return;
+                        
+                        let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
+                        for (let date in (lst.itemStats || {})) {
+                            const val = lst.itemStats[date][it.id] || 0;
+                            itToplam += val;
+                            if (date === today) itBugun = val;
+                            if (date.startsWith(monthPrefix)) itAy += val;
+                            if (date.startsWith(yearPrefix)) itYil += val;
+                        }
+                        
+                        // Sadece istatistiği olanları veya aktif duaları göstermek mantıklı ama şimdilik hepsini listeleyelim
+                        if (itToplam > 0 || itBugun > 0) {
                             globalToday += itBugun;
                             globalAll += itToplam;
-                            allRows.push(`<tr><td><b>${escapeHtml(it.name || 'Dua')}</b><br><span style="font-size:0.7rem;opacity:0.6;">${escapeHtml(lst.name)}</span></td><td>${itBugun}</td><td>${itAy}</td><td>${itYil}</td><td>${itToplam}</td></tr>`);
-                        });
-                    }
-                });
+                            const goalText = Math.max(1, Number(it.goal) || 33);
+                            allRows.push(`<tr>
+                                <td style="text-align:center;">${orderIndex++}</td>
+                                <td><span style="font-size:0.7rem;opacity:0.8;">${escapeHtml(lst.name)}</span></td>
+                                <td><b>${escapeHtml(it.name || 'Dua')}</b></td>
+                                <td style="text-align:center;">${goalText}</td>
+                                <td style="text-align:center;color:#2ecc71;font-weight:bold;">${itBugun}</td>
+                                <td style="text-align:center;">${itAy}</td>
+                                <td style="text-align:center;">${itYil}</td>
+                                <td style="text-align:center;font-weight:bold;">${itToplam}</td>
+                            </tr>`);
+                        }
+                    });
+                }
+            });
 
             const statsTodayEl = document.getElementById('statsToday');
             if (statsTodayEl) statsTodayEl.textContent = globalToday;
@@ -8485,14 +8479,28 @@
             const statsAllEl = document.getElementById('statsAll');
             if (statsAllEl) statsAllEl.textContent = globalAll;
             
-            const body = document.getElementById('statsDetailBody');
-            if (body) {
-                if (allRows.length > 0) {
-                    body.innerHTML = allRows.join('');
-                } else {
-                    body.innerHTML = `<tr><td colspan="5" style="text-align:center; opacity:0.6; padding:20px;">Henüz liste istatistiği yok</td></tr>`;
-                }
+            const tableContainer = document.getElementById('statsDetailBody')?.parentElement;
+            if (tableContainer) {
+                // Sütun başlıklarını kullanıcının istediği gibi değiştiriyoruz
+                tableContainer.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th style="width:40px; text-align:center;">Sıra</th>
+                            <th>Liste</th>
+                            <th>Dua</th>
+                            <th style="text-align:center;">Hedef</th>
+                            <th style="text-align:center; color:#2ecc71;">Bgn</th>
+                            <th style="text-align:center;">Ay</th>
+                            <th style="text-align:center;">Yıl</th>
+                            <th style="text-align:center;">Toplam</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsDetailBody">
+                        ${allRows.length > 0 ? allRows.join('') : `<tr><td colspan="8" style="text-align:center; opacity:0.6; padding:20px;">Henüz zikir çekilmemiş</td></tr>`}
+                    </tbody>
+                `;
             }
+            
             document.getElementById('statsSheet')?.classList.add('open');
         }
         function closeAppearance() { document.getElementById('appearanceSheet')?.classList.remove('open'); }
