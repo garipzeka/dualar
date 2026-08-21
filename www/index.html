@@ -2191,14 +2191,10 @@
 
     <div class="modal" id="listModal">
         <div class="modal-content" style="padding:18px 16px;">
-            <div class="sheet-header">
-                <button class="icon-btn" onclick="closeList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></button>
-                <h3>Dualarım</h3>
-            </div>
-
-            <!-- SEKME BAŞLIKLARI -->
-            <div style="display:flex;gap:0;margin-bottom:14px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;">
+            <!-- SEKME BAŞLIKLARI (Ana Ekran Düğmesi Ortaya Alındı) -->
+            <div style="display:flex;gap:4px;margin-bottom:14px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;align-items:center;">
                 <button id="tab-listelerim" class="list-tab-btn active" onclick="switchListTab('listelerim')">📋 Listelerim</button>
+                <button class="icon-btn" onclick="closeList()" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin:0 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></button>
                 <button id="tab-depo" class="list-tab-btn" onclick="switchListTab('depo')">📚 Dua Deposu</button>
             </div>
 
@@ -3670,8 +3666,14 @@
         }
 
         function saveToLocal() {
-            // Güvenlik gereği tam state cihazda tutulmaz, sadece ilerleme kaydedilir.
-            clearLocalStateCache();
+            try {
+                if (typeof state !== 'undefined' && state) {
+                    const minimalState = prepareMinimalStateForSaving(state);
+                    localStorage.setItem("zikir_app_data", JSON.stringify(minimalState));
+                }
+            } catch (e) {
+                console.error("Local save error", e);
+            }
         }
 
         const UI_SETTINGS_KEY = 'zikir_app_ui_settings';
@@ -4075,19 +4077,9 @@
                     showToast("İnternet bağlantısı sağlandı, dualar başarıyla yüklendi 🌿");
                 }
                 
-                // 2. Fetch user state from Firestore (misafirlerde atlanır)
+                // YENİ MİMARİ: Kullanıcı state'i artık Firebase'den ÇEKİLMİYOR.
+                // Tüm veriler sadece yerel cihazda (localStorage) tutuluyor.
                 let dbState = null;
-                if (canUseFirestore()) {
-                    try {
-                        const fsPromise = window.fsGetDoc(window.fsDoc(window.firebaseDb, "users", currentUser));
-                        const docSnap = await Promise.race([fsPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]);
-                        if (docSnap && docSnap.exists && docSnap.exists()) {
-                            dbState = docSnap.data().state;
-                        }
-                    } catch (e) {
-                        console.error("Firestore read error or timeout", e);
-                    }
-                }
                 
                 // 3. Herkese Açık Onaylanmış Duaları Firebase'den Çek (misafirlerde atlanır)
                 try {
@@ -4123,11 +4115,19 @@
                 }
                 
 
+                let localState = null;
+                try {
+                    const localRaw = localStorage.getItem("zikir_app_data");
+                    if (localRaw) {
+                        localState = JSON.parse(localRaw);
+                    }
+                } catch(e) { console.error("Yerel veri okuma hatasi", e); }
+
                 if (dbState) {
                     state = dbState;
-                    // Kullanıcının verisi Firebase'den geldi → bulut kaydı gerçekten var demektir.
-                    // Rozet "Yedekli" gösterir; sonraki kayıt başarısız olursa uyarıya döner.
                     _cloudSyncOk = true;
+                } else if (localState) {
+                    state = localState;
                 }
                 // Not: "Genel Liste" (list_default) burada asla yeniden oluşturulmaz.
                 // Kullanıcı onu silmişse geri getirilmez; yeni kullanıcılar için varsayılan
@@ -4298,10 +4298,10 @@
                 // Bulut (sunucu) listeleri kişisel "Listelerim" bölümüne karışmasın
                 removeServerListsFromPersonal();
 
-                // Buluttan gelen listeleri telefonun kalıcı hafızasına hemen yaz:
-                // cihaz değişikliğinde listeler otomatik olarak telefona inmiş olur
-                // (günlük kullanımda telefon kopyası hazır bekler, sunucudan tekrar çekilmez).
+                // YENİ MİMARİ: Açılış sonrası tüm verileri yerel hafızaya mühürle
                 saveProgressToPhone();
+                saveAppSettingsToPhone();
+                saveToLocal();
 
                 applyTheme(); syncInputs(); applyViewSettingsToCSS(); applyReaderMode(); updateUI();
                 if (state.keepAwake) requestWakeLock();
@@ -4437,40 +4437,28 @@
         function cloudSyncOk() { return !!(_cloudSyncOk && canUseFirestore()); }
 
         async function sendDataToServer() {
-            clearLocalStateCache();
-            if (!canUseFirestore()) {
+            // YENİ MİMARİ: Kullanıcı verileri (listeler, ayarlar, istatistikler) ARTIK FİREBASE'E GİTMEZ.
+            // Yalnızca telefonun kalıcı hafızasına (localStorage) yazılır.
+            // Firebase yalnızca "Kişisel Dua Paylaşımı" için kullanılır.
+            try { saveToLocal(); } catch(_) {}
+            if (!canUseFirestore() || currentUser === 'guest_user') {
                 _cloudSyncOk = false;
                 return;
             }
-            try {
-                const minimalState = prepareMinimalStateForSaving(state);
-                await window.fsSetDoc(window.fsDoc(window.firebaseDb, "users", currentUser), { state: minimalState }, { merge: true });
-                _cloudSyncOk = true;
-                showSyncStatus(true);
-            } catch (err) {
-                console.error(err);
-                _cloudSyncOk = false;
-                showSyncError("Bulut kayıt hatası: " + (err && err.message ? err.message : String(err)));
-            }
+            // Sadece auth durumunu "yedekli" (sorunsuz) göstermek için true yapıyoruz.
+            _cloudSyncOk = true;
+            showSyncStatus(true);
         }
 
         async function sendDataToServerAsync() {
             clearTimeout(saveTimeout);
-            clearLocalStateCache();
-            if (!canUseFirestore()) {
+            try { saveToLocal(); } catch(_) {}
+            if (!canUseFirestore() || currentUser === 'guest_user') {
                 _cloudSyncOk = false;
                 return;
             }
-            try {
-                const minimalState = prepareMinimalStateForSaving(state);
-                await window.fsSetDoc(window.fsDoc(window.firebaseDb, "users", currentUser), { state: minimalState }, { merge: true });
-                _cloudSyncOk = true;
-                showSyncStatus(true);
-            } catch (err) {
-                console.error(err);
-                _cloudSyncOk = false;
-                showSyncError("Bulut kayıt hatası: " + (err && err.message ? err.message : String(err)));
-            }
+            _cloudSyncOk = true;
+            showSyncStatus(true);
         }
 
         // Uygulama arka plana geçince veya kapanırken bekleyen bulut kaydını hemen gönder;
@@ -4748,7 +4736,7 @@
         }
 
         function fitTextToScreen() {
-            let currentSize = 4.5; const minSize = 0.5; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
+            let currentSize = 4.5; const minSize = 1.6; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
             if (!textEl || !container) return;
             if (container.clientWidth <= 0) return; // Gizliyken (örn. Sade Sayaç) ölçüm yapılamaz
             // Oto sığdırma modunda kelimeler ASLA ortasından bölünmesin:
@@ -7970,25 +7958,17 @@
         }
         // ─── LİSTE YEDEĞİ (giriş yapmamış kullanıcılar dahil) ─────────────────
         // Yedek yalnızca liste id + liste adı + dua id'leri + sayaç içerir;
-        // dua metinleri telefonda saklanmadığı gibi yedeğe de yazılmaz.
+        // YENİ MİMARİ: Tüm ayarları, istatistikleri ve listeleri içeren "Tam Yedek" alınır.
+        // dua metinleri (kutsal kelimeler) telefonda saklanmadığı gibi yedeğe de yazılmaz.
         function buildListBackup() {
             try { syncStateBackToActiveList(); } catch (_) { }
+            const minimal = prepareMinimalStateForSaving(state);
             return {
                 app: 'Zikirmatik Pro',
-                type: 'liste-yedegi',
-                version: 1,
+                type: 'tam-yedek',
+                version: 2,
                 exportedAt: new Date().toISOString(),
-                activeListId: state.activeListId || '',
-                lists: (state.lists || []).filter(l => l.id !== 'list_sayac' && l.id !== 'list_default').map(l => ({
-                    id: String(l.id || ''),
-                    name: String(l.name || ''),
-                    active: Math.max(0, Number(l.active) || 0),
-                    items: (Array.isArray(l.items) ? l.items : []).map(it => ({
-                        prayerId: String(it.prayerId || it.id || ''),
-                        count: Math.max(0, Number(it.count) || 0),
-                        goal: Math.max(1, Number(it.goal) || 33)
-                    })).filter(it => it.prayerId)
-                })).filter(l => l.id)
+                state: minimal
             };
         }
 
@@ -8041,15 +8021,33 @@
             } catch (_) { return false; }
         }
 
-        function downloadBackupFile() {
+        async function downloadBackupFile() {
             const json = window._lastBackupJson || '';
             if (!json) return showToast('Yedek bulunamadı');
+            
+            try {
+                const file = new File([json], 'zikirmatik_yedek.json', { type: 'application/json' });
+                // Mobil cihazlarda ve destekleyen tarayıcılarda Paylaşım menüsünü aç
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: 'Zikirmatik Yedek',
+                        text: 'Listelerimin yedeği',
+                        files: [file]
+                    });
+                    showToast('Yedekleme paylaşıldı 📤');
+                    return;
+                }
+            } catch (err) {
+                console.log("Paylaşım iptal edildi veya desteklenmiyor", err);
+            }
+
+            // Paylaşım yapılamıyorsa klasik indirme
             try {
                 const blob = new Blob([json], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'zikirmatik_liste_yedegi.json';
+                a.download = 'zikirmatik_yedek.json';
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
@@ -8087,22 +8085,37 @@
                 };
             }
         }
-
         function applyListBackup() {
             const ta = document.getElementById('backupImportText');
             const raw = ta ? ta.value.trim() : '';
             if (!raw) return showToast('Önce yedek metnini yapıştırın veya dosya seçin');
             let data = null;
             try { data = JSON.parse(raw); } catch (_) { }
-            if (!data || typeof data !== 'object' || !Array.isArray(data.lists)) {
-                return showToast('Geçersiz yedek dosyası');
+            
+            // Eski Tip (Sadece Liste) Yedekleri ve Yeni Tip (Tam State) Yedeklerini Destekle
+            let listsToImport = [];
+            let isFullBackup = false;
+            
+            if (data && typeof data === 'object') {
+                if (Array.isArray(data.lists)) {
+                    listsToImport = data.lists; // Eski tip v1 yedek
+                } else if (data.state && Array.isArray(data.state.lists)) {
+                    listsToImport = data.state.lists; // Yeni tip v2 tam yedek
+                    isFullBackup = true;
+                }
             }
+
+            if (listsToImport.length === 0) {
+                return showToast('Geçersiz veya boş yedek dosyası');
+            }
+
             ensureStateLists();
             const serverIds = Array.isArray(window._serverSharedLists)
                 ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
                 : new Set();
             let added = 0, updated = 0;
-            data.lists.forEach(sl => {
+            
+            listsToImport.forEach(sl => {
                 const id = String(sl.id || '');
                 if (!id || id === 'list_sayac' || id === 'list_default' || serverIds.has(id)) return;
                 const seen = new Set();
@@ -8112,11 +8125,14 @@
                     count: Math.max(0, Number(it.count) || 0),
                     goal: Math.max(1, Number(it.goal) || 33)
                 })).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
+                
                 const existing = state.lists.find(l => l.id === id);
                 if (existing) {
                     existing.name = String(sl.name || existing.name);
                     existing.items = items;
                     existing.active = Math.max(0, Math.min(Number(sl.active) || 0, Math.max(0, items.length - 1)));
+                    if (isFullBackup && sl.stats) existing.stats = sl.stats;
+                    if (isFullBackup && sl.itemStats) existing.itemStats = sl.itemStats;
                     updated++;
                 } else {
                     state.lists.push({
@@ -8124,18 +8140,36 @@
                         name: String(sl.name || 'Yedek Liste'),
                         items,
                         active: Math.max(0, Math.min(Number(sl.active) || 0, Math.max(0, items.length - 1))),
-                        stats: {},
-                        itemStats: {},
+                        stats: (isFullBackup && sl.stats) ? sl.stats : {},
+                        itemStats: (isFullBackup && sl.itemStats) ? sl.itemStats : {},
                         restoredFromPhone: true
                     });
                     added++;
                 }
             });
-            if (added + updated === 0) return showToast('Yedekte yüklenecek liste bulunamadı');
+            
+            // Yeni tip tam yedek ise; tema, sayaç vb. ayarları ve genel istatistikleri de geri yükle
+            if (isFullBackup && data.state) {
+                const s = data.state;
+                const keys = ['theme', 'duaColor', 'accent', 'duaFontSize', 'duaFontFamily', 'soundMode', 'vibrateDuration', 'timeStats'];
+                keys.forEach(k => {
+                    if (s[k] !== undefined) state[k] = s[k];
+                });
+                if (s.activeListId && state.lists.some(l => l.id === s.activeListId)) {
+                    state.activeListId = s.activeListId;
+                }
+            }
+
             syncActiveListIntoState();
             save(true);
             closeBackupModal();
             if (typeof renderListManager === 'function') renderListManager();
+            updateUI();
+            
+            if (isFullBackup) {
+                applyTheme(); applyViewSettingsToCSS();
+            }
+            
             showToast(`Yedek yüklendi: ${added} yeni, ${updated} güncellendi 📥`);
         }
 

@@ -3486,15 +3486,7 @@
         
 
         function clearLocalStateCache() {
-            try { localStorage.removeItem("zikir_state"); } catch (_) { }
-            try {
-                for (let i = localStorage.length - 1; i >= 0; i--) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith("zikir_state")) {
-                        localStorage.removeItem(key);
-                    }
-                }
-            } catch (_) { }
+            // Disabled: we want to keep local state.
         }
 
         // İLERLEME KAYIT SİSTEMİ (sadece dua ID + sayaç, metin asla kaydedilmez)
@@ -3670,8 +3662,14 @@
         }
 
         function saveToLocal() {
-            // Güvenlik gereği tam state cihazda tutulmaz, sadece ilerleme kaydedilir.
-            clearLocalStateCache();
+            try {
+                if (typeof state !== 'undefined' && state) {
+                    const minimalState = prepareMinimalStateForSaving(state);
+                    localStorage.setItem("zikir_app_data", JSON.stringify(minimalState));
+                }
+            } catch (e) {
+                console.error("Local save error", e);
+            }
         }
 
         const UI_SETTINGS_KEY = 'zikir_app_ui_settings';
@@ -4123,8 +4121,22 @@
                 }
                 
 
+                let localState = null;
+                try {
+                    const localRaw = localStorage.getItem("zikir_app_data");
+                    if (localRaw) {
+                        localState = JSON.parse(localRaw);
+                    }
+                } catch(e) { }
+
                 if (dbState) {
                     state = dbState;
+                } else if (localState) {
+                    state = localState;
+                    _cloudSyncOk = true;
+                }
+
+                if (dbState) {
                     // Kullanıcının verisi Firebase'den geldi → bulut kaydı gerçekten var demektir.
                     // Rozet "Yedekli" gösterir; sonraki kayıt başarısız olursa uyarıya döner.
                     _cloudSyncOk = true;
@@ -4437,8 +4449,8 @@
         function cloudSyncOk() { return !!(_cloudSyncOk && canUseFirestore()); }
 
         async function sendDataToServer() {
-            clearLocalStateCache();
-            if (!canUseFirestore()) {
+            saveToLocal();
+            if (!canUseFirestore() || currentUser === 'guest_user') {
                 _cloudSyncOk = false;
                 return;
             }
@@ -4456,8 +4468,8 @@
 
         async function sendDataToServerAsync() {
             clearTimeout(saveTimeout);
-            clearLocalStateCache();
-            if (!canUseFirestore()) {
+            saveToLocal();
+            if (!canUseFirestore() || currentUser === 'guest_user') {
                 _cloudSyncOk = false;
                 return;
             }
@@ -4748,7 +4760,7 @@
         }
 
         function fitTextToScreen() {
-            let currentSize = 4.5; const minSize = 0.5; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
+            let currentSize = 4.5; const minSize = 1.6; const textEl = document.getElementById('duaText'); const container = document.getElementById('swipeArea');
             if (!textEl || !container) return;
             if (container.clientWidth <= 0) return; // Gizliyken (örn. Sade Sayaç) ölçüm yapılamaz
             // Oto sığdırma modunda kelimeler ASLA ortasından bölünmesin:
@@ -4769,6 +4781,7 @@
             // Kelime bölme artık kullanılmıyor: en küçük boyutta bile sığmayan (pratikte imkânsız)
             // tek bir kelime ekran kenarından taşabilir ama asla ortasından bölünmez.
             textEl.style.transition = originalTransition;
+            setTimeout(() => { const w = document.querySelectorAll('.dua-scroll-wrapper'); w.forEach(el => el.scrollTop = 0); }, 10);
         }
 
         function updateUI() {

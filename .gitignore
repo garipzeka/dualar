@@ -49,3 +49,6 @@ check_divs.py
 validator_output.txt
 result.json
 script_test.html
+jdk-*/
+Yeni klasör/
+*.py
