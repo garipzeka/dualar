@@ -2240,7 +2240,7 @@
             <!-- SEKME 2: DUA DEPOSU -->
             <div id="panel-depo" class="list-tab-panel" style="display:none;">
                 <!-- ➕ DUA EKLE (en üstte) -->
-                <div style="margin-bottom:12px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;overflow:hidden;">
+                <div id="depotAddWrapper" style="margin-bottom:12px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;overflow:hidden;">
                     <div id="depotAddHeader" onclick="toggleDepotAddForm()" style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,0.05);cursor:pointer;font-weight:800;color:var(--accent);user-select:none;">
                         <span>➕ Dua Ekle</span>
                         <span id="depotAddChevron" style="opacity:0.6;">▾</span>
@@ -6449,6 +6449,10 @@
                 if (panel) panel.style.display = t === tab ? '' : 'none';
             });
             if (tab === 'depo') {
+                const addWrapper = document.getElementById('depotAddWrapper');
+                if (addWrapper) {
+                    addWrapper.style.display = _editingListId ? 'none' : '';
+                }
                 populateTypeFilters();
                 renderDepotByCategory();
                 if (typeof updatePrivateAddGuestNotice === 'function') updatePrivateAddGuestNotice();
@@ -6711,7 +6715,7 @@
                     const adminBtns = '';
                     const privBtns = p._isPrivate ? `<button class="mini-btn" onclick="event.stopPropagation(); editPrivatePrayer('${pId}')" title="Düzenle">✏️</button><button class="mini-btn" onclick="event.stopPropagation(); submitSinglePrivatePrayer('${pId}')" title="Topluluğa aç (Admin onayına gönder)">📤 Topluluğa Aç</button>` : '';
                     
-                    const actionBtns = `
+                    const actionBtns = _editingListId ? '' : `
                         ${adminBtns}${privBtns}
                         <button class="mini-btn" onclick="event.stopPropagation(); previewLibraryPrayer('${pId}')">👁️</button>
                         <button class="mini-btn" style="background:var(--accent);color:white;border:none;" onclick="event.stopPropagation(); startSinglePrayer('${pId}')">▶ Tekli Başlat</button>
