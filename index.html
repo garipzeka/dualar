@@ -8386,7 +8386,7 @@
             
             let allListsToProcess = [];
             
-            // Fallback: tüm listeleri al
+            // Tüm listeleri topla
             if (Array.isArray(state.lists)) {
                 allListsToProcess = [...state.lists];
             }
@@ -8397,20 +8397,27 @@
                     }
                 });
             }
-            if (state.selectedSharedList && !allListsToProcess.some(l => l.id === state.selectedSharedList.id)) {
-                allListsToProcess.push(state.selectedSharedList);
+            
+            let isSingleList = false;
+            let targetList = null;
+            if (targetListId) {
+                targetList = allListsToProcess.find(l => l.id === targetListId);
+                if (targetList) {
+                    allListsToProcess = [targetList];
+                    isSingleList = true;
+                }
             }
             
             const titleEl = document.getElementById('statsSheetTitle');
-            if (titleEl) titleEl.textContent = "Genel İstatistikler Tablosu";
+            if (titleEl) titleEl.textContent = isSingleList ? (targetList.name + " İstatistikleri") : "Genel İstatistikler Tablosu";
             
-            // Zaman istatistiklerini ve sıfırlama butonunu göster
+            // Zaman istatistiklerini ve sıfırlama butonunu göster (yalnızca genel istatistikse)
             const ttCard = document.getElementById('statsTimeTodayCard');
             const taCard = document.getElementById('statsTimeAllCard');
             const resetBtn = document.getElementById('statsResetBtn');
-            if (ttCard) ttCard.style.display = '';
-            if (taCard) taCard.style.display = '';
-            if (resetBtn) resetBtn.style.display = '';
+            if (ttCard) ttCard.style.display = isSingleList ? 'none' : '';
+            if (taCard) taCard.style.display = isSingleList ? 'none' : '';
+            if (resetBtn) resetBtn.style.display = isSingleList ? 'none' : '';
 
             let orderIndex = 1;
             allListsToProcess.forEach(lst => {
