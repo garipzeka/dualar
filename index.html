@@ -8427,14 +8427,15 @@
                 if (lst.id === 'list_default' || lst.id === 'list_sayac') return; // Sistem listelerini gizle
                 
                 if (Array.isArray(lst.items)) {
-                    lst.items.forEach(it => {
-                        const itemName = String(it.name || '').trim();
+                    lst.items.forEach(rawIt => {
+                        const resolvedIt = resolveDuaItem(rawIt);
+                        const itemName = String(resolvedIt.name || '').trim();
                         if (itemName === 'Sade Sayaç') return;
                         
                         let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
                         for (let date in (lst.itemStats || {})) {
-                            const valId = lst.itemStats[date][it.id] || 0;
-                            const valPrayer = (it.prayerId && it.prayerId !== it.id) ? (lst.itemStats[date][it.prayerId] || 0) : 0;
+                            const valId = lst.itemStats[date][rawIt.id] || 0;
+                            const valPrayer = (rawIt.prayerId && rawIt.prayerId !== rawIt.id) ? (lst.itemStats[date][rawIt.prayerId] || 0) : 0;
                             const val = valId + valPrayer;
                             itToplam += val;
                             if (date === today) itBugun = val;
@@ -8446,11 +8447,11 @@
                         if (itToplam > 0 || itBugun > 0) {
                             globalToday += itBugun;
                             globalAll += itToplam;
-                            const goalText = Math.max(1, Number(it.goal) || 33);
+                            const goalText = Math.max(1, Number(resolvedIt.goal) || 33);
                             allRows.push(`<tr>
                                 <td style="text-align:center;">${orderIndex++}</td>
                                 <td><span style="font-size:0.7rem;opacity:0.8;">${escapeHtml(lst.name)}</span></td>
-                                <td><b>${escapeHtml(it.name || 'Dua')}</b></td>
+                                <td><b>${escapeHtml(itemName || 'Dua')}</b></td>
                                 <td style="text-align:center;">${goalText}</td>
                                 <td style="text-align:center;color:#2ecc71;font-weight:bold;">${itBugun}</td>
                                 <td style="text-align:center;">${itAy}</td>
