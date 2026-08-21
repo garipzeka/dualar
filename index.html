@@ -3154,15 +3154,15 @@
             }
             if (cloudLists.length > 0) {
                 html += cloudLists.map((lst) => {
-                    const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Bulut</span>';
+                    const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">📋 Şablon</span>';
                     return `<div class="list-item" style="opacity:0.9; margin-bottom:8px;">
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(lst.name)}</div>
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${cloudBadge}</div>
                         </div>
                         <div class="list-actions">
-                            <button class="mini-btn" onclick="previewSharedList('${lst.id}')">👀 Önizle</button>
-                            <button class="mini-btn" style="background:var(--accent); color:white; border:none;" onclick="copyCloudList('${lst.id}')">⬇️ Listeme Ekle</button>
+                            <button class="mini-btn" onclick="previewSharedList('${lst.id}')">👀 İncele</button>
+                            <button class="mini-btn" style="background:var(--accent); color:white; border:none;" onclick="copyCloudList('${lst.id}')">⬇️ Kişisel Listeme Ekle</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -5874,17 +5874,17 @@
                 // kişisel liste eklenirse o en üstte kalır, bulutlar altında durur.
                 const cloudLists = Array.isArray(sharedLists) ? sharedLists : [];
                 if (cloudLists.length > 0) {
-                    html += '<div style="margin:14px 0 8px; font-size:0.78rem; font-weight:bold; color:var(--accent); opacity:0.85; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:4px;">☁️ Bulut Listeler (GitHub)</div>';
+                    html += '<div style="margin:14px 0 8px; font-size:0.78rem; font-weight:bold; color:var(--accent); opacity:0.85; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:4px;">📋 Şablon Listeler (GitHub)</div>';
                     html += cloudLists.map(lst => {
                         const isActive = lst.id === state.activeListId;
                         return `
-                            <div class="list-item" style="padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; ${isActive ? 'border-left:4px solid var(--accent); background:rgba(46,204,113,0.08);' : ''}">
+                            <div class="list-item" style="padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; opacity:0.9;">
                                 <div>
                                     <div style="font-weight:bold; font-size:0.95rem;">${escapeHtml(lst.name)}</div>
-                                    <div style="font-size:0.78rem; opacity:0.7;">${(lst.items || []).length} Zikir <span style="background:rgba(52,152,219,0.2); color:#3498db; font-size:0.65rem; padding:2px 6px; border-radius:6px; font-weight:700; margin-left:4px;">☁️ Bulut</span></div>
+                                    <div style="font-size:0.78rem; opacity:0.7;">${(lst.items || []).length} Zikir <span style="background:rgba(52,152,219,0.2); color:#3498db; font-size:0.65rem; padding:2px 6px; border-radius:6px; font-weight:700; margin-left:4px;">📋 Şablon</span></div>
                                 </div>
-                                <button class="mini-btn" style="background:${isActive ? 'var(--muted)' : 'var(--accent)'}; color:#fff; padding:6px 14px; font-weight:bold;" onclick="selectCloudListFromZikirlerimModal('${lst.id}')">
-                                    ${isActive ? '✓ Aktif' : '▶ Başlat'}
+                                <button class="mini-btn" style="background:var(--accent); color:#fff; padding:6px 14px; font-weight:bold;" onclick="copyCloudList('${lst.id}')">
+                                    ⬇️ Ekle
                                 </button>
                             </div>
                         `;
