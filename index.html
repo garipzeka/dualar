@@ -2906,6 +2906,7 @@
                     if (serverIds.has(lId)) {
                         const shared = sharedLists.find(sl => sl.id === lId);
                         if (shared) {
+                            if (l.active !== undefined) shared.active = l.active;
                             shared.stats = mergeMax(shared.stats || {}, l.stats || {});
                             shared.itemStats = shared.itemStats || {};
                             if (l.itemStats) {
@@ -7065,8 +7066,42 @@
                     // Update Shared Lists — yalnızca yöneticinin yayınladığı gerçek bulut
                     // listeleri gösterilir (tür/kategoriye göre "X Duaları" sanal listeleri üretilmez).
                     if (Array.isArray(data.lists)) {
+                        const oldSharedLists = typeof sharedLists !== 'undefined' ? sharedLists : [];
                         window._serverSharedLists = data.lists;
                         sharedLists = buildSharedListsFromServer(data.lists, prayerPool);
+                        
+                        // İstatistikleri ve sayaçları koru
+                        if (Array.isArray(oldSharedLists) && Array.isArray(sharedLists)) {
+                            sharedLists.forEach(newSl => {
+                                const oldSl = oldSharedLists.find(l => l.id === newSl.id);
+                                if (oldSl) {
+                                    newSl.active = oldSl.active;
+                                    newSl.stats = oldSl.stats || {};
+                                    newSl.itemStats = oldSl.itemStats || {};
+                                    if (Array.isArray(newSl.items) && Array.isArray(oldSl.items)) {
+                                        const oldMap = new Map(oldSl.items.map(it => [String(it.prayerId || it.id), it]));
+                                        newSl.items.forEach(newIt => {
+                                            const match = oldMap.get(String(newIt.prayerId || newIt.id));
+                                            if (match) {
+                                                newIt.count = Math.max(Number(newIt.count) || 0, Number(match.count) || 0);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                        
+                        // Referansı yenile ki tıklanan dualar güncel listeye yazılsın
+                        if (state.selectedSharedList) {
+                            const newActive = sharedLists.find(l => l.id === state.selectedSharedList.id);
+                            if (newActive) {
+                                state.selectedSharedList = newActive;
+                                if (state.activeListId === newActive.id) {
+                                    syncActiveListIntoState();
+                                }
+                            }
+                        }
+                        
                         const customPool = prayerPool || [];
                         
                         // Sync to user state
