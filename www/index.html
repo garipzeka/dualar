@@ -75,7 +75,13 @@
             console.error("Firebase başlatılamadı:", e);
         }
     </script>
-
+    <style>
+        /* Normal zikir çekerken rakamların seçilmesini (Kopyala/Paylaş çıkmasını) engelle */
+        #countDisplay, #bgCounterText, #modernCountText, .tap-btn, .modern-tap-btn, #swipeArea, .progress-bar {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
     <style>
         :root {
             --accent: #10b981;
@@ -1942,6 +1948,16 @@
             <!-- Modern Glass Card -->
             <div style="position: relative; z-index: 2; margin: 0 20px clamp(15px, 4vh, 30px) 20px; padding: clamp(16px, 3vh, 24px); flex-shrink: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
                 
+                <!-- Ana Ekran Düğmeleri (Listelerim ve Dua Deposu) En Yukarı Alındı -->
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <button class="modern-secondary-btn" style="flex: 1;" onclick="showList()">
+                        📋 Listelerim
+                    </button>
+                    <button class="modern-secondary-btn" style="flex: 1;" onclick="openDepotTab()">
+                        🗂️ Dua Deposu
+                    </button>
+                </div>
+
                 <!-- Target Selection Row -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div style="color: #fff; font-size: 1rem; font-weight: 600;">Hedef Seçin</div>
@@ -1977,14 +1993,7 @@
                 <button class="modern-tap-btn" id="modernTapBtn" onclick="increment()">
                     📿 ZİKİR ÇEK
                 </button>
-                <div style="display: flex; gap: 12px;">
-                    <button class="modern-secondary-btn" style="flex: 1;" onclick="showList()">
-                        📋 Listelerim
-                    </button>
-                    <button class="modern-secondary-btn" style="flex: 1;" onclick="openDepotTab()">
-                        🗂️ Dua Deposu
-                    </button>
-                </div>
+                <!-- Butonlar yukarı taşındı -->
             </div>
             
             <!-- Safe Area Bottom Padding -->
@@ -4299,6 +4308,7 @@
                 removeServerListsFromPersonal();
 
                 // YENİ MİMARİ: Açılış sonrası tüm verileri yerel hafızaya mühürle
+                syncActiveListIntoState(); // İstatistiklerin senkronize edilmesi
                 saveProgressToPhone();
                 saveAppSettingsToPhone();
                 saveToLocal();
@@ -8020,28 +8030,37 @@
                 return ok;
             } catch (_) { return false; }
         }
-
         async function downloadBackupFile() {
             const json = window._lastBackupJson || '';
             if (!json) return showToast('Yedek bulunamadı');
             
             try {
+                // Dosya paylaşımı denemesi (Bazı cihazlarda desteklenmez)
                 const file = new File([json], 'zikirmatik_yedek.json', { type: 'application/json' });
-                // Mobil cihazlarda ve destekleyen tarayıcılarda Paylaşım menüsünü aç
                 if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
                         title: 'Zikirmatik Yedek',
-                        text: 'Listelerimin yedeği',
+                        text: 'Zikirmatik verilerimin yedeği',
                         files: [file]
                     });
                     showToast('Yedekleme paylaşıldı 📤');
+                    return;
+                }
+                
+                // Eğer dosya paylaşılamıyorsa, sadece metni paylaşmayı dene (Android WebView garantisi)
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'Zikirmatik Yedek',
+                        text: json
+                    });
+                    showToast('Yedekleme metni paylaşıldı 📤');
                     return;
                 }
             } catch (err) {
                 console.log("Paylaşım iptal edildi veya desteklenmiyor", err);
             }
 
-            // Paylaşım yapılamıyorsa klasik indirme
+            // Paylaşım yapılamıyorsa klasik indirme (Android WebView'de bazen çalışmaz, o yüzden 'Kopyala' butonu eklendi)
             try {
                 const blob = new Blob([json], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
