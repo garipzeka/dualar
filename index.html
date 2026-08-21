@@ -8266,12 +8266,15 @@
                 const id = String(sl.id || '');
                 if (!id || id === 'list_sayac' || id === 'list_default' || serverIds.has(id)) return;
                 const seen = new Set();
-                const items = (Array.isArray(sl.items) ? sl.items : []).map(it => ({
-                    id: generateId(),
-                    prayerId: String(it.prayerId || it.id || ''),
-                    count: 0,
-                    goal: Math.max(1, Number(it.goal) || 33)
-                })).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
+                const items = (Array.isArray(sl.items) ? sl.items : []).map(it => {
+                    const safeId = String(it.prayerId || it.id || '');
+                    return {
+                        id: safeId || generateId(),
+                        prayerId: safeId,
+                        count: 0,
+                        goal: Math.max(1, Number(it.goal) || 33)
+                    };
+                }).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
                 const existing = state.lists.find(l => l.id === id);
                 const slStats = (sl.stats && typeof sl.stats === 'object') ? sl.stats : {};
                 const slItemStats = (sl.itemStats && typeof sl.itemStats === 'object') ? sl.itemStats : {};
@@ -8430,7 +8433,9 @@
                         
                         let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
                         for (let date in (lst.itemStats || {})) {
-                            const val = lst.itemStats[date][it.id] || 0;
+                            const valId = lst.itemStats[date][it.id] || 0;
+                            const valPrayer = (it.prayerId && it.prayerId !== it.id) ? (lst.itemStats[date][it.prayerId] || 0) : 0;
+                            const val = valId + valPrayer;
                             itToplam += val;
                             if (date === today) itBugun = val;
                             if (date.startsWith(monthPrefix)) itAy += val;
