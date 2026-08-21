@@ -75,13 +75,7 @@
             console.error("Firebase başlatılamadı:", e);
         }
     </script>
-    <style>
-        /* Normal zikir çekerken rakamların seçilmesini (Kopyala/Paylaş çıkmasını) engelle */
-        #countDisplay, #bgCounterText, #modernCountText, .tap-btn, .modern-tap-btn, #swipeArea, .progress-bar {
-            user-select: none;
-            -webkit-user-select: none;
-        }
-    </style>
+
     <style>
         :root {
             --accent: #10b981;
@@ -134,6 +128,14 @@
             justify-content: center;
             overflow: hidden;
             transition: background 0.3s;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        input, textarea {
+            -webkit-user-select: auto;
+            user-select: auto;
         }
 
         .app {
@@ -1066,6 +1068,9 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
             /* Extra safety max-height to ensure it doesn't stay huge if text is small */
             min-height: calc(var(--count-font-size) * 1.5rem + 40px);
         }
@@ -1821,7 +1826,7 @@
                     <div class="top-action-menu" id="topActionMenu">
                         <button class="top-menu-item" onclick="goToHomeScreen()" title="Ana Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span>Ana Ekran</span></button>
                         <button class="top-menu-item" onclick="toggleFullScreen(); closeTopMenu()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg><span>Tam Ekran</span></button>
-                        <button class="top-menu-item" onclick="openStats()" title="İstatistikler"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 20V10M12 20V4M6 20v-6" /></svg><span>İstatistikler</span></button>
+
                         <button class="top-menu-item" onclick="openAppearance()" title="Görünüm Ayarları"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg><span>Görünüm Ayarları</span></button>
                         <button class="top-menu-item" onclick="openSettings()" title="Genel Ayarlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg><span>Genel Ayarlar</span></button>
                         <button class="top-menu-item" onclick="showList()" title="Dualarım"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><circle cx="3" cy="6" r="1"></circle><circle cx="3" cy="12" r="1"></circle><circle cx="3" cy="18" r="1"></circle></svg><span>Dualarım</span></button>
@@ -1843,6 +1848,17 @@
             <div class="dua-section" style="padding-bottom: 10px;">
                 <div class="dua-header">
                     
+                    <!-- YENİ ÜST MENÜ BUTONLARI (Listelerim / Dua Deposu) -->
+                    <div id="actionButtonsBar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                        <button class="btn-primary" style="flex: 1; padding: 12px 10px; min-height: 48px; font-size: 0.9rem; font-weight: 800; background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;" onclick="showList()">
+                            <span style="font-size: 1.4rem; line-height: 1;">📋</span>
+                            <span style="font-weight: 600;">Listelerim</span>
+                        </button>
+                        <button class="btn-primary" style="flex: 1; padding: 12px 10px; min-height: 48px; font-size: 0.9rem; font-weight: 800; background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;" onclick="openDepotTab()">
+                            <span style="font-size: 1.4rem; line-height: 1;">🗂️</span>
+                            <span style="font-weight: 600;">Dua Deposu</span>
+                        </button>
+                    </div>
                     <!-- 1. DUA BAŞLIĞI, HEDEF VE HIZLI BUTONLAR (Klasik Ekran Üst Çubuğu) -->
                     <div class="title-wrapper" id="duaTitleWrapper" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; width: 100%;">
                         
@@ -1915,15 +1931,6 @@
                         </div>
                     </div>
                     
-                    <!-- 4. AKSİYON BUTONLARI BAR (ZİKİRLERİM & SIFIRLA) -->
-                    <div id="actionButtonsBar" style="display: flex; gap: 12px; align-items: center; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5px;">
-                        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--accent); color: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="showList()">
-                            📋 LİSTELERİM
-                        </button>
-                        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--accent); color: #fff; border-radius: 14px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openDepotTab()">
-                            🗂️ DUA DEPOSU
-                        </button>
-                    </div>
             </div>
 
             <!-- 5. EN ALT: BÜYÜK ZİKİR TIKLAMA DÜĞMESİ (SAYAÇ BUTTON) -->
@@ -1947,17 +1954,17 @@
 
             <!-- Modern Glass Card -->
             <div style="position: relative; z-index: 2; margin: 0 20px clamp(15px, 4vh, 30px) 20px; padding: clamp(16px, 3vh, 24px); flex-shrink: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                
-                <!-- Ana Ekran Düğmeleri (Listelerim ve Dua Deposu) En Yukarı Alındı -->
-                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-                    <button class="modern-secondary-btn" style="flex: 1;" onclick="showList()">
-                        📋 Listelerim
+                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                    <button class="modern-secondary-btn" style="flex: 1; padding: 12px 10px; min-height: 48px; border-radius: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;" onclick="showList()">
+                        <span style="font-size: 1.4rem; line-height: 1;">📋</span>
+                        <span style="font-size: 0.8rem; font-weight: 600;">Listelerim</span>
                     </button>
-                    <button class="modern-secondary-btn" style="flex: 1;" onclick="openDepotTab()">
-                        🗂️ Dua Deposu
+                    <button class="modern-secondary-btn" style="flex: 1; padding: 12px 10px; min-height: 48px; border-radius: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;" onclick="openDepotTab()">
+                        <span style="font-size: 1.4rem; line-height: 1;">🗂️</span>
+                        <span style="font-size: 0.8rem; font-weight: 600;">Dua Deposu</span>
                     </button>
                 </div>
-
+                
                 <!-- Target Selection Row -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div style="color: #fff; font-size: 1rem; font-weight: 600;">Hedef Seçin</div>
@@ -1993,7 +2000,6 @@
                 <button class="modern-tap-btn" id="modernTapBtn" onclick="increment()">
                     📿 ZİKİR ÇEK
                 </button>
-                <!-- Butonlar yukarı taşındı -->
             </div>
             
             <!-- Safe Area Bottom Padding -->
@@ -2155,13 +2161,13 @@
             <div class="sheet-actions-row"><button class="icon-btn" onclick="closeStats()"><svg viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    </svg></button><button class="icon-btn" style="color:#e74c3c; border-color: rgba(231, 76, 60, 0.3);"
+                    </svg></button><button id="statsResetBtn" class="icon-btn" style="color:#e74c3c; border-color: rgba(231, 76, 60, 0.3);"
                     onclick="showStatsConfirm()" title="Tümünü Sıfırla"><svg viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2.5" width="20" height="20">
                         <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
                         </path>
                     </svg></button></div>
-            <h3>İstatistikler</h3>
+            <h3 id="statsSheetTitle">İstatistikler</h3>
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="stats-card">
@@ -2172,11 +2178,11 @@
                 <div class="stats-val" id="statsAll">0</div>
                 <div class="stats-label">Toplam</div>
             </div>
-            <div class="stats-card" style="grid-column: span 2;">
+            <div class="stats-card" id="statsTimeTodayCard" style="grid-column: span 2;">
                 <div class="stats-val" id="statsTimeToday">00:00</div>
                 <div class="stats-label">Bugün Harcanan Süre</div>
             </div>
-            <div class="stats-card" style="grid-column: span 2;">
+            <div class="stats-card" id="statsTimeAllCard" style="grid-column: span 2;">
                 <div class="stats-val" id="statsTimeAll">00:00</div>
                 <div class="stats-label">Toplam Süre</div>
             </div>
@@ -2200,10 +2206,10 @@
 
     <div class="modal" id="listModal">
         <div class="modal-content" style="padding:18px 16px;">
-            <!-- SEKME BAŞLIKLARI (Ana Ekran Düğmesi Ortaya Alındı) -->
+            <!-- SEKME BAŞLIKLARI -->
             <div style="display:flex;gap:4px;margin-bottom:14px;background:rgba(255,255,255,0.06);border-radius:14px;padding:4px;align-items:center;">
                 <button id="tab-listelerim" class="list-tab-btn active" onclick="switchListTab('listelerim')">📋 Listelerim</button>
-                <button class="icon-btn" onclick="closeList()" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin:0 2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></button>
+                <button onclick="closeList()" style="background:transparent;border:none;color:var(--text);opacity:0.7;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;transition:0.2s;" title="Ana Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button>
                 <button id="tab-depo" class="list-tab-btn" onclick="switchListTab('depo')">📚 Dua Deposu</button>
             </div>
 
@@ -2910,6 +2916,17 @@
                 state.lists = state.lists.filter(l => !deletedIds.has(String((l && (l.id || l.list_id)) || '')));
             }
 
+            // Sade Sayaç sanal listesini state içine güvenlice yerleştir (yoksa)
+            if (!state.lists.find(l => l.id === 'list_sayac')) {
+                state.lists.unshift({
+                    id: 'list_sayac',
+                    name: 'Sade Sayaç',
+                    items: [{ id: 'sayac_default', name: 'Sade Sayaç', count: 0, goal: getLastCustomGoalFromStorage() || 33, meaning: '', text: '' }],
+                    active: 0,
+                    stats: {}, itemStats: {}
+                });
+            }
+
             // Not: "Genel Liste" (list_default) artık özel korumalı değildir;
             // kullanıcı isterse silebilir/adını değiştirebilir. Silinirse otomatik geri getirilmez.
 
@@ -3111,14 +3128,8 @@
                     const isActive = lst.id === state.activeListId;
                     const isShared = !!(lst.copiedFromSharedListId || lst.virtualSharedList);
                     const sharedBadge = isShared ? '<span style="background:rgba(16,185,129,0.2);color:var(--accent);font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">Paylaşımlı</span>' : '';
-                    // Bulut yedek durumu: rozet yalnızca GERÇEKTEN başarılı bir bulut kaydı
-                    // sonrasında "Yedekli" gösterir. Yazma hatası varsa uyarı rozeti çıkar,
-                    // giriş yoksa "Telefonda" kalır (yanlış pozitif "Yedekli" asla görünmez).
-                    const backupBadge = cloudSyncOk()
-                        ? '<span title="Bu liste Firebase bulutuna kaydedildi" style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Yedekli</span>'
-                        : (canUseFirestore()
-                            ? '<span title="Son kayıt buluta iletilemedi — bağlantıyı kontrol edin" style="background:rgba(231,76,60,0.2);color:#e74c3c;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">⚠️ Yedeklenemedi</span>'
-                            : '<span title="Giriş yapılmadığı için yalnızca bu telefonda" style="background:rgba(255,255,255,0.1);color:var(--text);opacity:0.75;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:600;">📱 Telefonda</span>');
+                    // Liste yalnızca telefon hafızasında tutulur; bulut rozeti kaldırıldı.
+                    const backupBadge = '';
                     return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : ''}margin-bottom:8px;">
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
@@ -3127,22 +3138,24 @@
                         <div class="list-actions">
                             ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
                             <button class="mini-btn" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
+                            <button class="mini-btn" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
                         </div>
-                    </div>`;
+                    </div>\`;
                 }).join('');
             }
             if (cloudLists.length > 0) {
                 html += cloudLists.map((lst) => {
                     const isActive = state.selectedSharedList && state.selectedSharedList.id === lst.id && state.activeListId === lst.id;
                     const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Bulut</span>';
-                    return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : 'opacity:0.9;'}margin-bottom:8px;">
+                    return \`<div class="list-item" style="\${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : 'opacity:0.9;'}margin-bottom:8px;">
                         <div class="list-info">
-                            <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
-                            <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${cloudBadge}</div>
+                            <div class="list-info-title">\${escapeHtml(lst.name)}\${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
+                            <div class="list-info-meta"><span class="list-badge">\${lst.items.length} dua</span>\${cloudBadge}</div>
                         </div>
                         <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveSharedList('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
+                            \${!isActive ? \`<button class="mini-btn" onclick="setActiveSharedList('\${lst.id}'); closeList()">Seç</button>\` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
                             <button class="mini-btn" onclick="copyCloudList('${lst.id}')">📋 Kopyala</button>
+                            <button class="mini-btn" onclick="openStats('${lst.id}', true)">📊 İstatistik</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -3384,6 +3397,7 @@
             }
             shouldAskSessionStartChoice = false;
 
+            ensureStateLists();
             const savedProgress = loadProgressFromPhone();
             if (!savedProgress || !savedProgress.activeListId) {
                 maybeAskStartupListSelection();
@@ -3425,6 +3439,7 @@
             if (modal) modal.style.display = 'none';
 
             // Telefondan kaydedilen ilerlemeyi yükle ve uygula
+            ensureStateLists();
             const savedProgress = loadProgressFromPhone();
             if (savedProgress) {
                 applyProgressToState(savedProgress);
@@ -3491,28 +3506,105 @@
         
 
         function clearLocalStateCache() {
-            try { localStorage.removeItem("zikir_state"); } catch (_) { }
-            try {
-                for (let i = localStorage.length - 1; i >= 0; i--) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith("zikir_state")) {
-                        localStorage.removeItem(key);
-                    }
-                }
-            } catch (_) { }
+            // Disabled: we want to keep local state.
+        }
+
+        // İki istatistik objesini birleştirir: her anahtar için büyük değer kazanır.
+        function mergeMax(a, b) {
+            const out = (a && typeof a === 'object') ? { ...a } : {};
+            if (b && typeof b === 'object') {
+                Object.keys(b).forEach(k => {
+                    out[k] = Math.max(Number(out[k]) || 0, Number(b[k]) || 0);
+                });
+            }
+            return out;
         }
 
         // İLERLEME KAYIT SİSTEMİ (sadece dua ID + sayaç, metin asla kaydedilmez)
         const PROGRESS_KEY = 'zikir_progress_v2';
 
+        // --- NATIVE STORAGE YEDEKLERİ ---
+        const NATIVE_PROGRESS_FILE = 'zikir_progress_v2_auto.json';
+        let _lastNativeSaveStr = '';
+
+        async function restoreProgressFromNativeStorage() {
+            try {
+                const isNative = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+                if (!isNative) return;
+                const { Filesystem } = window.Capacitor.Plugins;
+                if (!Filesystem) return;
+
+                const result = await Filesystem.readFile({
+                    path: NATIVE_PROGRESS_FILE,
+                    directory: 'DATA',
+                    encoding: 'utf8'
+                });
+                if (result && result.data) {
+                    const nativeData = JSON.parse(result.data);
+                    const localRaw = localStorage.getItem(PROGRESS_KEY);
+                    let shouldOverwriteLocal = true;
+                    if (localRaw) {
+                        try {
+                            const localData = JSON.parse(localRaw);
+                            if (localData.savedAt && nativeData.savedAt && new Date(localData.savedAt) >= new Date(nativeData.savedAt)) {
+                                shouldOverwriteLocal = false;
+                            }
+                        } catch(e){}
+                    }
+                    if (shouldOverwriteLocal) {
+                        localStorage.setItem(PROGRESS_KEY, result.data);
+                        _lastNativeSaveStr = result.data;
+                        console.log("Kalıcı hafızadaki istatistikler yüklendi.");
+                    }
+                }
+            } catch (err) {
+            }
+        }
+
+        async function saveProgressToNativeStorage() {
+            try {
+                const isNative = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+                if (!isNative) return;
+                const { Filesystem } = window.Capacitor.Plugins;
+                if (!Filesystem) return;
+
+                const raw = localStorage.getItem(PROGRESS_KEY);
+                if (!raw) return;
+                
+                if (raw === _lastNativeSaveStr) return;
+
+                await Filesystem.writeFile({
+                    path: NATIVE_PROGRESS_FILE,
+                    data: raw,
+                    directory: 'DATA',
+                    encoding: 'utf8'
+                });
+                _lastNativeSaveStr = raw;
+            } catch (err) {
+                console.error("Kalıcı hafızaya yazma hatası:", err);
+            }
+        }
+        
+        function startNativeAutoSaveInterval() {
+            setInterval(() => {
+                saveProgressToNativeStorage();
+            }, 10000);
+        }
+        // --- NATIVE STORAGE YEDEKLERİ SONU ---
+
         function saveProgressToPhone() {
             try {
                 if (!state || !Array.isArray(state.lists)) return;
                 // Sadece ID tabanlı ilerleme bilgisi kaydet, metin/anlam asla kaydedilmez
+                const listsToSave = [...state.lists];
+                if (state.selectedSharedList && !listsToSave.some(l => l.id === state.selectedSharedList.id)) {
+                    listsToSave.push(state.selectedSharedList);
+                }
+
                 const progressData = {
                     activeListId: state.activeListId || '',
                     savedAt: new Date().toISOString(),
-                    lists: state.lists.map(lst => ({
+                    lists: listsToSave.map(lst => ({
                         id: lst.id,
                         name: String(lst.name || ''),
                         active: Math.max(0, Number(lst.active) || 0),
@@ -3551,16 +3643,6 @@
                 if (!state || !Array.isArray(state.lists)) return 0;
                 const existingIds = new Set(state.lists.map(l => String(l.id || '')));
                 const poolMap = new Map((Array.isArray(prayerPool) ? prayerPool : []).map(p => [String(p.id || ''), p]));
-                // GitHub'da zaten bulunan bir liste (örn. Akşam/Sabah), telefon yedeğinden
-                // geri yüklenip Firebase'de tekrar yer kaplamasın: kullanıcı bilerek silmişse
-                // silinmiş kalır. Yalnızca gerçekten kaybolmuş kişisel listeler geri getirilir.
-                const rawServerIds = Array.isArray(window._serverSharedLists)
-                    ? new Set(window._serverSharedLists.map(s => String(s.id || s.list_id || '')))
-                    : new Set();
-                const serverIds = Array.isArray(window._serverSharedLists)
-                    ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
-                    : new Set();
-                const githubListeIdleri = new Set([...rawServerIds, ...serverIds]);
                 // Kullanıcının bilerek sildiği listeler asla geri getirilmez:
                 // deletedListIds, silme anında state'e işlenip buluta da yazılır;
                 // böylece başka cihazın telefon yedeğindeki eski kopya bile geri yüklenmez.
@@ -3568,7 +3650,7 @@
                 let restored = 0;
                 backup.lists.forEach(sl => {
                     const id = String(sl.id || '');
-                    if (!id || id === 'list_sayac' || id === 'list_default' || existingIds.has(id) || githubListeIdleri.has(id) || deletedIds.has(id)) return;
+                    if (!id || id === 'list_sayac' || existingIds.has(id) || deletedIds.has(id)) return;
                     const items = (Array.isArray(sl.items) ? sl.items : []).filter(it => it && typeof it === 'object').map(it => {
                         const pId = String(it.prayerId || it.id || '');
                         const poolItem = poolMap.get(pId);
@@ -3614,7 +3696,10 @@
             if (!state || !Array.isArray(state.lists)) return false;
 
             progressData.lists.forEach(savedList => {
-                const stateList = state.lists.find(l => l.id === savedList.id);
+                let stateList = state.lists.find(l => l.id === savedList.id);
+                if (!stateList && typeof sharedLists !== 'undefined') {
+                    stateList = sharedLists.find(l => l.id === savedList.id);
+                }
                 if (!stateList) return;
 
                 // Aktif dua indeksini restore et
@@ -3640,13 +3725,15 @@
                     });
                 }
 
-                // İstatistikleri restore et
-                if (savedList.stats && typeof savedList.stats === 'object') {
-                    stateList.stats = savedList.stats;
-                }
+                // İstatistikleri restore et (Eski değeri ezmek yerine daha yüksek olanı koru)
+                stateList.stats = mergeMax(stateList.stats, savedList.stats);
+                const fsItemStats = (stateList.itemStats && typeof stateList.itemStats === 'object') ? stateList.itemStats : {};
                 if (savedList.itemStats && typeof savedList.itemStats === 'object') {
-                    stateList.itemStats = savedList.itemStats;
+                    Object.keys(savedList.itemStats).forEach(date => {
+                        fsItemStats[date] = mergeMax(fsItemStats[date], savedList.itemStats[date]);
+                    });
                 }
+                stateList.itemStats = fsItemStats;
             });
 
             // Aktif listeyi restore et
@@ -3661,9 +3748,12 @@
                 }
             }
 
-            // Kronometre süre istatistiğini restore et
+            // Kronometre süre istatistiğini restore et (birleştirerek)
             if (progressData.timeStats && typeof progressData.timeStats === 'object') {
-                state.timeStats = progressData.timeStats;
+                if (!state.timeStats || typeof state.timeStats !== 'object') state.timeStats = {};
+                Object.keys(progressData.timeStats).forEach(k => {
+                    state.timeStats[k] = Math.max(Number(state.timeStats[k]) || 0, Number(progressData.timeStats[k]) || 0);
+                });
             }
 
             syncActiveListIntoState();
@@ -3926,13 +4016,7 @@
         
         function logoutUser() {
             try { localStorage.removeItem('isGuestMode'); } catch (_) {}
-            // Presence kaydını temizle
-            try {
-                if (presenceInterval) { clearInterval(presenceInterval); presenceInterval = null; }
-                if (canUseFirestore()) {
-                    window.fsDeleteDoc(window.fsDoc(window.firebaseDb, "presence", currentUser)).catch(() => {});
-                }
-            } catch (_) {}
+            if (presenceInterval) { clearInterval(presenceInterval); presenceInterval = null; }
             if (window.firebaseAuth) {
                 window.signOut(window.firebaseAuth).then(() => {
                     currentUser = null;
@@ -4085,12 +4169,23 @@
                 } else if (isRetry) {
                     showToast("İnternet bağlantısı sağlandı, dualar başarıyla yüklendi 🌿");
                 }
-                
-                // YENİ MİMARİ: Kullanıcı state'i artık Firebase'den ÇEKİLMİYOR.
-                // Tüm veriler sadece yerel cihazda (localStorage) tutuluyor.
-                let dbState = null;
-                
-                // 3. Herkese Açık Onaylanmış Duaları Firebase'den Çek (misafirlerde atlanır)
+                // 2. State: İstatistikler ve listeler SADECE telefonun kalıcı hafızasından okunur.
+                // (Kullanıcının isteği üzerine Firebase bağlantısı TAMAMEN koparılmıştır.)
+                const dbState = null;
+
+                let localState = null;
+                try {
+                    const localRaw = localStorage.getItem("zikir_app_data");
+                    if (localRaw) localState = JSON.parse(localRaw);
+                } catch(e) { }
+                // Eğer buluttan veri geldiyse, onu baz al; gelmediyse telefondaki yedeği baz al.
+                if (dbState) {
+                    state = dbState;
+                } else if (localState) {
+                    state = localState;
+                }
+
+                // 3. Herkese Açık Onaylanmış Duaları Firebase'den Çek (custom_prayers)
                 try {
                     if (canUseFirestore()) {
                         const approvedRef = window.fsCollection(window.firebaseDb, "custom_prayers");
@@ -4100,7 +4195,7 @@
                         if (querySnap2 && querySnap2.forEach) {
                             querySnap2.forEach((doc) => {
                                 const customData = doc.data();
-                                customData.id = doc.id; // use firestore id
+                                customData.id = doc.id;
                                 prayerPool.push(customData);
                             });
                         }
@@ -4112,7 +4207,7 @@
                 // 4. Kullanıcının Bekleyen Kendi Özel Dualarını Çek
                 await fetchPrivatePrayersFromFirebase();
 
-                // Deduplicate prayerPool by id (multiple lists in JSON may share same prayers)
+                // Deduplicate prayerPool
                 if (prayerPool && prayerPool.length > 0) {
                     const seen = new Map();
                     prayerPool = prayerPool.filter(p => {
@@ -4122,26 +4217,14 @@
                         return true;
                     });
                 }
+
+                ensureStateLists();
                 
-
-                let localState = null;
-                try {
-                    const localRaw = localStorage.getItem("zikir_app_data");
-                    if (localRaw) {
-                        localState = JSON.parse(localRaw);
-                    }
-                } catch(e) { console.error("Yerel veri okuma hatasi", e); }
-
-                if (dbState) {
-                    state = dbState;
-                    _cloudSyncOk = true;
-                } else if (localState) {
-                    state = localState;
+                const restoredCount = restoreListsFromPhoneBackup();
+                if (restoredCount > 0) {
+                    console.log(`Telefon yedeğinden ${restoredCount} kişisel liste geri yüklendi.`);
                 }
-                // Not: "Genel Liste" (list_default) burada asla yeniden oluşturulmaz.
-                // Kullanıcı onu silmişse geri getirilmez; yeni kullanıcılar için varsayılan
-                // state'teki liste aşağıdaki sync bloğuyla otomatik doldurulur.
-
+                
                 // Telefondan kaydedilen ilerleme varsa Firestore state'i yoksa veya taze ise uygula
                 // (sayaçlar Firestore'dan geldiyse localStorage'daki daha yeni olabilir)
                 const localProgress = loadProgressFromPhone();
@@ -4166,45 +4249,35 @@
                     if (!isNaN(ct) && !isNaN(bt)) phoneIsNewer = bt >= ct;
                 }
 
-                if (localProgress && Array.isArray(state.lists) && phoneIsNewer) {
-                    // Firestore state ile localStorage progress'i karşılaştır:
-                    // daha yüksek sayaç/konum kullanılır (offline işlemler dikkate alınır)
+                // İstatistikler her zaman yerel kayddan birleştirilir (phoneIsNewer'dan bağımsız).
+                // Bulut daha yeni olsa bile o gün çekilen zikirler kaybolmamalı.
+
+                if (localProgress && Array.isArray(state.lists) && Array.isArray(localProgress.lists)) {
                     localProgress.lists.forEach(savedList => {
                         const stateList = state.lists.find(l => l.id === savedList.id);
                         if (!stateList) return;
-                        // Aktif dua konumu (daha ileride olan kazanır)
-                        if (savedList.active !== undefined) {
-                            const fsActive = Number(stateList.active) || 0;
-                            const lsActive = Number(savedList.active) || 0;
-                            stateList.active = Math.max(0, Math.min(Math.max(fsActive, lsActive), Math.max(0, (stateList.items || []).length - 1)));
-                        }
-                        // Dua sayaçları (daha yüksek olan kazanır)
-                        if (Array.isArray(savedList.items) && Array.isArray(stateList.items)) {
-                            // Yedekte bozuk (null) kayıt varsa atla — birleştirme asla çökmesin.
-                            const savedMap = new Map(savedList.items
-                                .filter(it => it && typeof it === 'object')
-                                .map(it => [String(it.prayerId || it.id), it]));
-                            stateList.items.forEach(it => {
-                                if (!it || typeof it !== 'object') return;
-                                const savedItem = savedMap.get(String(it.prayerId || it.id)) ||
-                                                 savedMap.get(String(it.id));
-                                if (savedItem) {
-                                    const fsCount = Number(it.count) || 0;
-                                    const lsCount = Number(savedItem.count) || 0;
-                                    it.count = Math.max(fsCount, lsCount);
-                                }
-                            });
-                        }
-                        // İstatistikler: tarih bazında daha yüksek değer kazanır
-                        const mergeMax = (a, b) => {
-                            const out = (a && typeof a === 'object') ? { ...a } : {};
-                            if (b && typeof b === 'object') {
-                                Object.keys(b).forEach(k => {
-                                    out[k] = Math.max(Number(out[k]) || 0, Number(b[k]) || 0);
+                        // Sayaç ve konum: yalnızca telefon daha yeniyse (bulut birincildir)
+                        if (phoneIsNewer) {
+                            if (savedList.active !== undefined) {
+                                const fsActive = Number(stateList.active) || 0;
+                                const lsActive = Number(savedList.active) || 0;
+                                stateList.active = Math.max(0, Math.min(Math.max(fsActive, lsActive), Math.max(0, (stateList.items || []).length - 1)));
+                            }
+                            if (Array.isArray(savedList.items) && Array.isArray(stateList.items)) {
+                                const savedMap = new Map(savedList.items
+                                    .filter(it => it && typeof it === 'object')
+                                    .map(it => [String(it.prayerId || it.id), it]));
+                                stateList.items.forEach(it => {
+                                    if (!it || typeof it !== 'object') return;
+                                    const savedItem = savedMap.get(String(it.prayerId || it.id)) ||
+                                                     savedMap.get(String(it.id));
+                                    if (savedItem) {
+                                        it.count = Math.max(Number(it.count) || 0, Number(savedItem.count) || 0);
+                                    }
                                 });
                             }
-                            return out;
-                        };
+                        }
+                        // İstatistikler: HER ZAMAN birleştir (daha yüksek değer kazanır)
                         stateList.stats = mergeMax(stateList.stats, savedList.stats);
                         const fsItemStats = (stateList.itemStats && typeof stateList.itemStats === 'object') ? stateList.itemStats : {};
                         if (savedList.itemStats && typeof savedList.itemStats === 'object') {
@@ -4214,27 +4287,22 @@
                         }
                         stateList.itemStats = fsItemStats;
                     });
-                    if (!dbState && localProgress.activeListId && state.lists.some(l => l && l.id === localProgress.activeListId)) {
+                    if (phoneIsNewer && !dbState && localProgress.activeListId && state.lists.some(l => l && l.id === localProgress.activeListId)) {
                         state.activeListId = localProgress.activeListId;
                     }
                 }
 
-                // Bulutta olmayan kişisel listeleri telefon yedeğinden HER ZAMAN geri getir.
-                // restoreListsFromPhoneBackup yalnızca EKSİK listeleri ekler (var olanlara
-                // dokunmaz, çift eklemez). phoneIsNewer kapısı kaldırıldı: bulut daha yeni
-                // olsa bile telefonda durup bulutta olmayan bir liste kayboluyordu —
-                // güncelleme sonrası listelerin silinmesi bu yüzden yaşandı.
-                {
-                    const restoredCount = restoreListsFromPhoneBackup();
-                    if (restoredCount > 0 && canUseFirestore()) {
-                        setTimeout(() => sendDataToServerAsync().catch(() => {}), 500);
-                    }
-                }
-
-                // Kronometre süre istatistiğini yerelden geri yükle (her kullanıcıda kalıcı)
+                // Kronometre: her zaman local ile birleştir (daha yüksek değer kazanır)
                 if (localProgress && localProgress.timeStats && typeof localProgress.timeStats === 'object') {
-                    state.timeStats = localProgress.timeStats;
+                    if (!state.timeStats || typeof state.timeStats !== 'object') state.timeStats = {};
+                    Object.keys(localProgress.timeStats).forEach(k => {
+                        state.timeStats[k] = Math.max(Number(state.timeStats[k]) || 0, Number(localProgress.timeStats[k]) || 0);
+                    });
                 }
+                
+                // İstatistikleri ve güncellenmiş aktif listeyi root state'e kopyala
+                // (Aksi takdirde sonraki save() işlemi stats'ı silebilir)
+                syncActiveListIntoState();
 
                 // GitHub Canlı Senkronizasyonu: GitHub'da dua metni/meali değiştiyse ram'de anında güncelle
                 if (Array.isArray(prayerPool) && prayerPool.length > 0 && Array.isArray(state.lists)) {
@@ -4307,11 +4375,10 @@
                 // Bulut (sunucu) listeleri kişisel "Listelerim" bölümüne karışmasın
                 removeServerListsFromPersonal();
 
-                // YENİ MİMARİ: Açılış sonrası tüm verileri yerel hafızaya mühürle
-                syncActiveListIntoState(); // İstatistiklerin senkronize edilmesi
+                // Buluttan gelen listeleri telefonun kalıcı hafızasına hemen yaz:
+                // cihaz değişikliğinde listeler otomatik olarak telefona inmiş olur
+                // (günlük kullanımda telefon kopyası hazır bekler, sunucudan tekrar çekilmez).
                 saveProgressToPhone();
-                saveAppSettingsToPhone();
-                saveToLocal();
 
                 applyTheme(); syncInputs(); applyViewSettingsToCSS(); applyReaderMode(); updateUI();
                 if (state.keepAwake) requestWakeLock();
@@ -4441,101 +4508,41 @@
             }, 1000);
         }
 
-        // Bulut senkron durumu: yalnızca gerçekten başarılı kayıt sonrası "Yedekli" rozeti gösterilir.
-        // Misafir kullanıcılar veya yazma hatası olan oturumlarda rozet asla "Yedekli" demez.
         let _cloudSyncOk = false;
-        function cloudSyncOk() { return !!(_cloudSyncOk && canUseFirestore()); }
+        function cloudSyncOk() { return false; }
 
-        async function sendDataToServer() {
-            // YENİ MİMARİ: Kullanıcı verileri (listeler, ayarlar, istatistikler) ARTIK FİREBASE'E GİTMEZ.
-            // Yalnızca telefonun kalıcı hafızasına (localStorage) yazılır.
-            // Firebase yalnızca "Kişisel Dua Paylaşımı" için kullanılır.
-            try { saveToLocal(); } catch(_) {}
-            if (!canUseFirestore() || currentUser === 'guest_user') {
-                _cloudSyncOk = false;
-                return;
-            }
-            // Sadece auth durumunu "yedekli" (sorunsuz) göstermek için true yapıyoruz.
-            _cloudSyncOk = true;
-            showSyncStatus(true);
+        function sendDataToServer() {
+            // users/{uid} artık kullanılmıyor; tüm veriler yalnızca telefon hafızasına kaydedilir.
+            saveToLocal();
         }
 
         async function sendDataToServerAsync() {
             clearTimeout(saveTimeout);
-            try { saveToLocal(); } catch(_) {}
-            if (!canUseFirestore() || currentUser === 'guest_user') {
-                _cloudSyncOk = false;
-                return;
-            }
-            _cloudSyncOk = true;
-            showSyncStatus(true);
+            saveToLocal();
         }
 
-        // Uygulama arka plana geçince veya kapanırken bekleyen bulut kaydını hemen gönder;
-        // aksi halde 1 sn'lik debounce içinde yapılan liste/dua değişiklikleri kaybolabilir.
+        // Uygulama kapanırken/arka plana geçerken telefon yedeğini yaz.
         function flushPendingCloudSave() {
-            // Uygulama kapanırken/arka plana geçerken telefon yedeğini de yaz:
-            // bulut kaydı başarısız olsa bile listeler kalıcı hafızada kalır.
+            // KAPANMADAN ÖNCE ROOT STATE'İ AKTİF LİSTEYE KAYDET!
+            // (Eğer bu yapılmazsa o gün çekilen son zikirler listeye geçmez ve kaybolur)
+            try { syncStateBackToActiveList(); } catch (_) {}
             try { saveProgressToPhone(); } catch (_) {}
             if (saveTimeout) {
                 clearTimeout(saveTimeout);
                 saveTimeout = null;
-                sendDataToServer();
+                saveToLocal();
             }
         }
-        window.addEventListener('pagehide', flushPendingCloudSave);
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') flushPendingCloudSave();
-        });
-        // Capacitor Native: uygulama arka plana geçince bekleyen bulut kaydını gönder.
-        // DİKKAT: Yanlış API kullanımı (window.Capacitor.addListener) APK WebView'inde
-        // TypeError fırlatıp ana scripti durduruyordu; uygulama "Bağlantı kontrol
-        // ediliyor..." ekranında kilitleniyor ve butonlar çalışmıyordu.
-        // Doğru API: window.Capacitor.Plugins.App.addListener (Promise döner).
         try {
             if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App && typeof window.Capacitor.Plugins.App.addListener === 'function') {
                 window.Capacitor.Plugins.App.addListener('appStateChange', (s) => { if (!s.isActive) flushPendingCloudSave(); }).catch(() => {});
             }
         } catch (_) { }
 
-        // ─── PRESENCE HEARTBEAT (çevrimiçi sayacı) ───
-        // Uygulama arayüzünde sayaç gösterilmez; yalnızca yönetici aracında
-        // (dualar_yonetici.py) görünür. Giriş yapmış kullanıcılar sessizce
-        // "presence/{uid}" dokümanına lastSeen zamanını yazar.
-        // Misafirler Firestore'a bağlanmaz (sadece giriş yapmış kullanıcılar sayılır).
-        const PRESENCE_TTL_MS = 5 * 60 * 1000; // 5 dakika içinde heartbeat atanlar aktif sayılır
+        // presence artık kullanılmıyor
         let presenceInterval = null;
+        function startPresenceHeartbeat() { /* devre dışı */ }
 
-        function sendPresenceHeartbeat() {
-            if (!canUseFirestore()) return;
-            try {
-                window.fsSetDoc(window.fsDoc(window.firebaseDb, "presence", currentUser), {
-                    lastSeen: new Date().toISOString()
-                }, { merge: true }).catch(() => {});
-            } catch (_) { }
-        }
-
-        function startPresenceHeartbeat() {
-            if (!window.firebaseDb) return;
-            if (!currentUser || currentUser === 'guest_user') return; // misafirler bağlanmaz
-            sendPresenceHeartbeat();
-            if (!presenceInterval) {
-                presenceInterval = setInterval(sendPresenceHeartbeat, 2 * 60 * 1000); // 2 dk heartbeat
-            }
-        }
-
-        // Uygulama arka plana geçince heartbeat durur (yazma kotasını korur);
-        // geri dönünce anında heartbeat gönderilir.
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                if (presenceInterval) { clearInterval(presenceInterval); presenceInterval = null; }
-            } else if (window.firebaseDb && currentUser && currentUser !== 'guest_user') {
-                sendPresenceHeartbeat();
-                if (!presenceInterval) {
-                    presenceInterval = setInterval(sendPresenceHeartbeat, 2 * 60 * 1000);
-                }
-            }
-        });
 
         // FULLSCREEN & BAŞLATMA
         function startAppWithFullscreen() {
@@ -4767,23 +4774,13 @@
             // Kelime bölme artık kullanılmıyor: en küçük boyutta bile sığmayan (pratikte imkânsız)
             // tek bir kelime ekran kenarından taşabilir ama asla ortasından bölünmez.
             textEl.style.transition = originalTransition;
+            setTimeout(() => { const w = document.querySelectorAll('.dua-scroll-wrapper'); w.forEach(el => el.scrollTop = 0); }, 10);
         }
 
         function updateUI() {
             ensureStateLists();
             initScrollWrapperListener();
 
-            // Sade Sayaç sanal listesini state içine güvenlice yerleştir (yoksa)
-            if (!state.lists.find(l => l.id === 'list_sayac')) {
-                state.lists.unshift({
-                    id: 'list_sayac',
-                    name: 'Sade Sayaç',
-                    items: [{ id: 'sayac_default', name: 'Sade Sayaç', count: 0, goal: getLastCustomGoalFromStorage() || 33, meaning: '', text: '' }],
-                    active: 0,
-                    stats: {}, itemStats: {}
-                });
-            }
-            
             if (!state.activeListId) state.activeListId = 'list_sayac';
 
             // Dropdown'u güncelle (Kişisel listeler en üstte, sistem listeleri altında)
@@ -7967,29 +7964,61 @@
             }
         }
         // ─── LİSTE YEDEĞİ (giriş yapmamış kullanıcılar dahil) ─────────────────
-        // Yedek yalnızca liste id + liste adı + dua id'leri + sayaç içerir;
-        // YENİ MİMARİ: Tüm ayarları, istatistikleri ve listeleri içeren "Tam Yedek" alınır.
-        // dua metinleri (kutsal kelimeler) telefonda saklanmadığı gibi yedeğe de yazılmaz.
+        // Yedek: liste id + liste adı + dua id'leri + hedef sayısı + istatistikler + görünüm/genel ayarlar.
+        // Arapça metinler ve sayaç ilerlemesi (count) asla yazılmaz.
         function buildListBackup() {
             try { syncStateBackToActiveList(); } catch (_) { }
-            const minimal = prepareMinimalStateForSaving(state);
             return {
                 app: 'Zikirmatik Pro',
-                type: 'tam-yedek',
+                type: 'liste-yedegi',
                 version: 2,
                 exportedAt: new Date().toISOString(),
-                state: minimal
+                activeListId: state.activeListId || '',
+                lists: (state.lists || []).filter(l => l.id !== 'list_sayac' && l.id !== 'list_default').map(l => ({
+                    id: String(l.id || ''),
+                    name: String(l.name || ''),
+                    active: Math.max(0, Number(l.active) || 0),
+                    items: (Array.isArray(l.items) ? l.items : []).map(it => ({
+                        prayerId: String(it.prayerId || it.id || ''),
+                        goal: Math.max(1, Number(it.goal) || 33)
+                    })).filter(it => it.prayerId),
+                    stats: (l.stats && typeof l.stats === 'object') ? l.stats : {},
+                    itemStats: (l.itemStats && typeof l.itemStats === 'object') ? l.itemStats : {}
+                })).filter(l => l.id),
+                timeStats: (state.timeStats && typeof state.timeStats === 'object') ? state.timeStats : {},
+                settings: {
+                    theme: state.theme,
+                    accent: state.accent,
+                    duaColor: state.duaColor,
+                    sheetOpacity: state.sheetOpacity,
+                    duaFontSize: state.duaFontSize,
+                    titleFontSize: state.titleFontSize,
+                    countFontSize: state.countFontSize,
+                    duaFontFamily: state.duaFontFamily,
+                    duaFontWeight: state.duaFontWeight,
+                    duaFontStyle: state.duaFontStyle,
+                    duaLineHeight: state.duaLineHeight,
+                    arabicFontSize: state.arabicFontSize,
+                    arabicFontFamily: state.arabicFontFamily,
+                    soundMode: state.soundMode,
+                    vibrateDuration: state.vibrateDuration,
+                    endDuaVibrate: state.endDuaVibrate,
+                    funMode: state.funMode,
+                    autoFitEnabled: state.autoFitEnabled,
+                    bgCounterMode: state.bgCounterMode,
+                    autoAdvance: state.autoAdvance,
+                    keepAwake: state.keepAwake,
+                    showStopwatch: state.showStopwatch
+                }
             };
         }
 
         function exportListBackup() {
             closeTopMenu();
-            const body = document.getElementById('backupModalBody');
-            const title = document.getElementById('backupModalTitle');
-            if (!body || !title) return showToast('Yedek penceresi bulunamadı');
             const json = JSON.stringify(buildListBackup(), null, 2);
             window._lastBackupJson = json;
-            title.textContent = 'Yedek İndir';
+            const body = document.getElementById('backupModalBody');
+            const title = document.getElementById('backupModalTitle');
             body.innerHTML = `
                 <div style="font-size:0.82rem; opacity:0.8; margin-bottom:10px; line-height:1.5;">
                     Listeleriniz yalnızca <b>liste adı + dua id'leri</b> olarak yedeklenir (dua metinleri yazılmaz — gizlilik ilkesi).
@@ -7999,6 +8028,7 @@
                 <div style="display:flex; gap:8px;">
                     <button class="btn-primary" style="flex:1; justify-content:center;" onclick="copyBackupText()">📋 Kopyala</button>
                     <button class="btn-primary" style="flex:1; justify-content:center;" onclick="downloadBackupFile()">⬇️ İndir</button>
+                    <button class="btn-primary" style="flex:1; justify-content:center;" onclick="shareBackupFile()">📤 Paylaş</button>
                 </div>`;
             const ta = document.getElementById('backupExportText');
             if (ta) ta.value = json;
@@ -8030,48 +8060,98 @@
                 return ok;
             } catch (_) { return false; }
         }
-        async function downloadBackupFile() {
-            const json = window._lastBackupJson || '';
-            if (!json) return showToast('Yedek bulunamadı');
-            
-            try {
-                // Dosya paylaşımı denemesi (Bazı cihazlarda desteklenmez)
-                const file = new File([json], 'zikirmatik_yedek.json', { type: 'application/json' });
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        title: 'Zikirmatik Yedek',
-                        text: 'Zikirmatik verilerimin yedeği',
-                        files: [file]
-                    });
-                    showToast('Yedekleme paylaşıldı 📤');
-                    return;
-                }
-                
-                // Eğer dosya paylaşılamıyorsa, sadece metni paylaşmayı dene (Android WebView garantisi)
-                if (navigator.share) {
-                    await navigator.share({
-                        title: 'Zikirmatik Yedek',
-                        text: json
-                    });
-                    showToast('Yedekleme metni paylaşıldı 📤');
-                    return;
-                }
-            } catch (err) {
-                console.log("Paylaşım iptal edildi veya desteklenmiyor", err);
-            }
 
-            // Paylaşım yapılamıyorsa klasik indirme (Android WebView'de bazen çalışmaz, o yüzden 'Kopyala' butonu eklendi)
+        async function downloadBackupFile() {
+            const json = window._lastBackupJson || (document.getElementById('backupExportText') || {}).value || '';
+            const filename = 'zikirmatik_yedek_' + localTodayStr() + '.json';
+            const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+
+            if (isNative) {
+                try {
+                    const { Filesystem } = window.Capacitor.Plugins;
+                    if (Filesystem) {
+                        await Filesystem.writeFile({
+                            path: filename,
+                            data: json,
+                            directory: 'DOCUMENTS',
+                            encoding: 'utf8'
+                        });
+                        showToast('Yedek belgelerinize kaydedildi 📥');
+                        return;
+                    }
+                } catch (nativeErr) {
+                    console.error("Native filesystem err:", nativeErr);
+                }
+            }
+            
+            // Tarayıcı/PWA: Blob + objectURL
             try {
                 const blob = new Blob([json], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'zikirmatik_yedek.json';
+                a.download = filename;
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
                 showToast('Yedek dosyası indirildi 📤');
-            } catch (_) { showToast('İndirme yapılamadı, kopyalayın'); }
+            } catch (err) { 
+                console.error("Download error:", err);
+                showToast('İndirme yapılamadı, kopyalayın'); 
+            }
+        }
+
+        async function shareBackupFile() {
+            const json = window._lastBackupJson || (document.getElementById('backupExportText') || {}).value || '';
+            const filename = 'zikirmatik_yedek_' + localTodayStr() + '.json';
+            const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+
+            if (isNative) {
+                try {
+                    const { Filesystem, Share } = window.Capacitor.Plugins;
+                    if (Filesystem && Share) {
+                        const writeResult = await Filesystem.writeFile({
+                            path: filename,
+                            data: json,
+                            directory: 'CACHE',
+                            encoding: 'utf8'
+                        });
+                        await Share.share({
+                            title: 'Zikirmatik Yedek',
+                            text: 'Zikirmatik listelerinizin yedeği.',
+                            url: writeResult.uri,
+                            dialogTitle: 'Yedeği Paylaş'
+                        });
+                        return;
+                    }
+                } catch (nativeErr) {
+                    if (nativeErr.message && nativeErr.message.includes('abort')) return; 
+                }
+            }
+            
+            if (navigator.canShare) {
+                try {
+                    const file = new File([new Blob([json], { type: 'application/json' })], filename, { type: 'application/json' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Zikirmatik Yedek',
+                            text: 'Zikirmatik listelerinizin yedeği'
+                        });
+                        return;
+                    }
+                } catch (e) {
+                    console.warn(e);
+                }
+                
+                try {
+                    await navigator.share({ title: 'Zikirmatik Yedek', text: json });
+                } catch (shareErr) {
+                    if (shareErr.name === 'AbortError') return;
+                }
+            } else {
+                showToast('Tarayıcınız paylaşma özelliğini desteklemiyor. Kopyalayabilirsiniz.');
+            }
         }
 
         function importListBackup() {
@@ -8104,54 +8184,45 @@
                 };
             }
         }
+
         function applyListBackup() {
             const ta = document.getElementById('backupImportText');
             const raw = ta ? ta.value.trim() : '';
             if (!raw) return showToast('Önce yedek metnini yapıştırın veya dosya seçin');
             let data = null;
             try { data = JSON.parse(raw); } catch (_) { }
-            
-            // Eski Tip (Sadece Liste) Yedekleri ve Yeni Tip (Tam State) Yedeklerini Destekle
-            let listsToImport = [];
-            let isFullBackup = false;
-            
-            if (data && typeof data === 'object') {
-                if (Array.isArray(data.lists)) {
-                    listsToImport = data.lists; // Eski tip v1 yedek
-                } else if (data.state && Array.isArray(data.state.lists)) {
-                    listsToImport = data.state.lists; // Yeni tip v2 tam yedek
-                    isFullBackup = true;
-                }
+            if (!data || typeof data !== 'object' || !Array.isArray(data.lists)) {
+                return showToast('Geçersiz yedek dosyası');
             }
-
-            if (listsToImport.length === 0) {
-                return showToast('Geçersiz veya boş yedek dosyası');
-            }
-
             ensureStateLists();
             const serverIds = Array.isArray(window._serverSharedLists)
                 ? new Set(window._serverSharedLists.map(serverListSafeId).filter(Boolean))
                 : new Set();
             let added = 0, updated = 0;
-            
-            listsToImport.forEach(sl => {
+            data.lists.forEach(sl => {
                 const id = String(sl.id || '');
                 if (!id || id === 'list_sayac' || id === 'list_default' || serverIds.has(id)) return;
                 const seen = new Set();
                 const items = (Array.isArray(sl.items) ? sl.items : []).map(it => ({
                     id: generateId(),
                     prayerId: String(it.prayerId || it.id || ''),
-                    count: Math.max(0, Number(it.count) || 0),
+                    count: 0,
                     goal: Math.max(1, Number(it.goal) || 33)
                 })).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
-                
                 const existing = state.lists.find(l => l.id === id);
+                const slStats = (sl.stats && typeof sl.stats === 'object') ? sl.stats : {};
+                const slItemStats = (sl.itemStats && typeof sl.itemStats === 'object') ? sl.itemStats : {};
                 if (existing) {
                     existing.name = String(sl.name || existing.name);
                     existing.items = items;
                     existing.active = Math.max(0, Math.min(Number(sl.active) || 0, Math.max(0, items.length - 1)));
-                    if (isFullBackup && sl.stats) existing.stats = sl.stats;
-                    if (isFullBackup && sl.itemStats) existing.itemStats = sl.itemStats;
+                    // İstatistikleri birleştir: mevcut > yedek ise mevcut korunur (daha yüksek değer kazanır)
+                    existing.stats = mergeMax(existing.stats || {}, slStats);
+                    const merged = existing.itemStats || {};
+                    Object.keys(slItemStats).forEach(date => {
+                        merged[date] = mergeMax(merged[date] || {}, slItemStats[date]);
+                    });
+                    existing.itemStats = merged;
                     updated++;
                 } else {
                     state.lists.push({
@@ -8159,37 +8230,61 @@
                         name: String(sl.name || 'Yedek Liste'),
                         items,
                         active: Math.max(0, Math.min(Number(sl.active) || 0, Math.max(0, items.length - 1))),
-                        stats: (isFullBackup && sl.stats) ? sl.stats : {},
-                        itemStats: (isFullBackup && sl.itemStats) ? sl.itemStats : {},
+                        stats: slStats,
+                        itemStats: slItemStats,
                         restoredFromPhone: true
                     });
                     added++;
                 }
             });
-            
-            // Yeni tip tam yedek ise; tema, sayaç vb. ayarları ve genel istatistikleri de geri yükle
-            if (isFullBackup && data.state) {
-                const s = data.state;
-                const keys = ['theme', 'duaColor', 'accent', 'duaFontSize', 'duaFontFamily', 'soundMode', 'vibrateDuration', 'timeStats'];
-                keys.forEach(k => {
-                    if (s[k] !== undefined) state[k] = s[k];
-                });
-                if (s.activeListId && state.lists.some(l => l.id === s.activeListId)) {
-                    state.activeListId = s.activeListId;
-                }
+            // Görünüm ve genel ayarları uygula (varsa)
+            if (data.settings && typeof data.settings === 'object') {
+                const s = data.settings;
+                const str = (v, d) => (v !== undefined && v !== null) ? String(v) : d;
+                const num = (v, d) => (v !== undefined && !isNaN(Number(v))) ? Number(v) : d;
+                const bool = (v, d) => (v !== undefined) ? !!v : d;
+                if (s.theme !== undefined) state.theme = s.theme;
+                if (s.accent !== undefined) state.accent = str(s.accent, state.accent);
+                if (s.duaColor !== undefined) state.duaColor = str(s.duaColor, state.duaColor);
+                if (s.sheetOpacity !== undefined) state.sheetOpacity = num(s.sheetOpacity, state.sheetOpacity);
+                if (s.duaFontSize !== undefined) state.duaFontSize = num(s.duaFontSize, state.duaFontSize);
+                if (s.titleFontSize !== undefined) state.titleFontSize = num(s.titleFontSize, state.titleFontSize);
+                if (s.countFontSize !== undefined) state.countFontSize = num(s.countFontSize, state.countFontSize);
+                if (s.duaFontFamily !== undefined) state.duaFontFamily = str(s.duaFontFamily, state.duaFontFamily);
+                if (s.duaFontWeight !== undefined) state.duaFontWeight = str(s.duaFontWeight, state.duaFontWeight);
+                if (s.duaFontStyle !== undefined) state.duaFontStyle = str(s.duaFontStyle, state.duaFontStyle);
+                if (s.duaLineHeight !== undefined) state.duaLineHeight = num(s.duaLineHeight, state.duaLineHeight);
+                if (s.arabicFontSize !== undefined) state.arabicFontSize = num(s.arabicFontSize, state.arabicFontSize);
+                if (s.arabicFontFamily !== undefined) state.arabicFontFamily = str(s.arabicFontFamily, state.arabicFontFamily);
+                if (s.soundMode !== undefined) state.soundMode = str(s.soundMode, state.soundMode);
+                if (s.vibrateDuration !== undefined) state.vibrateDuration = num(s.vibrateDuration, state.vibrateDuration);
+                if (s.endDuaVibrate !== undefined) state.endDuaVibrate = num(s.endDuaVibrate, state.endDuaVibrate);
+                if (s.funMode !== undefined) state.funMode = bool(s.funMode, state.funMode);
+                if (s.autoFitEnabled !== undefined) state.autoFitEnabled = bool(s.autoFitEnabled, state.autoFitEnabled);
+                if (s.bgCounterMode !== undefined) state.bgCounterMode = bool(s.bgCounterMode, state.bgCounterMode);
+                if (s.autoAdvance !== undefined) state.autoAdvance = bool(s.autoAdvance, state.autoAdvance);
+                if (s.keepAwake !== undefined) state.keepAwake = bool(s.keepAwake, state.keepAwake);
+                if (s.showStopwatch !== undefined) state.showStopwatch = bool(s.showStopwatch, state.showStopwatch);
+                applyTheme();
+                applyViewSettingsToCSS();
+                syncInputs();
             }
-
+            // timeStats (kronometre) birleştir
+            if (data.timeStats && typeof data.timeStats === 'object') {
+                if (!state.timeStats || typeof state.timeStats !== 'object') state.timeStats = {};
+                Object.keys(data.timeStats).forEach(k => {
+                    state.timeStats[k] = Math.max(Number(state.timeStats[k]) || 0, Number(data.timeStats[k]) || 0);
+                });
+            }
+            if (added + updated === 0 && !data.settings && !data.timeStats) return showToast('Yedekte yüklenecek içerik bulunamadı');
             syncActiveListIntoState();
             save(true);
             closeBackupModal();
             if (typeof renderListManager === 'function') renderListManager();
-            updateUI();
-            
-            if (isFullBackup) {
-                applyTheme(); applyViewSettingsToCSS();
-            }
-            
-            showToast(`Yedek yüklendi: ${added} yeni, ${updated} güncellendi 📥`);
+            const listMsg = (added + updated) > 0 ? ` • ${added} yeni, ${updated} güncellendi liste` : '';
+            const settMsg = data.settings ? ' • Ayarlar uygulandı' : '';
+            const statMsg = data.timeStats ? ' • İstatistikler yüklendi' : '';
+            showToast(`Yedek yüklendi 📥${listMsg}${settMsg}${statMsg}`);
         }
 
         function closeBackupModal() {
@@ -8216,28 +8311,101 @@
             closeAll(); 
             document.getElementById('settingsSheet')?.classList.add('open'); 
         }
-        function openStats() {
+        function openStats(targetListId, isShared) {
             ensureStateLists();
             closeAll();
             const today = localTodayStr();
             const monthPrefix = today.substring(0, 7), yearPrefix = today.substring(0, 4);
-            const statsTodayEl = document.getElementById('statsToday');
-            if (statsTodayEl) statsTodayEl.textContent = (state.stats && state.stats[today]) || 0;
-            const statsAllEl = document.getElementById('statsAll');
-            if (statsAllEl) statsAllEl.textContent = state.stats ? Object.values(state.stats).reduce((a, b) => a + b, 0) : 0;
-            const body = document.getElementById('statsDetailBody');
-            if (body && Array.isArray(state.items)) {
-                body.innerHTML = state.items.map(it => {
-                    let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
-                    for (let date in (state.itemStats || {})) {
-                        const val = state.itemStats[date][it.id] || 0;
-                        itToplam += val;
-                        if (date === today) itBugun = val;
-                        if (date.startsWith(monthPrefix)) itAy += val;
-                        if (date.startsWith(yearPrefix)) itYil += val;
+            
+            let globalToday = 0;
+            let globalAll = 0;
+            let allRows = [];
+            
+            let allListsToProcess = [];
+            let isSingleList = false;
+            
+            if (targetListId) {
+                let targetList = null;
+                if (isShared && typeof sharedLists !== 'undefined') {
+                    targetList = sharedLists.find(l => l.id === targetListId);
+                } else if (state.lists) {
+                    targetList = state.lists.find(l => l.id === targetListId);
+                }
+                
+                if (targetList) {
+                    allListsToProcess.push(targetList);
+                    isSingleList = true;
+                    const titleEl = document.getElementById('statsSheetTitle');
+                    if (titleEl) titleEl.textContent = targetList.name + " İstatistikleri";
+                } else {
+                    return;
+                }
+            } else {
+                // Fallback: tüm listeleri al
+                if (Array.isArray(state.lists)) {
+                    allListsToProcess = [...state.lists];
+                }
+                if (state.selectedSharedList && !allListsToProcess.find(l => l.id === state.selectedSharedList.id)) {
+                    allListsToProcess.push(state.selectedSharedList);
+                }
+                const titleEl = document.getElementById('statsSheetTitle');
+                if (titleEl) titleEl.textContent = "İstatistikler";
+            }
+            
+            // Zaman istatistiklerini ve sıfırlama butonunu gizle/göster
+            const ttCard = document.getElementById('statsTimeTodayCard');
+            const taCard = document.getElementById('statsTimeAllCard');
+            const resetBtn = document.getElementById('statsResetBtn');
+            if (isSingleList) {
+                if (ttCard) ttCard.style.display = 'none';
+                if (taCard) taCard.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+            } else {
+                if (ttCard) ttCard.style.display = '';
+                if (taCard) taCard.style.display = '';
+                if (resetBtn) resetBtn.style.display = '';
+            }
+
+            allListsToProcess.forEach(lst => {
+                    // Sadece Sade Sayaç MADDESİNİ istatistikten ve toplamdan gizle, listenin tamamını değil
+                    // (Kullanıcı Sade Sayaç listesine kendi duasını eklemiş olabilir)
+                    
+                    if (Array.isArray(lst.items)) {
+                        lst.items.forEach(it => {
+                            const itemName = String(it.name || '').trim();
+                            if (itemName === 'Sade Sayaç') {
+                                return; // Yalnızca adı "Sade Sayaç" olanları gizle (kullanıcı adını değiştirip dua girdiyse gizleme)
+                            }
+
+                            let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
+                            for (let date in (lst.itemStats || {})) {
+                                const val = lst.itemStats[date][it.id] || 0;
+                                itToplam += val;
+                                if (date === today) itBugun = val;
+                                if (date.startsWith(monthPrefix)) itAy += val;
+                                if (date.startsWith(yearPrefix)) itYil += val;
+                            }
+                            
+                            globalToday += itBugun;
+                            globalAll += itToplam;
+                            allRows.push(`<tr><td><b>${escapeHtml(it.name || 'Dua')}</b><br><span style="font-size:0.7rem;opacity:0.6;">${escapeHtml(lst.name)}</span></td><td>${itBugun}</td><td>${itAy}</td><td>${itYil}</td><td>${itToplam}</td></tr>`);
+                        });
                     }
-                    return `<tr><td><b>${escapeHtml(it.name || 'Dua')}</b></td><td>${itBugun}</td><td>${itAy}</td><td>${itYil}</td><td>${itToplam}</td></tr>`;
-                }).join('');
+                });
+
+            const statsTodayEl = document.getElementById('statsToday');
+            if (statsTodayEl) statsTodayEl.textContent = globalToday;
+            
+            const statsAllEl = document.getElementById('statsAll');
+            if (statsAllEl) statsAllEl.textContent = globalAll;
+            
+            const body = document.getElementById('statsDetailBody');
+            if (body) {
+                if (allRows.length > 0) {
+                    body.innerHTML = allRows.join('');
+                } else {
+                    body.innerHTML = `<tr><td colspan="5" style="text-align:center; opacity:0.6; padding:20px;">Henüz liste istatistiği yok</td></tr>`;
+                }
             }
             document.getElementById('statsSheet')?.classList.add('open');
         }
@@ -8261,7 +8429,20 @@
         }
         function showStatsConfirm() { document.getElementById('statsConfirmModal').style.display = 'flex'; }
         function hideStatsConfirm() { document.getElementById('statsConfirmModal').style.display = 'none'; }
-        function executeClearStats() { state.stats = {}; state.itemStats = {}; state.timeStats = {}; syncStateBackToActiveList(); save(); openStats(); hideStatsConfirm(); showToast("İstatistikler silindi"); }
+        function executeClearStats() { 
+            if (Array.isArray(state.lists)) {
+                state.lists.forEach(l => {
+                    l.stats = {};
+                    l.itemStats = {};
+                });
+            }
+            state.timeStats = {}; 
+            syncActiveListIntoState(); 
+            save(); 
+            openStats(); 
+            hideStatsConfirm(); 
+            showToast("İstatistikler silindi"); 
+        }
         function adjustGoal(amount) { const input = document.getElementById('newGoal'); let val = parseInt(input.value); if (isNaN(val)) val = 0; val += amount; if (val < 1) val = 1; input.value = val; }
 
         // Service Worker Kaydı (scope uyumlu + eski kayıtları temizle)
@@ -8387,8 +8568,10 @@
 
         const initApp = async () => {
             clearLocalStateCache();
+            await restoreProgressFromNativeStorage();
             initDragReorder();
             await load();
+            startNativeAutoSaveInterval();
         };
         
         // DOMContentLoaded beklemiyoruz, çünkü Firebase modülü (type="module") 
