@@ -1899,6 +1899,11 @@
                         <button class="dua-tab-btn" id="tab_arapca" onclick="setDuaView('arapca')">Arapça</button>
                         <button class="dua-tab-btn" id="tab_meal" onclick="setDuaView('meal')">Meal</button>
                         <button class="dua-tab-btn" id="tab_kaynak" onclick="setDuaView('kaynak')">Kaynak</button>
+                        <button class="dua-tab-btn" id="btn_toggle_top" onclick="toggleTopVisibility()" style="padding: 0 10px; display: flex; align-items: center; justify-content: center;" title="Üst kısmı gizle/göster">
+                            <svg id="top_toggle_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
+                                <path d="M18 15l-6-6-6 6"/>
+                            </svg>
+                        </button>
                     </div>
 
                     <!-- 2. DUA OKUMA VE METİN ALANI -->
@@ -2125,7 +2130,6 @@
                 <span style="font-size:0.85rem; opacity:0.8;">Zikir süresini ekranda göster</span>
             </div>
         </div>
-        <div class="setting-group"><label class="setting-label" style="display:flex; justify-content:space-between; align-items:center;">Hedef Dolunca Otomatik Geç<label class="toggle-switch"><input type="checkbox" id="autoAdvanceCheck" onchange="toggleAutoAdvance()"><span class="slider"></span></label></label></div>
         <div class="setting-group"><label class="setting-label" style="display:flex; justify-content:space-between; align-items:center;">Ekran Uyanık Kalsın (Zikir Sırasında)<label class="toggle-switch"><input type="checkbox" id="keepAwakeCheck" onchange="toggleKeepAwake()"><span class="slider"></span></label></label></div>
         <div class="setting-group"><label class="setting-label"
                 style="display:flex; justify-content:space-between; align-items:center;">Eğlenceli Efektler (Çocuk
@@ -2544,6 +2548,28 @@
             if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
         }
 
+        let isTopHidden = false;
+        function toggleTopVisibility() {
+            isTopHidden = !isTopHidden;
+            const header = document.querySelector('.header');
+            const duaHeader = document.querySelector('.dua-header');
+            const mainContainer = document.querySelector('.main-container');
+            const iconPath = document.querySelector('#top_toggle_icon path');
+            
+            if (isTopHidden) {
+                if (header) header.style.display = 'none';
+                if (duaHeader) duaHeader.style.display = 'none';
+                if (mainContainer) mainContainer.style.paddingTop = '10px';
+                if (iconPath) iconPath.setAttribute('d', 'M6 9l6 6 6-6'); // Aşağı ok
+            } else {
+                if (header) header.style.display = 'flex';
+                if (duaHeader) duaHeader.style.display = 'flex';
+                if (mainContainer) mainContainer.style.paddingTop = ''; // Varsayılan 80px'e döner
+                if (iconPath) iconPath.setAttribute('d', 'M18 15l-6-6-6 6'); // Yukarı ok
+            }
+            if (typeof fitTextToScreen === 'function' && state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
+        }
+
         function getDuaTextValue(item) {
             return String(item?.text ?? item?.dua ?? item?.note ?? '');
         }
@@ -2688,7 +2714,7 @@
 
         function cloneDuaItemForPersonalList(item) {
             const safe = sanitizeDuaItem(item);
-            return { ...safe, id: generateId(), count: Number(safe.count) || 0 };
+            return { ...safe, id: safe.prayerId || safe.id || generateId(), count: 0 };
         }
 
         // ─── METİN GİRİŞ MODALI (native prompt yerine uygulama içi) ─────────────
@@ -3038,30 +3064,8 @@
         }
 
         function setActiveSharedList(sharedListId) {
-            const sl = (sharedLists || []).find(l => l.id === sharedListId);
-            if (!sl) return false;
-            ensureStateLists();
-            
-            // Mark it as a virtual shared list so the UI knows it's read-only
-            sl.virtualSharedList = true;
-            const prevActiveListId = state.activeListId;
-            state.selectedSharedList = sl;
-            state.activeListId = sl.id;
-            state.isSinglePrayerMode = false;
-            
-            syncActiveListIntoState();
-            // Liste seçilince her zaman 1. dua/zikirden başla (kaldığı yerden devam etme)
-            if (prevActiveListId !== sl.id) {
-                sl.active = 0;
-                state.active = 0;
-            }
-            updateUI();
-            renderListManager();
-            renderActiveListRows();
-            if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
-            save();
-            showToast(sl.name + ' listesi seçildi');
-            return true;
+            // Artık doğrudan kullanılamaz, kopyalamaya yönlendiriyoruz.
+            copyCloudList(sharedListId);
         }
 
         // Bulut (GitHub) listesini kişisel listeye kopyala.
@@ -3098,7 +3102,8 @@
                 if (typeof renderListManager === 'function') renderListManager();
                 if (typeof renderZikirlerimModalRows === 'function') renderZikirlerimModalRows();
                 updateUI();
-                showToast('Bulut listesi kişisel listelerine kopyalandı 📋');
+                showToast('Liste eklendi ve aktif edildi');
+                closeList(); // Modal'ı kapat ve ana ekrana dön
             });
         }
 
@@ -3165,27 +3170,25 @@
                             <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${backupBadge}${sharedBadge}</div>
                         </div>
-                        <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
-                            <button class="mini-btn" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
-                            <button class="mini-btn" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
+                        <div class="list-actions" style="width: 100%; display: flex; flex-wrap: nowrap; gap: 4px;">
+                            ${!isActive ? `<button class="mini-btn" style="flex: 3; justify-content: center; padding: 8px 4px; font-size: 0.85rem; font-weight: 700;" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<div style="flex: 3; display: flex; align-items: center; justify-content: center; background: rgba(16,185,129,0.1); border: 1px solid var(--accent); border-radius: 8px;"><span style="font-size:0.85rem;color:var(--accent);font-weight:700;">✓ Seçili</span></div>'}
+                            <button class="mini-btn" style="flex: 2; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
+                            <button class="mini-btn" style="flex: 1.5; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
                         </div>
                     </div>`;
                 }).join('');
             }
             if (cloudLists.length > 0) {
                 html += cloudLists.map((lst) => {
-                    const isActive = state.selectedSharedList && state.selectedSharedList.id === lst.id && state.activeListId === lst.id;
-                    const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">☁️ Bulut</span>';
-                    return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : 'opacity:0.9;'}margin-bottom:8px;">
+                    const cloudBadge = '<span style="background:rgba(52,152,219,0.2);color:#3498db;font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">📋 Şablon</span>';
+                    return `<div class="list-item" style="opacity:0.9; margin-bottom:8px;">
                         <div class="list-info">
-                            <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
+                            <div class="list-info-title">${escapeHtml(lst.name)}</div>
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${cloudBadge}</div>
                         </div>
                         <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveSharedList('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
-                            <button class="mini-btn" onclick="copyCloudList('${lst.id}')">📋 Kopyala</button>
-                            <button class="mini-btn" onclick="openStats('${lst.id}', true)">📊 İstatistik</button>
+                            <button class="mini-btn" onclick="previewSharedList('${lst.id}')">👀 İncele</button>
+                            <button class="mini-btn" style="background:var(--accent); color:white; border:none;" onclick="copyCloudList('${lst.id}')">⬇️ Kişisel Listeme Ekle</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -4646,8 +4649,6 @@
             const bgCheck = document.getElementById('bgCounterCheck');
             if (bgCheck) bgCheck.checked = state.bgCounterMode;
 
-            const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
-            if (autoAdvanceCheck) autoAdvanceCheck.checked = state.autoAdvance;
 
             const keepAwakeCheck = document.getElementById('keepAwakeCheck');
             if (keepAwakeCheck) keepAwakeCheck.checked = state.keepAwake;
@@ -4746,7 +4747,6 @@
         function toggleBgCounterMode() { state.bgCounterMode = document.getElementById('bgCounterCheck').checked; save(); updateUI(); if (state.bgCounterMode) showToast("Arka Plan Sayacı: AÇIK"); else showToast("Arka Plan Sayacı: KAPALI"); }
         function toggleAutoFit() { state.autoFitEnabled = !state.autoFitEnabled; syncInputs(); save(); updateUI(); if (state.autoFitEnabled) { fitTextToScreen(); showToast("Oto Sığdırma: AÇIK"); } else { showToast("Oto Sığdırma: KAPALI"); } }
         function toggleTheme() { state.theme = document.getElementById('darkThemeCheck').checked ? 'dark' : 'light'; applyTheme(); save(); showToast(state.theme === 'dark' ? "Koyu Tema: AÇIK 🌙" : "Açık Tema: AÇIK ☀️"); }
-        function toggleAutoAdvance() { state.autoAdvance = document.getElementById('autoAdvanceCheck').checked; save(); showToast(state.autoAdvance ? "Hedef Dolunca Otomatik Geç: AÇIK" : "Hedef Dolunca Otomatik Geç: KAPALI"); }
         // ─── Ekran Uyanık Kalsın (Wake Lock) ───
         let wakeLockSentinel = null;
         async function requestWakeLock() {
@@ -5662,7 +5662,7 @@
                     stopStopwatch();
                     const transitionVibration = Math.max(0, Number(state.endDuaVibrate) || 0);
 
-                    if (state.autoAdvance && idxBefore < state.items.length - 1) {
+                    if (idxBefore < state.items.length - 1) {
                         if (transitionVibration > 0) hapticVibrate([transitionVibration, 120, Math.min(transitionVibration, 800)]);
                         state.active = idxBefore + 1;
                         // Re-sync but don't increment the new item, it starts at 0 naturally
@@ -5674,26 +5674,17 @@
                         return;
                     }
 
-                    // Liste sonu VEYA otomatik geçiş kapalı: tebrik + sayaç(lar)ı sıfırla
+                    // Liste sonu: tebrik + tüm sayaçları sıfırla + ana ekrana dön
                     if (transitionVibration > 0) hapticVibrate([transitionVibration, 120, Math.min(transitionVibration, 800)]);
                     if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#2ecc71', '#f1c40f', '#3498db'] });
                     showToast(getCongratsText());
 
-                    if (state.autoAdvance) {
-                        // Liste sonu: tüm sayaçlar sıfırlanır ve ana ekrana (Sade Sayaç) dönülür
-                        state.items.forEach(i => i.count = 0);
-                        syncStateBackToActiveList();
-                        save(true);
-                        goToHomeScreen();
-                        return;
-                    } else {
-                        // Otomatik geçiş kapalı: konum korunur, yalnız bu duanın sayacı sıfırlanır
-                        it.count = 0;
-                    }
+                    // Liste sonu: tüm sayaçlar sıfırlanır ve ana ekrana (Sade Sayaç) dönülür
+                    state.items.forEach(i => i.count = 0);
                     syncStateBackToActiveList();
-                    updateUI();
-                    if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
                     save(true);
+                    goToHomeScreen();
+                    return;
                 } else {
                     if (state.vibrateDuration > 0) hapticVibrate([state.vibrateDuration]);
                 }
@@ -5897,17 +5888,17 @@
                 // kişisel liste eklenirse o en üstte kalır, bulutlar altında durur.
                 const cloudLists = Array.isArray(sharedLists) ? sharedLists : [];
                 if (cloudLists.length > 0) {
-                    html += '<div style="margin:14px 0 8px; font-size:0.78rem; font-weight:bold; color:var(--accent); opacity:0.85; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:4px;">☁️ Bulut Listeler (GitHub)</div>';
+                    html += '<div style="margin:14px 0 8px; font-size:0.78rem; font-weight:bold; color:var(--accent); opacity:0.85; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:4px;">📋 Şablon Listeler (GitHub)</div>';
                     html += cloudLists.map(lst => {
                         const isActive = lst.id === state.activeListId;
                         return `
-                            <div class="list-item" style="padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; ${isActive ? 'border-left:4px solid var(--accent); background:rgba(46,204,113,0.08);' : ''}">
+                            <div class="list-item" style="padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; opacity:0.9;">
                                 <div>
                                     <div style="font-weight:bold; font-size:0.95rem;">${escapeHtml(lst.name)}</div>
-                                    <div style="font-size:0.78rem; opacity:0.7;">${(lst.items || []).length} Zikir <span style="background:rgba(52,152,219,0.2); color:#3498db; font-size:0.65rem; padding:2px 6px; border-radius:6px; font-weight:700; margin-left:4px;">☁️ Bulut</span></div>
+                                    <div style="font-size:0.78rem; opacity:0.7;">${(lst.items || []).length} Zikir <span style="background:rgba(52,152,219,0.2); color:#3498db; font-size:0.65rem; padding:2px 6px; border-radius:6px; font-weight:700; margin-left:4px;">📋 Şablon</span></div>
                                 </div>
-                                <button class="mini-btn" style="background:${isActive ? 'var(--muted)' : 'var(--accent)'}; color:#fff; padding:6px 14px; font-weight:bold;" onclick="selectCloudListFromZikirlerimModal('${lst.id}')">
-                                    ${isActive ? '✓ Aktif' : '▶ Başlat'}
+                                <button class="mini-btn" style="background:var(--accent); color:#fff; padding:6px 14px; font-weight:bold;" onclick="copyCloudList('${lst.id}')">
+                                    ⬇️ Ekle
                                 </button>
                             </div>
                         `;
@@ -8289,12 +8280,15 @@
                 const id = String(sl.id || '');
                 if (!id || id === 'list_sayac' || id === 'list_default' || serverIds.has(id)) return;
                 const seen = new Set();
-                const items = (Array.isArray(sl.items) ? sl.items : []).map(it => ({
-                    id: generateId(),
-                    prayerId: String(it.prayerId || it.id || ''),
-                    count: 0,
-                    goal: Math.max(1, Number(it.goal) || 33)
-                })).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
+                const items = (Array.isArray(sl.items) ? sl.items : []).map(it => {
+                    const safeId = String(it.prayerId || it.id || '');
+                    return {
+                        id: safeId || generateId(),
+                        prayerId: safeId,
+                        count: 0,
+                        goal: Math.max(1, Number(it.goal) || 33)
+                    };
+                }).filter(it => it.prayerId && !seen.has(it.prayerId) && (seen.add(it.prayerId), true));
                 const existing = state.lists.find(l => l.id === id);
                 const slStats = (sl.stats && typeof sl.stats === 'object') ? sl.stats : {};
                 const slItemStats = (sl.itemStats && typeof sl.itemStats === 'object') ? sl.itemStats : {};
@@ -8408,76 +8402,80 @@
             let allRows = [];
             
             let allListsToProcess = [];
-            let isSingleList = false;
             
-            if (targetListId) {
-                let targetList = null;
-                if (isShared && typeof sharedLists !== 'undefined') {
-                    targetList = sharedLists.find(l => l.id === targetListId);
-                } else if (state.lists) {
-                    targetList = state.lists.find(l => l.id === targetListId);
-                }
-                
-                if (targetList) {
-                    allListsToProcess.push(targetList);
-                    isSingleList = true;
-                    const titleEl = document.getElementById('statsSheetTitle');
-                    if (titleEl) titleEl.textContent = targetList.name + " İstatistikleri";
-                } else {
-                    return;
-                }
-            } else {
-                // Fallback: tüm listeleri al
-                if (Array.isArray(state.lists)) {
-                    allListsToProcess = [...state.lists];
-                }
-                if (state.selectedSharedList && !allListsToProcess.find(l => l.id === state.selectedSharedList.id)) {
-                    allListsToProcess.push(state.selectedSharedList);
-                }
-                const titleEl = document.getElementById('statsSheetTitle');
-                if (titleEl) titleEl.textContent = "İstatistikler";
+            // Tüm listeleri topla
+            if (Array.isArray(state.lists)) {
+                allListsToProcess = [...state.lists];
+            }
+            if (typeof sharedLists !== 'undefined' && Array.isArray(sharedLists)) {
+                sharedLists.forEach(sl => {
+                    if (!allListsToProcess.some(l => l.id === sl.id)) {
+                        allListsToProcess.push(sl);
+                    }
+                });
             }
             
-            // Zaman istatistiklerini ve sıfırlama butonunu gizle/göster
+            let isSingleList = false;
+            let targetList = null;
+            if (targetListId) {
+                targetList = allListsToProcess.find(l => l.id === targetListId);
+                if (targetList) {
+                    allListsToProcess = [targetList];
+                    isSingleList = true;
+                }
+            }
+            
+            const titleEl = document.getElementById('statsSheetTitle');
+            if (titleEl) titleEl.textContent = isSingleList ? (targetList.name + " İstatistikleri") : "Genel İstatistikler Tablosu";
+            
+            // Zaman istatistiklerini ve sıfırlama butonunu göster (yalnızca genel istatistikse)
             const ttCard = document.getElementById('statsTimeTodayCard');
             const taCard = document.getElementById('statsTimeAllCard');
             const resetBtn = document.getElementById('statsResetBtn');
-            if (isSingleList) {
-                if (ttCard) ttCard.style.display = 'none';
-                if (taCard) taCard.style.display = 'none';
-                if (resetBtn) resetBtn.style.display = 'none';
-            } else {
-                if (ttCard) ttCard.style.display = '';
-                if (taCard) taCard.style.display = '';
-                if (resetBtn) resetBtn.style.display = '';
-            }
+            if (ttCard) ttCard.style.display = isSingleList ? 'none' : '';
+            if (taCard) taCard.style.display = isSingleList ? 'none' : '';
+            if (resetBtn) resetBtn.style.display = isSingleList ? 'none' : '';
 
+            let orderIndex = 1;
             allListsToProcess.forEach(lst => {
-                    // Sadece Sade Sayaç MADDESİNİ istatistikten ve toplamdan gizle, listenin tamamını değil
-                    // (Kullanıcı Sade Sayaç listesine kendi duasını eklemiş olabilir)
-                    
-                    if (Array.isArray(lst.items)) {
-                        lst.items.forEach(it => {
-                            const itemName = String(it.name || '').trim();
-                            if (itemName === 'Sade Sayaç') {
-                                return; // Yalnızca adı "Sade Sayaç" olanları gizle (kullanıcı adını değiştirip dua girdiyse gizleme)
-                            }
-
-                            let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
-                            for (let date in (lst.itemStats || {})) {
-                                const val = lst.itemStats[date][it.id] || 0;
-                                itToplam += val;
-                                if (date === today) itBugun = val;
-                                if (date.startsWith(monthPrefix)) itAy += val;
-                                if (date.startsWith(yearPrefix)) itYil += val;
-                            }
-                            
+                if (lst.id === 'list_default' || lst.id === 'list_sayac') return; // Sistem listelerini gizle
+                
+                if (Array.isArray(lst.items)) {
+                    lst.items.forEach(rawIt => {
+                        const resolvedIt = resolveDuaItem(rawIt);
+                        const itemName = String(resolvedIt.name || '').trim();
+                        if (itemName === 'Sade Sayaç') return;
+                        
+                        let itBugun = 0, itAy = 0, itYil = 0, itToplam = 0;
+                        for (let date in (lst.itemStats || {})) {
+                            const valId = lst.itemStats[date][rawIt.id] || 0;
+                            const valPrayer = (rawIt.prayerId && rawIt.prayerId !== rawIt.id) ? (lst.itemStats[date][rawIt.prayerId] || 0) : 0;
+                            const val = valId + valPrayer;
+                            itToplam += val;
+                            if (date === today) itBugun = val;
+                            if (date.startsWith(monthPrefix)) itAy += val;
+                            if (date.startsWith(yearPrefix)) itYil += val;
+                        }
+                        
+                        // Sadece istatistiği olanları veya aktif duaları göstermek mantıklı ama şimdilik hepsini listeleyelim
+                        if (itToplam > 0 || itBugun > 0) {
                             globalToday += itBugun;
                             globalAll += itToplam;
-                            allRows.push(`<tr><td><b>${escapeHtml(it.name || 'Dua')}</b><br><span style="font-size:0.7rem;opacity:0.6;">${escapeHtml(lst.name)}</span></td><td>${itBugun}</td><td>${itAy}</td><td>${itYil}</td><td>${itToplam}</td></tr>`);
-                        });
-                    }
-                });
+                            const goalText = Math.max(1, Number(resolvedIt.goal) || 33);
+                            allRows.push(`<tr>
+                                <td style="text-align:center;">${orderIndex++}</td>
+                                <td><span style="font-size:0.7rem;opacity:0.8;">${escapeHtml(lst.name)}</span></td>
+                                <td><b>${escapeHtml(itemName || 'Dua')}</b></td>
+                                <td style="text-align:center;">${goalText}</td>
+                                <td style="text-align:center;color:#2ecc71;font-weight:bold;">${itBugun}</td>
+                                <td style="text-align:center;">${itAy}</td>
+                                <td style="text-align:center;">${itYil}</td>
+                                <td style="text-align:center;font-weight:bold;">${itToplam}</td>
+                            </tr>`);
+                        }
+                    });
+                }
+            });
 
             const statsTodayEl = document.getElementById('statsToday');
             if (statsTodayEl) statsTodayEl.textContent = globalToday;
@@ -8485,14 +8483,28 @@
             const statsAllEl = document.getElementById('statsAll');
             if (statsAllEl) statsAllEl.textContent = globalAll;
             
-            const body = document.getElementById('statsDetailBody');
-            if (body) {
-                if (allRows.length > 0) {
-                    body.innerHTML = allRows.join('');
-                } else {
-                    body.innerHTML = `<tr><td colspan="5" style="text-align:center; opacity:0.6; padding:20px;">Henüz liste istatistiği yok</td></tr>`;
-                }
+            const tableContainer = document.getElementById('statsDetailBody')?.parentElement;
+            if (tableContainer) {
+                // Sütun başlıklarını kullanıcının istediği gibi değiştiriyoruz
+                tableContainer.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th style="width:40px; text-align:center;">Sıra</th>
+                            <th>Liste</th>
+                            <th>Dua</th>
+                            <th style="text-align:center;">Hedef</th>
+                            <th style="text-align:center; color:#2ecc71;">Bgn</th>
+                            <th style="text-align:center;">Ay</th>
+                            <th style="text-align:center;">Yıl</th>
+                            <th style="text-align:center;">Toplam</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsDetailBody">
+                        ${allRows.length > 0 ? allRows.join('') : `<tr><td colspan="8" style="text-align:center; opacity:0.6; padding:20px;">Henüz zikir çekilmemiş</td></tr>`}
+                    </tbody>
+                `;
             }
+            
             document.getElementById('statsSheet')?.classList.add('open');
         }
         function closeAppearance() { document.getElementById('appearanceSheet')?.classList.remove('open'); }

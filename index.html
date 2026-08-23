@@ -1899,6 +1899,11 @@
                         <button class="dua-tab-btn" id="tab_arapca" onclick="setDuaView('arapca')">Arapça</button>
                         <button class="dua-tab-btn" id="tab_meal" onclick="setDuaView('meal')">Meal</button>
                         <button class="dua-tab-btn" id="tab_kaynak" onclick="setDuaView('kaynak')">Kaynak</button>
+                        <button class="dua-tab-btn" id="btn_toggle_top" onclick="toggleTopVisibility()" style="padding: 0 10px; display: flex; align-items: center; justify-content: center;" title="Üst kısmı gizle/göster">
+                            <svg id="top_toggle_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
+                                <path d="M18 15l-6-6-6 6"/>
+                            </svg>
+                        </button>
                     </div>
 
                     <!-- 2. DUA OKUMA VE METİN ALANI -->
@@ -2125,7 +2130,6 @@
                 <span style="font-size:0.85rem; opacity:0.8;">Zikir süresini ekranda göster</span>
             </div>
         </div>
-        <div class="setting-group"><label class="setting-label" style="display:flex; justify-content:space-between; align-items:center;">Hedef Dolunca Otomatik Geç<label class="toggle-switch"><input type="checkbox" id="autoAdvanceCheck" onchange="toggleAutoAdvance()"><span class="slider"></span></label></label></div>
         <div class="setting-group"><label class="setting-label" style="display:flex; justify-content:space-between; align-items:center;">Ekran Uyanık Kalsın (Zikir Sırasında)<label class="toggle-switch"><input type="checkbox" id="keepAwakeCheck" onchange="toggleKeepAwake()"><span class="slider"></span></label></label></div>
         <div class="setting-group"><label class="setting-label"
                 style="display:flex; justify-content:space-between; align-items:center;">Eğlenceli Efektler (Çocuk
@@ -2542,6 +2546,28 @@
             currentDuaView = view;
             updateUI();
             if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
+        }
+
+        let isTopHidden = false;
+        function toggleTopVisibility() {
+            isTopHidden = !isTopHidden;
+            const header = document.querySelector('.header');
+            const duaHeader = document.querySelector('.dua-header');
+            const mainContainer = document.querySelector('.main-container');
+            const iconPath = document.querySelector('#top_toggle_icon path');
+            
+            if (isTopHidden) {
+                if (header) header.style.display = 'none';
+                if (duaHeader) duaHeader.style.display = 'none';
+                if (mainContainer) mainContainer.style.paddingTop = '10px';
+                if (iconPath) iconPath.setAttribute('d', 'M6 9l6 6 6-6'); // Aşağı ok
+            } else {
+                if (header) header.style.display = 'flex';
+                if (duaHeader) duaHeader.style.display = 'flex';
+                if (mainContainer) mainContainer.style.paddingTop = ''; // Varsayılan 80px'e döner
+                if (iconPath) iconPath.setAttribute('d', 'M18 15l-6-6-6 6'); // Yukarı ok
+            }
+            if (typeof fitTextToScreen === 'function' && state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
         }
 
         function getDuaTextValue(item) {
@@ -3144,10 +3170,10 @@
                             <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${backupBadge}${sharedBadge}</div>
                         </div>
-                        <div class="list-actions">
-                            ${!isActive ? `<button class="mini-btn" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<span style="font-size:0.72rem;color:var(--accent);font-weight:700;">✓ Seçili</span>'}
-                            <button class="mini-btn" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
-                            <button class="mini-btn" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
+                        <div class="list-actions" style="width: 100%; display: flex; flex-wrap: nowrap; gap: 4px;">
+                            ${!isActive ? `<button class="mini-btn" style="flex: 3; justify-content: center; padding: 8px 4px; font-size: 0.85rem; font-weight: 700;" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<div style="flex: 3; display: flex; align-items: center; justify-content: center; background: rgba(16,185,129,0.1); border: 1px solid var(--accent); border-radius: 8px;"><span style="font-size:0.85rem;color:var(--accent);font-weight:700;">✓ Seçili</span></div>'}
+                            <button class="mini-btn" style="flex: 2; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
+                            <button class="mini-btn" style="flex: 1.5; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -4623,8 +4649,6 @@
             const bgCheck = document.getElementById('bgCounterCheck');
             if (bgCheck) bgCheck.checked = state.bgCounterMode;
 
-            const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
-            if (autoAdvanceCheck) autoAdvanceCheck.checked = state.autoAdvance;
 
             const keepAwakeCheck = document.getElementById('keepAwakeCheck');
             if (keepAwakeCheck) keepAwakeCheck.checked = state.keepAwake;
@@ -4723,7 +4747,6 @@
         function toggleBgCounterMode() { state.bgCounterMode = document.getElementById('bgCounterCheck').checked; save(); updateUI(); if (state.bgCounterMode) showToast("Arka Plan Sayacı: AÇIK"); else showToast("Arka Plan Sayacı: KAPALI"); }
         function toggleAutoFit() { state.autoFitEnabled = !state.autoFitEnabled; syncInputs(); save(); updateUI(); if (state.autoFitEnabled) { fitTextToScreen(); showToast("Oto Sığdırma: AÇIK"); } else { showToast("Oto Sığdırma: KAPALI"); } }
         function toggleTheme() { state.theme = document.getElementById('darkThemeCheck').checked ? 'dark' : 'light'; applyTheme(); save(); showToast(state.theme === 'dark' ? "Koyu Tema: AÇIK 🌙" : "Açık Tema: AÇIK ☀️"); }
-        function toggleAutoAdvance() { state.autoAdvance = document.getElementById('autoAdvanceCheck').checked; save(); showToast(state.autoAdvance ? "Hedef Dolunca Otomatik Geç: AÇIK" : "Hedef Dolunca Otomatik Geç: KAPALI"); }
         // ─── Ekran Uyanık Kalsın (Wake Lock) ───
         let wakeLockSentinel = null;
         async function requestWakeLock() {
@@ -5639,7 +5662,7 @@
                     stopStopwatch();
                     const transitionVibration = Math.max(0, Number(state.endDuaVibrate) || 0);
 
-                    if (state.autoAdvance && idxBefore < state.items.length - 1) {
+                    if (idxBefore < state.items.length - 1) {
                         if (transitionVibration > 0) hapticVibrate([transitionVibration, 120, Math.min(transitionVibration, 800)]);
                         state.active = idxBefore + 1;
                         // Re-sync but don't increment the new item, it starts at 0 naturally
@@ -5651,26 +5674,17 @@
                         return;
                     }
 
-                    // Liste sonu VEYA otomatik geçiş kapalı: tebrik + sayaç(lar)ı sıfırla
+                    // Liste sonu: tebrik + tüm sayaçları sıfırla + ana ekrana dön
                     if (transitionVibration > 0) hapticVibrate([transitionVibration, 120, Math.min(transitionVibration, 800)]);
                     if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#2ecc71', '#f1c40f', '#3498db'] });
                     showToast(getCongratsText());
 
-                    if (state.autoAdvance) {
-                        // Liste sonu: tüm sayaçlar sıfırlanır ve ana ekrana (Sade Sayaç) dönülür
-                        state.items.forEach(i => i.count = 0);
-                        syncStateBackToActiveList();
-                        save(true);
-                        goToHomeScreen();
-                        return;
-                    } else {
-                        // Otomatik geçiş kapalı: konum korunur, yalnız bu duanın sayacı sıfırlanır
-                        it.count = 0;
-                    }
+                    // Liste sonu: tüm sayaçlar sıfırlanır ve ana ekrana (Sade Sayaç) dönülür
+                    state.items.forEach(i => i.count = 0);
                     syncStateBackToActiveList();
-                    updateUI();
-                    if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
                     save(true);
+                    goToHomeScreen();
+                    return;
                 } else {
                     if (state.vibrateDuration > 0) hapticVibrate([state.vibrateDuration]);
                 }
