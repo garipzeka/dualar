@@ -1738,7 +1738,7 @@
             </div>
             
             <h1 class="auth-title">Zikirmatik Pro</h1>
-            <p class="auth-subtitle">Dualarınız İçin Dijital Yoldaşınız<br><span style="font-size:0.78rem; opacity:0.75;">🔒 Dualar telefona asla kaydedilmez, yalnızca bulut hesabınızda saklanır</span></p>
+            <p class="auth-subtitle">Dualarınız İçin Dijital Dostunuz<br><span style="font-size:0.78rem; opacity:0.75;">🔒 Dualar telefona asla kaydedilmez, yalnızca bulut hesabınızda saklanır</span></p>
 
             <div id="authLoading" class="auth-state active">
                 <div class="spinner"></div>
@@ -1831,8 +1831,7 @@
                         <button class="top-menu-item" onclick="openSettings()" title="Genel Ayarlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg><span>Genel Ayarlar</span></button>
                         <button class="top-menu-item" onclick="showList()" title="Dualarım"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><circle cx="3" cy="6" r="1"></circle><circle cx="3" cy="12" r="1"></circle><circle cx="3" cy="18" r="1"></circle></svg><span>Dualarım</span></button>
                         <button class="top-menu-item" onclick="closeTopMenu(); showIntroFromMenu()" title="Uygulama Tanıtımı"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" /></svg><span>Tanıtım</span></button>
-                        <button class="top-menu-item" onclick="exportListBackup()" title="Yedek İndir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg><span>Yedek İndir</span></button>
-                        <button class="top-menu-item" onclick="importListBackup()" title="Yedek Yükle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" /></svg><span>Yedek Yükle</span></button>
+                        <button class="top-menu-item" onclick="exportListBackup()" title="Yedek İşlemleri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg><span>Yedek</span></button>
                         <!-- Serverless migration: Removed leaderboard and admin buttons -->
                         <div class="top-menu-account">
                             <div class="top-menu-account-label">Kullanıcı Hesabı</div>
@@ -2537,7 +2536,8 @@
             vibrateDuration: 25, endDuaVibrate: 200, soundMode: 'soft',
             stats: {}, itemStats: {}, sheetOpacity: 0.4,
             autoFitEnabled: false, funMode: false, bgCounterMode: false,
-            autoAdvance: true, keepAwake: false, showStopwatch: false
+            autoBackupMode: 'off', lastBackupDate: 0,
+            keepAwake: false, showStopwatch: false
         };
 
         let currentDuaView = 'okunus';
@@ -3840,7 +3840,8 @@
                     bgCounterMode: state.bgCounterMode,
                     arabicFontSize: state.arabicFontSize,
                     arabicFontFamily: state.arabicFontFamily,
-                    autoAdvance: state.autoAdvance,
+                    autoBackupMode: state.autoBackupMode,
+                    lastBackupDate: state.lastBackupDate,
                     keepAwake: state.keepAwake,
                     showStopwatch: state.showStopwatch
                 };
@@ -3869,6 +3870,8 @@
                 if (p.duaLineHeight !== undefined) state.duaLineHeight = p.duaLineHeight;
                 if (p.soundMode !== undefined) state.soundMode = p.soundMode;
                 if (p.vibrateDuration !== undefined) state.vibrateDuration = p.vibrateDuration;
+                if (p.autoBackupMode !== undefined) state.autoBackupMode = p.autoBackupMode;
+                if (p.lastBackupDate !== undefined) state.lastBackupDate = p.lastBackupDate;
                 if (p.endDuaVibrate !== undefined) state.endDuaVibrate = p.endDuaVibrate;
                 if (p.funMode !== undefined) state.funMode = p.funMode;
                 if (p.autoFitEnabled !== undefined) state.autoFitEnabled = p.autoFitEnabled;
@@ -4004,7 +4007,7 @@
                     let done = false;
                     const finish = () => { if (!done) { done = true; resolve(); } };
                     window.addEventListener('firebaseLoaded', finish, { once: true });
-                    setTimeout(finish, 10000); // güvenlik ağı: Firebase yüklenemezse devam et
+                    setTimeout(finish, 3000); // güvenlik ağı: Firebase yüklenemezse devam et
                 });
             }
 
@@ -4044,7 +4047,7 @@
                         setTimeout(() => {
                             if (typeof unsubscribe === 'function') unsubscribe();
                             applyUser(window.firebaseAuth ? window.firebaseAuth.currentUser : null);
-                        }, 8000);
+                        }, 2500);
                     } catch (e) {
                         applyUser(window.firebaseAuth ? window.firebaseAuth.currentUser : null);
                     }
@@ -4120,7 +4123,7 @@
                     let debugInfo = "";
                     try {
                         const fetchPromise = fetch(liveUrl, { cache: "no-store" });
-                        const ghRes = await Promise.race([fetchPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]);
+                        const ghRes = await Promise.race([fetchPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
                         if (ghRes.ok) {
                             data = await ghRes.json();
                             fetchSuccess = true;
@@ -4135,7 +4138,7 @@
                     if (!fetchSuccess && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp) {
                         try {
                             const capPromise = window.Capacitor.Plugins.CapacitorHttp.get({ url: liveUrl });
-                            const nativeRes = await Promise.race([capPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]);
+                            const nativeRes = await Promise.race([capPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
                             if (nativeRes && nativeRes.status === 200 && nativeRes.data) {
                                 data = typeof nativeRes.data === 'string' ? JSON.parse(nativeRes.data) : nativeRes.data;
                                 fetchSuccess = true;
@@ -4152,7 +4155,7 @@
                         try {
                             if (window.CapacitorHttp) {
                                 const capGPromise = window.CapacitorHttp.get({ url: liveUrl });
-                                const nativeRes2 = await Promise.race([capGPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]);
+                                const nativeRes2 = await Promise.race([capGPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
                                 if (nativeRes2 && nativeRes2.status === 200 && nativeRes2.data) {
                                     data = typeof nativeRes2.data === 'string' ? JSON.parse(nativeRes2.data) : nativeRes2.data;
                                     fetchSuccess = true;
@@ -4650,6 +4653,8 @@
             if (bgCheck) bgCheck.checked = state.bgCounterMode;
 
 
+            const autoBackupSelect = document.getElementById('autoBackupSelect');
+            if (autoBackupSelect) autoBackupSelect.value = state.autoBackupMode || 'off';
             const keepAwakeCheck = document.getElementById('keepAwakeCheck');
             if (keepAwakeCheck) keepAwakeCheck.checked = state.keepAwake;
 
@@ -4747,6 +4752,47 @@
         function toggleBgCounterMode() { state.bgCounterMode = document.getElementById('bgCounterCheck').checked; save(); updateUI(); if (state.bgCounterMode) showToast("Arka Plan Sayacı: AÇIK"); else showToast("Arka Plan Sayacı: KAPALI"); }
         function toggleAutoFit() { state.autoFitEnabled = !state.autoFitEnabled; syncInputs(); save(); updateUI(); if (state.autoFitEnabled) { fitTextToScreen(); showToast("Oto Sığdırma: AÇIK"); } else { showToast("Oto Sığdırma: KAPALI"); } }
         function toggleTheme() { state.theme = document.getElementById('darkThemeCheck').checked ? 'dark' : 'light'; applyTheme(); save(); showToast(state.theme === 'dark' ? "Koyu Tema: AÇIK 🌙" : "Açık Tema: AÇIK ☀️"); }
+        function updateAutoBackup() {
+            const val = document.getElementById('autoBackupSelect').value;
+            state.autoBackupMode = val;
+            save();
+            showToast("Otomatik Yedekleme: " + (val === 'daily' ? 'GÜNLÜK' : val === 'weekly' ? 'HAFTALIK' : 'KAPALI'));
+        }
+
+        async function checkAndRunAutoBackup() {
+            if (!state || !state.autoBackupMode || state.autoBackupMode === 'off') return;
+            const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+            if (!isNative) return;
+
+            const now = new Date().getTime();
+            const last = state.lastBackupDate || 0;
+            const diffHours = (now - last) / (1000 * 60 * 60);
+
+            let shouldBackup = false;
+            if (state.autoBackupMode === 'daily' && diffHours >= 24) shouldBackup = true;
+            if (state.autoBackupMode === 'weekly' && diffHours >= (24 * 7)) shouldBackup = true;
+
+            if (shouldBackup) {
+                try {
+                    const json = JSON.stringify(buildListBackup(), null, 2);
+                    const filename = 'zikirmatik_otomatik_yedek.json';
+                    const { Filesystem } = window.Capacitor.Plugins;
+                    if (Filesystem) {
+                        await Filesystem.writeFile({
+                            path: filename,
+                            data: json,
+                            directory: 'DOCUMENTS',
+                            encoding: 'utf8'
+                        });
+                        state.lastBackupDate = now;
+                        save();
+                        console.log("Otomatik yedek alındı:", filename);
+                    }
+                } catch (e) {
+                    console.error("Otomatik yedek hatası:", e);
+                }
+            }
+        }
         // ─── Ekran Uyanık Kalsın (Wake Lock) ───
         let wakeLockSentinel = null;
         async function requestWakeLock() {
@@ -8099,15 +8145,24 @@
             body.innerHTML = `
                 <div style="font-size:0.82rem; opacity:0.8; margin-bottom:10px; line-height:1.5;">
                     Listeleriniz yalnızca <b>liste adı + dua id'leri</b> olarak yedeklenir (dua metinleri yazılmaz — gizlilik ilkesi).
-                    Yedeği kopyalayıp istediğiniz yerde saklayabilir veya dosya olarak indirebilirsiniz.
+                    Yedeğinizi <b>Paylaş</b> butonuyla istediğiniz yere gönderebilir veya <b>Geri Yükle</b> ekranından eski yedeklerinizi alabilirsiniz.
+                </div>
+                <div class="setting-group" style="background: rgba(0,0,0,0.15); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                    <label class="setting-label" style="margin-bottom: 6px; font-weight: 700; color: var(--accent);">Cihaz İçi Otomatik Yedekleme</label>
+                    <select id="autoBackupSelect" onchange="updateAutoBackup()" style="margin-bottom: 0;">
+                        <option value="off">KAPALI</option>
+                        <option value="daily">GÜNLÜK (Her Gün)</option>
+                        <option value="weekly">HAFTALIK (7 Günde Bir)</option>
+                    </select>
                 </div>
                 <textarea id="backupExportText" readonly rows="8" style="width:100%; box-sizing:border-box; font-family:monospace; font-size:0.72rem; margin-bottom:10px; background:rgba(128,128,128,0.1); border:1px solid rgba(128,128,128,0.3); border-radius:10px; padding:10px; color:var(--text);"></textarea>
                 <div style="display:flex; gap:8px;">
-                    <button class="btn-primary" style="flex:1; justify-content:center;" onclick="copyBackupText()">📋 Kopyala</button>
-                    <button class="btn-primary" style="flex:1; justify-content:center;" onclick="downloadBackupFile()">⬇️ İndir</button>
+                    <button class="btn-primary" style="flex:1; justify-content:center; background: rgba(255,255,255,0.1); color: var(--text);" onclick="importListBackup()">📥 Geri Yükle</button>
                     <button class="btn-primary" style="flex:1; justify-content:center;" onclick="shareBackupFile()">📤 Paylaş</button>
                 </div>`;
             const ta = document.getElementById('backupExportText');
+            const autoBackupSelect = document.getElementById('autoBackupSelect');
+            if (autoBackupSelect) autoBackupSelect.value = state.autoBackupMode || 'off';
             if (ta) ta.value = json;
             const modal = document.getElementById('backupModal');
             if (modal) modal.style.display = 'flex';
@@ -8239,12 +8294,15 @@
             title.textContent = 'Yedek Yükle';
             body.innerHTML = `
                 <div style="font-size:0.82rem; opacity:0.8; margin-bottom:10px; line-height:1.5;">
-                    Yedek dosyanızı seçin veya yedek metnini aşağıya yapıştırıp <b>Yükle</b>'ye basın.
-                    Yüklenen listeler mevcut listelerinize eklenir; aynı adlı/aynı id'li liste varsa güncellenir.
+                    <b>Dosya Seç</b> butonuyla telefonunuzun dosyalarından (veya Google Drive'dan) yedeğinizi bulabilir, ya da <b>Hızlı Bul</b> butonuyla otomatik yedeğinizi anında çekebilirsiniz.
                 </div>
-                <input type="file" id="backupFileInput" accept=".json,application/json" style="margin-bottom:10px; width:100%;" />
-                <textarea id="backupImportText" rows="6" placeholder="Yedek metnini buraya yapıştırın..." style="width:100%; box-sizing:border-box; font-family:monospace; font-size:0.72rem; margin-bottom:10px; background:rgba(128,128,128,0.1); border:1px solid rgba(128,128,128,0.3); border-radius:10px; padding:10px; color:var(--text);"></textarea>
-                <button class="btn-primary" style="width:100%; justify-content:center;" onclick="applyListBackup()">📥 Yedekten Yükle</button>`;
+                <div style="display:flex; gap:8px; margin-bottom:10px;">
+                    <button class="btn-primary" style="flex:1; justify-content:center; background: var(--card); border: 1px solid rgba(255,255,255,0.2); font-size:0.8rem; padding: 12px 5px;" onclick="document.getElementById('backupFileInput').click()">📁 Dosya Seç (Drive vb.)</button>
+                    <button class="btn-primary" style="flex:1; justify-content:center; background: var(--accent); font-size:0.8rem; padding: 12px 5px;" onclick="loadAutoBackupDirectly()">⚡ Otomatik Yedeği Hızlı Bul</button>
+                </div>
+                <input type="file" id="backupFileInput" accept=".json,application/json" style="display:none;" />
+                <textarea id="backupImportText" rows="6" placeholder="Yedek metni buraya yüklenecek..." style="width:100%; box-sizing:border-box; font-family:monospace; font-size:0.72rem; margin-bottom:10px; background:rgba(128,128,128,0.1); border:1px solid rgba(128,128,128,0.3); border-radius:10px; padding:10px; color:var(--text);"></textarea>
+                <button class="btn-primary" style="width:100%; justify-content:center; padding: 14px; font-size:0.9rem;" onclick="applyListBackup()">📥 Yedeği Şimdi Yükle</button>`;
             const modal = document.getElementById('backupModal');
             if (modal) modal.style.display = 'flex';
             const fileInput = document.getElementById('backupFileInput');
@@ -8261,6 +8319,22 @@
                 };
             }
         }
+
+        async function loadAutoBackupDirectly() {
+            try {
+                const { Filesystem } = window.Capacitor.Plugins;
+                if (!Filesystem) return showToast('Sistem desteklemiyor');
+                const result = await Filesystem.readFile({
+                    path: 'zikirmatik_otomatik_yedek.json',
+                    directory: 'DOCUMENTS',
+                    encoding: 'utf8'
+                });
+                const ta = document.getElementById('backupImportText');
+                if (ta) ta.value = result.data;
+                showToast('Otomatik yedek dosyası okundu! Yükle butonuna basabilirsiniz.');
+            } catch (e) {
+                showToast('Henüz alınmış bir otomatik yedek bulunamadı.');
+            }
 
         function applyListBackup() {
             const ta = document.getElementById('backupImportText');
@@ -8670,6 +8744,7 @@
             initDragReorder();
             await load();
             startNativeAutoSaveInterval();
+            setTimeout(checkAndRunAutoBackup, 2000);
         };
         
         // DOMContentLoaded beklemiyoruz, çünkü Firebase modülü (type="module") 
