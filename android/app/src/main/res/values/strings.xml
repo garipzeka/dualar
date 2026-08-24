@@ -4,4 +4,5 @@
     <string name="title_activity_main">Zikirmatik Pro</string>
     <string name="package_name">com.zikirmatik.pro</string>
     <string name="custom_url_scheme">com.zikirmatik.pro</string>
+    <string name="default_web_client_id">765011064176-vqrnb1k13l1i18n03temj65faosenojj.apps.googleusercontent.com</string>
 </resources>

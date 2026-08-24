@@ -10,6 +10,17 @@
     <title>Zikirmatik Pro</title>
 
     <script>
+        // Ayarları olabildiğince erken yükleyip temayı ayarla (flicker önleme)
+        try {
+            const raw = localStorage.getItem('zikir_app_settings');
+            if (raw) {
+                const saved = JSON.parse(raw);
+                if (typeof saved.theme !== 'undefined') {
+                    document.documentElement.setAttribute('data-theme', saved.theme);
+                }
+            }
+        } catch (e) { }
+        
         if (window.location.pathname === '/zikir') {
             window.location.replace('/zikir/');
         }
@@ -22,6 +33,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Lora:ital,wght@0,400;0,700&family=Montserrat:wght@400;700;900&family=Poppins:wght@400;700;900&family=Comfortaa:wght@400;700&family=Caveat:wght@400;700&family=Amiri:ital,wght@0,400;0,700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap"
         rel="stylesheet">
     <script src="confetti.browser.min.js"></script>
+    <script src="capacitor-firebase-auth.js"></script>
 
     <!-- Firebase SDKs -->
     <script type="module">
@@ -107,7 +119,6 @@
             --glass: rgba(0, 0, 0, 0.03);
             --sheet-rgb: 255, 255, 255;
         }
-
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -131,6 +142,9 @@
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
+        }
+        [data-theme="light"] body {
+            background: #f1f5f9;
         }
 
         input, textarea {
@@ -295,7 +309,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 20px 10px 20px;
+            padding: calc(15px + env(safe-area-inset-top, 10px)) 20px 10px 20px;
             z-index: 1000;
             background: transparent;
             width: 100%;
@@ -660,7 +674,7 @@
             display: none !important;
         }
         body.reader-mode .main-container {
-            padding: 8px 8px 0px 8px !important;
+            padding: calc(8px + env(safe-area-inset-top, 10px)) 8px 0px 8px !important;
         }
         body.reader-mode .dua-section {
             margin-bottom: 0px !important;
@@ -757,7 +771,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 80px 20px 20px 20px;
+            padding: calc(65px + env(safe-area-inset-top, 10px)) 20px 20px 20px;
             box-shadow: none;
             border: none;
             border-radius: 0;
@@ -783,18 +797,18 @@
         .dua-content-tabs {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             margin-bottom: 12px;
-            padding: 0 10px;
+            padding: 0 5px;
         }
 
         .dua-tab-btn {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.16);
             color: var(--muted);
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            padding: 5px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2559,12 +2573,12 @@
             if (isTopHidden) {
                 if (header) header.style.display = 'none';
                 if (duaHeader) duaHeader.style.display = 'none';
-                if (mainContainer) mainContainer.style.paddingTop = '10px';
+                if (mainContainer) mainContainer.style.paddingTop = 'calc(15px + env(safe-area-inset-top, 10px))';
                 if (iconPath) iconPath.setAttribute('d', 'M6 9l6 6 6-6'); // Aşağı ok
             } else {
                 if (header) header.style.display = 'flex';
                 if (duaHeader) duaHeader.style.display = 'flex';
-                if (mainContainer) mainContainer.style.paddingTop = ''; // Varsayılan 80px'e döner
+                if (mainContainer) mainContainer.style.paddingTop = ''; // Varsayılan CSS'e döner
                 if (iconPath) iconPath.setAttribute('d', 'M18 15l-6-6-6 6'); // Yukarı ok
             }
             if (typeof fitTextToScreen === 'function' && state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
@@ -3557,21 +3571,69 @@
         const PROGRESS_KEY = 'zikir_progress_v2';
 
         // --- NATIVE STORAGE YEDEKLERİ ---
-        const NATIVE_PROGRESS_FILE = 'zikir_progress_v2_auto.json';
-        let _lastNativeSaveStr = '';
+        const NATIVE_PROGRESS_FILE = "zikir_progress_v2_auto.json";
+        const NATIVE_SETTINGS_FILE = "zikir_settings_v2_auto.json";
+        let _lastNativeSaveStr = "";
+        let _lastNativeSettingsSaveStr = "";
 
-        async function restoreProgressFromNativeStorage() {
+        async function restoreSettingsFromNativeStorage() {
+            try {
+                const isNative = window.Capacitor && typeof window.Capacitor.isNativePlatform === "function" && window.Capacitor.isNativePlatform();
+                if (!isNative) return;
+                const { Filesystem } = window.Capacitor.Plugins;
+                if (!Filesystem) return;
+
+                const readPromise = Filesystem.readFile({
+                    path: NATIVE_SETTINGS_FILE,
+                    directory: "DATA",
+                    encoding: "utf8"
+                });
+                const result = await Promise.race([readPromise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 1500))]);
+                
+                if (result && result.data) {
+                    localStorage.setItem('zikir_app_ui_settings', result.data);
+                    _lastNativeSettingsSaveStr = result.data;
+                    console.log("Kalıcı hafızadaki ayarlar yüklendi.");
+                }
+            } catch (err) { }
+        }
+
+        async function saveSettingsToNativeStorage() {
             try {
                 const isNative = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
                 if (!isNative) return;
                 const { Filesystem } = window.Capacitor.Plugins;
                 if (!Filesystem) return;
 
-                const result = await Filesystem.readFile({
-                    path: NATIVE_PROGRESS_FILE,
+                const raw = localStorage.getItem('zikir_app_ui_settings');
+                if (!raw) return;
+                
+                if (raw === _lastNativeSettingsSaveStr) return;
+
+                await Filesystem.writeFile({
+                    path: NATIVE_SETTINGS_FILE,
+                    data: raw,
                     directory: 'DATA',
                     encoding: 'utf8'
                 });
+                _lastNativeSettingsSaveStr = raw;
+            } catch (err) { }
+        }
+
+        async function restoreProgressFromNativeStorage() {
+            try {
+                const isNative = window.Capacitor && typeof window.Capacitor.isNativePlatform === "function" && window.Capacitor.isNativePlatform();
+                if (!isNative) return;
+                const { Filesystem } = window.Capacitor.Plugins;
+                if (!Filesystem) return;
+
+                const readPromise = Filesystem.readFile({
+                    path: NATIVE_PROGRESS_FILE,
+                    directory: "DATA",
+                    encoding: "utf8"
+                });
+                const result = await Promise.race([readPromise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 1500))]);
+                
                 if (result && result.data) {
                     const nativeData = JSON.parse(result.data);
                     const localRaw = localStorage.getItem(PROGRESS_KEY);
@@ -3621,6 +3683,7 @@
         function startNativeAutoSaveInterval() {
             setInterval(() => {
                 saveProgressToNativeStorage();
+                saveSettingsToNativeStorage();
             }, 10000);
         }
         // --- NATIVE STORAGE YEDEKLERİ SONU ---
@@ -4109,157 +4172,38 @@
                 clearTimeout(autoRetryTimer);
                 autoRetryTimer = null;
             }
-            await ensureLoggedIn();
+            
+            // --- OFFLINE-FIRST: ANINDA AÇILIŞ ---
+            const overlay = document.getElementById("authOverlay");
+            if (overlay) {
+                overlay.style.opacity = "0";
+                overlay.style.display = "none";
+            }
+            
+            ensureLoggedIn().catch(()=>{}); // Arka planda çalışsın
+
             try {
-                let fetchedOk = false;
-                window._lastGithubFetch = 0;
-                // 1. Fetch public prayers strictly from GitHub on every launch (STRICT: Never local, internet required)
-                try {
-                    const liveUrl = (window.GITHUB_PRAYERS_URL || "https://raw.githubusercontent.com/selahattin35/dualar/main/dualar.json") + "?t=" + Date.now();
-                    let data = null;
-                    
-                    // İlk olarak standart fetch dene
-                    let fetchSuccess = false;
-                    let debugInfo = "";
-                    try {
-                        const fetchPromise = fetch(liveUrl, { cache: "no-store" });
-                        const ghRes = await Promise.race([fetchPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
-                        if (ghRes.ok) {
-                            data = await ghRes.json();
-                            fetchSuccess = true;
-                        } else {
-                            debugInfo += "Fetch Status: " + ghRes.status + "\n";
-                        }
-                    } catch (fetchErr) {
-                        debugInfo += "Fetch Err: " + (fetchErr.message || fetchErr) + "\n";
+                // 1. Önceki oturumdan (localStorage) GITHUB_CACHE yükle (Anında)
+                const cachedRaw = localStorage.getItem("GITHUB_CACHE");
+                if (cachedRaw) {
+                    const data = JSON.parse(cachedRaw);
+                    if (data && Array.isArray(data.items) && data.items.length > 0) {
+                        prayerPool = data.items;
+                        window.LEGACY_ID_MAP = data.legacyMap || {};
+                        window.CONGRATS_TEXT = data.congratsText || "";
+                        window._serverSharedLists = Array.isArray(data.lists) ? data.lists : null;
                     }
-
-                    // Standart fetch başarısız olduysa Capacitor native HTTP ile dene
-                    if (!fetchSuccess && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp) {
-                        try {
-                            const capPromise = window.Capacitor.Plugins.CapacitorHttp.get({ url: liveUrl });
-                            const nativeRes = await Promise.race([capPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
-                            if (nativeRes && nativeRes.status === 200 && nativeRes.data) {
-                                data = typeof nativeRes.data === 'string' ? JSON.parse(nativeRes.data) : nativeRes.data;
-                                fetchSuccess = true;
-                            } else {
-                                debugInfo += "CapHttp Status: " + (nativeRes ? nativeRes.status : 'no-res') + "\n";
-                            }
-                        } catch (capErr) {
-                            debugInfo += "CapHttp Err: " + (capErr.message || capErr) + "\n";
-                        }
-                    }
-
-                    // Capacitor.Plugins.CapacitorHttp yoksa, Capacitor global Http dene
-                    if (!fetchSuccess && window.Capacitor && !data) {
-                        try {
-                            if (window.CapacitorHttp) {
-                                const capGPromise = window.CapacitorHttp.get({ url: liveUrl });
-                                const nativeRes2 = await Promise.race([capGPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 1500))]);
-                                if (nativeRes2 && nativeRes2.status === 200 && nativeRes2.data) {
-                                    data = typeof nativeRes2.data === 'string' ? JSON.parse(nativeRes2.data) : nativeRes2.data;
-                                    fetchSuccess = true;
-                                } else {
-                                    debugInfo += "CapHttpG Status: " + (nativeRes2 ? nativeRes2.status : 'no-res') + "\n";
-                                }
-                            }
-                        } catch (capErr2) {
-                            debugInfo += "CapHttpG Err: " + (capErr2.message || capErr2) + "\n";
-                        }
-                    }
-
-                    if (!fetchSuccess) {
-                        showToast("Dua yükleme hatası: " + debugInfo);
-                    } else if (data) {
-                        if (data && Array.isArray(data.lists)) {
-                            window._serverSharedLists = data.lists;
-                        } else {
-                            window._serverSharedLists = null;
-                        }
-                        // Kutsal kelimeler telefona asla gömülmez: eski ID eşlemesi
-                        // ve tebrik metni GitHub'daki dualar.json'dan çekilir.
-                        window.LEGACY_ID_MAP = (data && data.legacyMap) || {};
-                        window.CONGRATS_TEXT = (data && data.congratsText) || '';
-                        // prayerPool = dua deposu: önce data.items kullan (tekrarsız ana kaynak),
-                        // yoksa lists.flatMap ile doldur (dedup sonradan yapılır)
-                        if (data && Array.isArray(data.items) && data.items.length > 0) {
-                            prayerPool = data.items;
-                            window._lastGithubFetch = Date.now();
-                        } else if (data && Array.isArray(data.lists)) {
-                            prayerPool = data.lists.flatMap(lst => lst.items || []);
-                        } else if (Array.isArray(data)) {
-                            prayerPool = data;
-                        } else {
-                            prayerPool = [];
-                        }
-
-                        if (prayerPool && prayerPool.length > 0) {
-                            fetchedOk = true;
-                            if (typeof renderDepotByCategory === 'function') {
-                                renderDepotByCategory();
-                            }
-                        } else {
-                            showToast("Dualar indirildi ancak liste boş geldi! Format hatası.");
-                        }
-                    }
-                } catch (e) {
-                    prayerPool = [];
-                    console.warn("İnternet bağlantısı yok veya GitHub'a ulaşılamadı", e);
                 }
-                if (!fetchedOk) {
-                    prayerPool = [];
-                    if (!isRetry) console.warn("İnternet bağlantısı yok, sayaç modunda devam ediliyor.");
-                } else if (isRetry) {
-                    showToast("İnternet bağlantısı sağlandı, dualar başarıyla yüklendi 🌿");
-                }
+            } catch(e) {}
+
+            try {
                 // 2. State: İstatistikler ve listeler SADECE telefonun kalıcı hafızasından okunur.
-                // (Kullanıcının isteği üzerine Firebase bağlantısı TAMAMEN koparılmıştır.)
-                const dbState = null;
-
                 let localState = null;
                 try {
                     const localRaw = localStorage.getItem("zikir_app_data");
                     if (localRaw) localState = JSON.parse(localRaw);
                 } catch(e) { }
-                // Eğer buluttan veri geldiyse, onu baz al; gelmediyse telefondaki yedeği baz al.
-                if (dbState) {
-                    state = dbState;
-                } else if (localState) {
-                    state = localState;
-                }
-
-                // 3. Herkese Açık Onaylanmış Duaları Firebase'den Çek (custom_prayers)
-                try {
-                    if (canUseFirestore()) {
-                        const approvedRef = window.fsCollection(window.firebaseDb, "custom_prayers");
-                        const q2 = window.fsQuery(approvedRef, window.fsWhere("status", "==", "onaylandi"));
-                        const qPromise = window.fsGetDocs(q2);
-                        const querySnap2 = await Promise.race([qPromise, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]);
-                        if (querySnap2 && querySnap2.forEach) {
-                            querySnap2.forEach((doc) => {
-                                const customData = doc.data();
-                                customData.id = doc.id;
-                                prayerPool.push(customData);
-                            });
-                        }
-                    }
-                } catch (e) {
-                    console.error("Onaylı dualar çekilemedi veya zaman aşımı", e);
-                }
-
-                // 4. Kullanıcının Bekleyen Kendi Özel Dualarını Çek
-                await fetchPrivatePrayersFromFirebase();
-
-                // Deduplicate prayerPool
-                if (prayerPool && prayerPool.length > 0) {
-                    const seen = new Map();
-                    prayerPool = prayerPool.filter(p => {
-                        const key = String(p.id ?? p.name ?? '');
-                        if (seen.has(key)) return false;
-                        seen.set(key, true);
-                        return true;
-                    });
-                }
+                if (localState) state = localState;
 
                 ensureStateLists();
                 
@@ -4268,272 +4212,141 @@
                     console.log(`Telefon yedeğinden ${restoredCount} kişisel liste geri yüklendi.`);
                 }
                 
-                // Telefondan kaydedilen ilerleme varsa Firestore state'i yoksa veya taze ise uygula
-                // (sayaçlar Firestore'dan geldiyse localStorage'daki daha yeni olabilir)
                 const localProgress = loadProgressFromPhone();
-
-                // ── ÇAKIŞMA KURALI (bulut vs telefon yedeği) ──────────────────
-                // En güncel olan kazanır:
-                //  • Bulut yoksa (misafir / boş hesap) → telefon yedeği her şeyi geri yükler.
-                //  • Telefon yedeği buluttan daha yeni ise → yedek yalnızca EKSİK olanı
-                //    tamamlar: bulutta olmayan listeler eklenir, sayaç/istatistik/konumda
-                //    daha yüksek olan değer kullanılır (çevrimdışı ilerleme korunur).
-                //  • Bulut daha yeni ise → bulut birincildir; telefon yedeği dikkate
-                //    alınmaz (eski bir yedek, başka cihazda silinen listeyi veya
-                //    sıfırlanan sayacı geri getirmez).
-                const cloudSavedAt = dbState ? String(dbState.savedAt || '') : '';
-                const backupSavedAt = localProgress ? String(localProgress.savedAt || '') : '';
-                let phoneIsNewer = false;
-                if (!cloudSavedAt) {
-                    phoneIsNewer = true;
-                } else if (backupSavedAt) {
-                    const ct = new Date(cloudSavedAt).getTime();
-                    const bt = new Date(backupSavedAt).getTime();
-                    if (!isNaN(ct) && !isNaN(bt)) phoneIsNewer = bt >= ct;
-                }
-
-                // İstatistikler her zaman yerel kayddan birleştirilir (phoneIsNewer'dan bağımsız).
-                // Bulut daha yeni olsa bile o gün çekilen zikirler kaybolmamalı.
-
-                if (localProgress && Array.isArray(state.lists) && Array.isArray(localProgress.lists)) {
-                    localProgress.lists.forEach(savedList => {
-                        const stateList = state.lists.find(l => l.id === savedList.id);
-                        if (!stateList) return;
-                        // Sayaç ve konum: yalnızca telefon daha yeniyse (bulut birincildir)
-                        if (phoneIsNewer) {
-                            if (savedList.active !== undefined) {
-                                const fsActive = Number(stateList.active) || 0;
-                                const lsActive = Number(savedList.active) || 0;
-                                stateList.active = Math.max(0, Math.min(Math.max(fsActive, lsActive), Math.max(0, (stateList.items || []).length - 1)));
-                            }
-                            if (Array.isArray(savedList.items) && Array.isArray(stateList.items)) {
-                                const savedMap = new Map(savedList.items
-                                    .filter(it => it && typeof it === 'object')
-                                    .map(it => [String(it.prayerId || it.id), it]));
-                                stateList.items.forEach(it => {
-                                    if (!it || typeof it !== 'object') return;
-                                    const savedItem = savedMap.get(String(it.prayerId || it.id)) ||
-                                                     savedMap.get(String(it.id));
-                                    if (savedItem) {
-                                        it.count = Math.max(Number(it.count) || 0, Number(savedItem.count) || 0);
-                                    }
-                                });
-                            }
-                        }
-                        // İstatistikler: HER ZAMAN birleştir (daha yüksek değer kazanır)
-                        stateList.stats = mergeMax(stateList.stats, savedList.stats);
-                        const fsItemStats = (stateList.itemStats && typeof stateList.itemStats === 'object') ? stateList.itemStats : {};
-                        if (savedList.itemStats && typeof savedList.itemStats === 'object') {
-                            Object.keys(savedList.itemStats).forEach(date => {
-                                fsItemStats[date] = mergeMax(fsItemStats[date], savedList.itemStats[date]);
-                            });
-                        }
-                        stateList.itemStats = fsItemStats;
-                    });
-                    if (phoneIsNewer && !dbState && localProgress.activeListId && state.lists.some(l => l && l.id === localProgress.activeListId)) {
-                        state.activeListId = localProgress.activeListId;
-                    }
-                }
-
-                // Kronometre: her zaman local ile birleştir (daha yüksek değer kazanır)
-                if (localProgress && localProgress.timeStats && typeof localProgress.timeStats === 'object') {
-                    if (!state.timeStats || typeof state.timeStats !== 'object') state.timeStats = {};
-                    Object.keys(localProgress.timeStats).forEach(k => {
-                        state.timeStats[k] = Math.max(Number(state.timeStats[k]) || 0, Number(localProgress.timeStats[k]) || 0);
-                    });
-                }
+                const cloudSavedAt = "";
+                const backupSavedAt = localProgress ? String(localProgress.savedAt || "") : "";
                 
-                // İstatistikleri ve güncellenmiş aktif listeyi root state'e kopyala
-                // (Aksi takdirde sonraki save() işlemi stats'ı silebilir)
-                syncActiveListIntoState();
-
-                // GitHub Canlı Senkronizasyonu: GitHub'da dua metni/meali değiştiyse ram'de anında güncelle
-                if (Array.isArray(prayerPool) && prayerPool.length > 0 && Array.isArray(state.lists)) {
-                    const poolMap = new Map(prayerPool.map(p => [String(p.id), p]));
-                    state.lists.forEach(list => {
-                        if (Array.isArray(list.items)) {
-                            list.items.forEach(it => {
-                                if (!it || typeof it !== 'object') return;
-                                const fresh = poolMap.get(String(it.id));
-                                if (fresh) {
-                                    it.name = fresh.name || it.name;
-                                    if (fresh.text !== undefined) it.text = fresh.text;
-                                    if (fresh.meaning !== undefined) it.meaning = fresh.meaning;
+                if (localProgress && Array.isArray(localProgress.lists)) {
+                    localProgress.lists.forEach(bkList => {
+                        const existing = state.lists.find(l => l.id === bkList.id);
+                        if (!existing) {
+                            state.lists.push(bkList);
+                        } else {
+                            existing.name = bkList.name || existing.name;
+                            existing.active = Math.max(existing.active || 0, bkList.active || 0);
+                            
+                            (bkList.items || []).forEach(bkItem => {
+                                const extItem = existing.items.find(i => (i.prayerId === bkItem.prayerId) || (i.id === bkItem.id));
+                                if (extItem) {
+                                    extItem.count = Math.max(extItem.count || 0, bkItem.count || 0);
+                                    if (bkItem.goal) extItem.goal = bkItem.goal;
+                                } else {
+                                    existing.items.push(bkItem);
                                 }
                             });
+                            
+                            existing.stats = mergeMax(existing.stats, bkList.stats);
+                            existing.itemStats = mergeMax(existing.itemStats, bkList.itemStats);
                         }
+                    });
+                    state.timeStats = mergeMax(state.timeStats, localProgress.timeStats);
+                    
+                    if (!state.activeListId || state.activeListId === "list_sayac") {
+                        if (localProgress.activeListId && state.lists.find(l => l.id === localProgress.activeListId)) {
+                            state.activeListId = localProgress.activeListId;
+                        }
+                    }
+                }
+                
+                if (!state.lists.find(l => l.id === "list_sayac")) {
+                    state.lists.unshift({
+                        id: "list_sayac",
+                        name: "Sade Sayaç",
+                        items: [{ id: "sayac_default", name: "Sade Sayaç", count: 0, goal: 33, meaning: "", text: "" }],
+                        active: 0, stats: {}, itemStats: {}
                     });
                 }
                 
-                if (currentEmail === 'selahattinbozdemir@gmail.com') {
-                    currentRole = 'admin';
-                } else {
-                    currentRole = 'user';
-                }
-                
-                applyRoleBasedUI();
-                
-                // Bulut listeler: yalnızca yöneticinin yayınladığı gerçek listeler gösterilir.
-                // (Eskiden dualar tür/kategoriye göre gruplanıp "X Duaları" sanal listeleri
-                // üretiliyordu; sunucuda böyle listeler olmadığı için kaldırıldı.)
-                sharedLists = buildSharedListsFromServer(window._serverSharedLists, prayerPool);
-                
-                if (typeof state.sheetOpacity === 'undefined') state.sheetOpacity = 0.4;
-                if (typeof state.autoFitEnabled === 'undefined') state.autoFitEnabled = false;
-                if (typeof state.funMode === 'undefined') state.funMode = false;
-                if (typeof state.bgCounterMode === 'undefined') state.bgCounterMode = false;
+                if (typeof state.sheetOpacity === "undefined") state.sheetOpacity = 0.4;
+                if (typeof state.autoFitEnabled === "undefined") state.autoFitEnabled = false;
+                if (typeof state.funMode === "undefined") state.funMode = false;
+                if (typeof state.bgCounterMode === "undefined") state.bgCounterMode = false;
 
                 loadAppSettingsFromPhone();
-
                 ensureStateLists();
+                setTimeout(() => maybeAskSessionStartChoice(), 50);
+                updateUI();
+                if (state.autoFitEnabled) setTimeout(fitTextToScreen, 50);
                 
-                // Sync list_default with prayerPool to ensure it always has all GitHub prayers
-                if (prayerPool && prayerPool.length > 0) {
-                    const defaultList = (state.lists || []).find(l => l.id === 'list_default');
-                    if (defaultList) {
-                        if (!Array.isArray(defaultList.items)) defaultList.items = [];
-                        prayerPool.forEach(p => {
-                            // Bozuk (null) kayıtları atla — eşitleme asla çökmesin.
-                            const exists = defaultList.items.find(it => it && typeof it === 'object' && ((it.id === p.id) || (it.name === p.name)));
-                            if (!exists) {
-                                defaultList.items.push({
-                                    id: String(p.id || generateId()),
-                                    name: String(p.name || ''),
-                                    goal: Number(p.goal) || 33,
-                                    count: 0,
-                                    text: String(p.text || ''),
-                                    meaning: String(p.meaning || ''),
-                                    date: new Date().toISOString()
-                                });
-                            } else {
-                                exists.name = String(p.name || exists.name);
-                                exists.goal = Number(p.goal) || exists.goal;
-                                exists.text = String(p.text || '');
-                                exists.meaning = String(p.meaning || '');
+            } catch(e) { console.error(e); }
+
+            // 3. Arka planda ağ güncellemeleri (Network Updates in Background)
+            setTimeout(async () => {
+                try {
+                    let fetchedOk = false;
+                    let data = null;
+                    const liveUrl = (window.GITHUB_PRAYERS_URL || "https://raw.githubusercontent.com/selahattin35/dualar/main/dualar.json") + "?t=" + Date.now();
+                    
+                    try {
+                        const fetchPromise = fetch(liveUrl, { cache: "no-store" });
+                        const ghRes = await Promise.race([fetchPromise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 1500))]);
+                        if (ghRes.ok) {
+                            data = await ghRes.json();
+                            fetchedOk = true;
+                        }
+                    } catch (e) {}
+
+                    if (!fetchedOk && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp) {
+                        try {
+                            const capPromise = window.Capacitor.Plugins.CapacitorHttp.get({ url: liveUrl });
+                            const nativeRes = await Promise.race([capPromise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 1500))]);
+                            if (nativeRes && nativeRes.status === 200 && nativeRes.data) {
+                                data = typeof nativeRes.data === "string" ? JSON.parse(nativeRes.data) : nativeRes.data;
+                                fetchedOk = true;
                             }
+                        } catch (e) {}
+                    }
+
+                    if (fetchedOk && data) {
+                        if (data && Array.isArray(data.items) && data.items.length > 0) {
+                            prayerPool = data.items;
+                            window.LEGACY_ID_MAP = data.legacyMap || {};
+                            window.CONGRATS_TEXT = data.congratsText || "";
+                            window._serverSharedLists = Array.isArray(data.lists) ? data.lists : null;
+                            localStorage.setItem("GITHUB_CACHE", JSON.stringify(data));
+                        } else if (data && Array.isArray(data.lists)) {
+                            prayerPool = data.lists.flatMap(lst => lst.items || []);
+                        } else if (Array.isArray(data)) {
+                            prayerPool = data;
+                        }
+                    }
+
+                    if (canUseFirestore()) {
+                        try {
+                            const approvedRef = window.fsCollection(window.firebaseDb, "custom_prayers");
+                            const q2 = window.fsQuery(approvedRef, window.fsWhere("status", "==", "onaylandi"));
+                            const qPromise = window.fsGetDocs(q2);
+                            const querySnap2 = await Promise.race([qPromise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 3000))]);
+                            if (querySnap2 && querySnap2.forEach) {
+                                querySnap2.forEach((doc) => {
+                                    const customData = doc.data();
+                                    customData.id = doc.id;
+                                    prayerPool.push(customData);
+                                });
+                            }
+                        } catch (e) {}
+                    }
+
+                    await fetchPrivatePrayersFromFirebase();
+
+                    if (prayerPool && prayerPool.length > 0) {
+                        const seen = new Map();
+                        prayerPool = prayerPool.filter(p => {
+                            const key = String(p.id ?? p.name ?? "");
+                            if (seen.has(key)) return false;
+                            seen.set(key, true);
+                            return true;
                         });
                     }
-                }
 
-                // Bulut (sunucu) listeleri kişisel "Listelerim" bölümüne karışmasın
-                removeServerListsFromPersonal();
-
-                // Buluttan gelen listeleri telefonun kalıcı hafızasına hemen yaz:
-                // cihaz değişikliğinde listeler otomatik olarak telefona inmiş olur
-                // (günlük kullanımda telefon kopyası hazır bekler, sunucudan tekrar çekilmez).
-                saveProgressToPhone();
-
-                applyTheme(); syncInputs(); applyViewSettingsToCSS(); applyReaderMode(); updateUI();
-                if (state.keepAwake) requestWakeLock();
-
-                // ResumeModal'ı sadece kayıtlı ilerleme varsa göster
-                const hasLocalProgress = !!loadProgressFromPhone();
-                if (!hasLocalProgress) {
-                    shouldAskSessionStartChoice = false;
-                }
-                maybeAskSessionStartChoice();
-                
-                showSyncStatus(true);
-                // NOT: clearLocalStateCache() burada artık çağrılmıyor
-                // Çünkü progress bilgisi korunmalı (sadece zikir_state öneki temizleniyor)
-                clearLocalStateCache();
-
-            } catch (err) {
-                console.warn('[diag] load failed', err);
-                // "Bulut bağlantısı yok" gibi yanıltıcı bir mesaj yerine GERÇEK hatayı göster:
-                // buraya yalnızca beklenmeyen hatalar düşer (veri biçimi, ağ, zaman aşımı vb.).
-                const yuklemeHatasi = (err && (err.message || err)) || 'Beklenmeyen hata';
-                if (String(yuklemeHatasi) !== 'login_required') {
-                    showSyncError("Veriler yüklenemedi: " + yuklemeHatasi);
-                }
-            }
-
-            initSwipe();
-            maybeShowIntro();
-            startPresenceHeartbeat();
+                    if (fetchedOk || (prayerPool && prayerPool.length > 0)) {
+                        if (typeof renderDepotByCategory === "function") renderDepotByCategory();
+                        updateUI();
+                    }
+                } catch(e) {}
+            }, 100);
         }
 
-        // ─── İLK AÇILIŞ TANITIMI (slayt) ───
-        const INTRO_SEEN_KEY = 'zikir_intro_seen_v1';
-        let introIndex = 0;
-
-        function maybeShowIntro() {
-            try {
-                if (localStorage.getItem(INTRO_SEEN_KEY) === '1') return;
-            } catch (_) { }
-            showIntroFromMenu();
-        }
-
-        // Menüden "Tanıtım" seçildiğinde ilk açılış kontrolüne bakmadan her zaman göster
-        function showIntroFromMenu() {
-            const overlay = document.getElementById('introOverlay');
-            if (!overlay) return;
-            introIndex = 0;
-            renderIntroDots();
-            updateIntroSlide();
-            overlay.style.display = 'flex';
-        }
-
-        function renderIntroDots() {
-            const dotsBox = document.getElementById('introDots');
-            if (!dotsBox) return;
-            const total = document.querySelectorAll('#introSlides .intro-slide').length;
-            dotsBox.innerHTML = '';
-            for (let i = 0; i < total; i++) {
-                const dot = document.createElement('span');
-                dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:#fff;opacity:0.35;transition:opacity .3s;';
-                dotsBox.appendChild(dot);
-            }
-        }
-
-        function updateIntroSlide() {
-            const slides = document.querySelectorAll('#introSlides .intro-slide');
-            slides.forEach((s, i) => {
-                s.style.display = (i === introIndex) ? 'flex' : 'none';
-            });
-            const dots = document.querySelectorAll('#introDots span');
-            dots.forEach((d, i) => { d.style.opacity = i === introIndex ? '1' : '0.35'; });
-            const total = slides.length;
-            const btn = document.getElementById('introNextBtn');
-            if (btn) btn.textContent = introIndex >= total - 1 ? 'Başla' : 'Devam Et';
-        }
-
-        function introNext() {
-            const total = document.querySelectorAll('#introSlides .intro-slide').length;
-            if (introIndex < total - 1) {
-                introIndex++;
-                updateIntroSlide();
-            } else {
-                closeIntro();
-            }
-        }
-
-        function closeIntro() {
-            try { localStorage.setItem(INTRO_SEEN_KEY, '1'); } catch (_) { }
-            const overlay = document.getElementById('introOverlay');
-            if (overlay) overlay.style.display = 'none';
-        }
-
-        // Slayt kaydırma (swipe) desteği
-        let introTouchStartX = null;
-        const introOverlayEl = () => document.getElementById('introOverlay');
-        document.addEventListener('touchstart', (e) => {
-            if (introOverlayEl() && introOverlayEl().style.display === 'flex') {
-                introTouchStartX = e.touches[0].clientX;
-            }
-        }, { passive: true });
-        document.addEventListener('touchend', (e) => {
-            if (introTouchStartX === null) return;
-            const overlay = introOverlayEl();
-            if (!overlay || overlay.style.display !== 'flex') { introTouchStartX = null; return; }
-            const delta = e.changedTouches[0].clientX - introTouchStartX;
-            introTouchStartX = null;
-            const total = document.querySelectorAll('#introSlides .intro-slide').length;
-            if (delta < -40 && introIndex < total - 1) { introIndex++; updateIntroSlide(); }
-            else if (delta > 40 && introIndex > 0) { introIndex--; updateIntroSlide(); }
-        }, { passive: true });
-
-        // KAYDETME
         function save(immediate = false) {
             saveAppSettingsToPhone();
             // İlerlemeyi her zaman telefona kaydet (Firestore backup'ı)
@@ -4541,6 +4354,7 @@
             saveProgressToPhone();
             if (immediate) {
                 clearTimeout(saveTimeout);
+                try { saveSettingsToNativeStorage(); } catch(_) {}
                 sendDataToServer();
                 return;
             }
@@ -4570,6 +4384,7 @@
             // (Eğer bu yapılmazsa o gün çekilen son zikirler listeye geçmez ve kaybolur)
             try { syncStateBackToActiveList(); } catch (_) {}
             try { saveProgressToPhone(); } catch (_) {}
+            try { saveSettingsToNativeStorage(); } catch (_) {}
             if (saveTimeout) {
                 clearTimeout(saveTimeout);
                 saveTimeout = null;
@@ -4653,8 +4468,6 @@
             if (bgCheck) bgCheck.checked = state.bgCounterMode;
 
 
-            const autoBackupSelect = document.getElementById('autoBackupSelect');
-            if (autoBackupSelect) autoBackupSelect.value = state.autoBackupMode || 'off';
             const keepAwakeCheck = document.getElementById('keepAwakeCheck');
             if (keepAwakeCheck) keepAwakeCheck.checked = state.keepAwake;
 
@@ -4684,7 +4497,7 @@
             }
         }
 
-        function applyTheme() { document.body.dataset.theme = state.theme; document.body.style.backgroundColor = state.theme === 'light' ? '#f1f5f9' : '#0f172a'; }
+        function applyTheme() { document.documentElement.setAttribute('data-theme', state.theme); document.body.setAttribute('data-theme', state.theme); }
 
         function applyViewSettingsToCSS() {
             document.documentElement.style.setProperty('--dua-font-size', state.duaFontSize + 'rem');
@@ -4752,47 +4565,6 @@
         function toggleBgCounterMode() { state.bgCounterMode = document.getElementById('bgCounterCheck').checked; save(); updateUI(); if (state.bgCounterMode) showToast("Arka Plan Sayacı: AÇIK"); else showToast("Arka Plan Sayacı: KAPALI"); }
         function toggleAutoFit() { state.autoFitEnabled = !state.autoFitEnabled; syncInputs(); save(); updateUI(); if (state.autoFitEnabled) { fitTextToScreen(); showToast("Oto Sığdırma: AÇIK"); } else { showToast("Oto Sığdırma: KAPALI"); } }
         function toggleTheme() { state.theme = document.getElementById('darkThemeCheck').checked ? 'dark' : 'light'; applyTheme(); save(); showToast(state.theme === 'dark' ? "Koyu Tema: AÇIK 🌙" : "Açık Tema: AÇIK ☀️"); }
-        function updateAutoBackup() {
-            const val = document.getElementById('autoBackupSelect').value;
-            state.autoBackupMode = val;
-            save();
-            showToast("Otomatik Yedekleme: " + (val === 'daily' ? 'GÜNLÜK' : val === 'weekly' ? 'HAFTALIK' : 'KAPALI'));
-        }
-
-        async function checkAndRunAutoBackup() {
-            if (!state || !state.autoBackupMode || state.autoBackupMode === 'off') return;
-            const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
-            if (!isNative) return;
-
-            const now = new Date().getTime();
-            const last = state.lastBackupDate || 0;
-            const diffHours = (now - last) / (1000 * 60 * 60);
-
-            let shouldBackup = false;
-            if (state.autoBackupMode === 'daily' && diffHours >= 24) shouldBackup = true;
-            if (state.autoBackupMode === 'weekly' && diffHours >= (24 * 7)) shouldBackup = true;
-
-            if (shouldBackup) {
-                try {
-                    const json = JSON.stringify(buildListBackup(), null, 2);
-                    const filename = 'zikirmatik_otomatik_yedek.json';
-                    const { Filesystem } = window.Capacitor.Plugins;
-                    if (Filesystem) {
-                        await Filesystem.writeFile({
-                            path: filename,
-                            data: json,
-                            directory: 'DOCUMENTS',
-                            encoding: 'utf8'
-                        });
-                        state.lastBackupDate = now;
-                        save();
-                        console.log("Otomatik yedek alındı:", filename);
-                    }
-                } catch (e) {
-                    console.error("Otomatik yedek hatası:", e);
-                }
-            }
-        }
         // ─── Ekran Uyanık Kalsın (Wake Lock) ───
         let wakeLockSentinel = null;
         async function requestWakeLock() {
@@ -4859,6 +4631,7 @@
             textEl.style.transition = originalTransition;
             setTimeout(() => { const w = document.querySelectorAll('.dua-scroll-wrapper'); w.forEach(el => el.scrollTop = 0); }, 10);
         }
+
 
         function updateUI() {
             ensureStateLists();
@@ -7611,14 +7384,14 @@
         }
         
         function submitSinglePrivatePrayer(privId) {
-            if (!currentUser || currentUser === 'guest_user') {
-                return promptLogin('Bu duayı topluluğa açmak (Admin\'e göndermek) için lütfen Google hesabınızla giriş yapın.');
+            if (!currentUser || currentUser === "guest_user") {
+                return promptLogin("Bu duayı topluluğa açmak (Admin'e göndermek) için lütfen Google hesabınızla giriş yapın.");
             }
             
-            const modal = document.createElement('div');
-            modal.className = 'auth-overlay';
-            modal.style.display = 'flex';
-            modal.style.zIndex = '9999';
+            const modal = document.createElement("div");
+            modal.className = "auth-overlay";
+            modal.style.display = "flex";
+            modal.style.zIndex = "9999";
             modal.innerHTML = `
                 <div class="auth-container" style="text-align:center; padding:25px; max-width:320px; width:90%;">
                     <div style="font-size:3rem; margin-bottom:10px;">🌐</div>
@@ -7626,7 +7399,7 @@
                     <p style="color:var(--muted); margin-bottom:20px; font-size:0.95rem; line-height:1.5;">Bu dua, incelenmek üzere Admin'e gönderilecek. Onaylandıktan sonra tüm kullanıcılara açık hale gelecektir. Onaylıyor musunuz?</p>
                     <div style="display:flex; gap:10px; justify-content:center;">
                         <button class="auth-btn btn-guest" style="flex:1; padding:10px; margin:0;" onclick="this.parentElement.parentElement.parentElement.remove()">İptal</button>
-                        <button class="auth-btn btn-google" style="flex:1; padding:10px; margin:0; background:#2ecc71; border-color:#27ae60; color:#fff;" onclick="this.parentElement.parentElement.parentElement.remove(); executeSubmitSinglePrivatePrayer('${privId}')">Evet, Paylaş</button>
+                        <button class="auth-btn btn-google" style="flex:1; padding:10px; margin:0;" onclick="this.parentElement.parentElement.parentElement.remove(); executeSubmitSinglePrivatePrayer('${privId}')">Gönder</button>
                     </div>
                 </div>
             `;
@@ -8335,6 +8108,7 @@
             } catch (e) {
                 showToast('Henüz alınmış bir otomatik yedek bulunamadı.');
             }
+        }
 
         function applyListBackup() {
             const ta = document.getElementById('backupImportText');
@@ -8739,8 +8513,14 @@
         } catch (_) { }
 
         const initApp = async () => {
+            const overlay = document.getElementById("authOverlay");
+            if (overlay) {
+                overlay.style.opacity = "0";
+                overlay.style.display = "none";
+            }
             clearLocalStateCache();
             await restoreProgressFromNativeStorage();
+            await restoreSettingsFromNativeStorage();
             initDragReorder();
             await load();
             startNativeAutoSaveInterval();
