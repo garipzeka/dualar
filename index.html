@@ -2502,11 +2502,19 @@
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                         <button class="icon-btn" onclick="closeListEditor()" style="min-width:36px;font-size:1.1rem;">←</button>
                         <b id="listEditorTitle" style="font-size:1rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></b>
-                        <button class="mini-btn" style="background:var(--accent);color:white;border:none;white-space:nowrap;" onclick="switchListTab('depo')">+ Dua Ekle</button>
+                        <button class="mini-btn" style="background:var(--accent);color:white;border:none;white-space:nowrap;" onclick="toggleEditorAddChooser()">+ Dua Ekle</button>
+                    </div>
+                    <div id="editorAddChooser" style="display:none;margin-bottom:12px;border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:10px 12px 12px;background:rgba(255,255,255,0.04);">
+                        <div style="font-size:0.8rem;opacity:0.75;margin-bottom:8px;">Nasıl dua eklemek istersiniz?</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <button class="mini-btn" style="background:var(--accent);color:white;border:none;padding:12px 6px;font-weight:700;justify-content:center;" onclick="editorAddFromDepot()">📚 Depodan Seç</button>
+                            <button class="mini-btn" style="background:rgba(255,255,255,0.08);color:var(--text);border:1px solid rgba(255,255,255,0.15);padding:12px 6px;font-weight:700;justify-content:center;" onclick="editorAddWriteNew()">✍️ Yazarak Ekle</button>
+                        </div>
                     </div>
                     <div id="listEditorRows" style="max-height:48vh;overflow-y:auto;"></div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;">
                         <button id="renameListBtn" class="mini-btn" onclick="editListTitle()">✏️ Adını Değiştir</button>
+                        <button id="statsListBtn" class="mini-btn" onclick="openEditorListStats()">📊 İstatistik</button>
                         <button id="deleteListBtn" class="mini-btn" style="color:#e74c3c;border-color:rgba(231,76,60,0.3);" onclick="deleteActiveEditList()">🗑️ Listeyi Sil</button>
                     </div>
                 </div>
@@ -2538,19 +2546,22 @@
                             </label>
                         </div>
                         <input type="text" id="privName" placeholder="Dua adı *" style="margin-bottom:8px;" />
-                        <textarea id="privText" rows="3" placeholder="Okunuşu (Dua metni) *" style="margin-bottom:8px;resize:vertical;"></textarea>
-                        <textarea id="privArabic" rows="2" placeholder="Arapçası (isteğe bağlı)" style="margin-bottom:8px;resize:vertical; direction: rtl; font-family: 'Amiri', 'Traditional Arabic', serif;"></textarea>
-                        <textarea id="privMeaning" rows="2" placeholder="Meali (isteğe bağlı)" style="margin-bottom:8px;resize:vertical;"></textarea>
-                        <input type="text" id="privSource" placeholder="Kaynak (Örn: Tirmizi, Deavat 15)" style="margin-bottom:8px;" />
-                        <input type="number" id="privGoal" placeholder="Hedef Sayı (Örn: 33)" min="1" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="margin-bottom:8px;" />
-                        <select id="privCategory" style="margin-bottom:14px;">
-                            <option value="genel">Genel</option>
-                            <option value="sureler">Sureler</option>
-                            <option value="sabah">Sabah Duaları</option>
-                            <option value="aksam">Akşam Duaları</option>
-                            <option value="esmaul-husna">Esmaü'l-Hüsna</option>
-                            <option value="diger">Diğer</option>
-                        </select>
+                        <textarea id="privText" rows="3" placeholder="Okunuşu (Dua metni) *" style="margin-bottom:4px;resize:vertical;"></textarea>
+                        <button type="button" id="depotAddAdvancedToggle" onclick="toggleDepotAddAdvanced()" style="background:transparent;border:none;color:var(--accent);font-size:0.82rem;font-weight:700;padding:2px 0 10px;cursor:pointer;text-align:left;display:block;">▸ Arapça, meal, hedef ve diğer detaylar</button>
+                        <div id="depotAddAdvanced" style="display:none;">
+                            <textarea id="privArabic" rows="2" placeholder="Arapçası (isteğe bağlı)" style="margin-bottom:8px;resize:vertical; direction: rtl; font-family: 'Amiri', 'Traditional Arabic', serif;"></textarea>
+                            <textarea id="privMeaning" rows="2" placeholder="Meali (isteğe bağlı)" style="margin-bottom:8px;resize:vertical;"></textarea>
+                            <input type="text" id="privSource" placeholder="Kaynak (Örn: Tirmizi, Deavat 15)" style="margin-bottom:8px;" />
+                            <input type="number" id="privGoal" placeholder="Hedef Sayı (Örn: 33)" min="1" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="margin-bottom:8px;" />
+                            <select id="privCategory" style="margin-bottom:14px;">
+                                <option value="genel">Genel</option>
+                                <option value="sureler">Sureler</option>
+                                <option value="sabah">Sabah Duaları</option>
+                                <option value="aksam">Akşam Duaları</option>
+                                <option value="esmaul-husna">Esmaü'l-Hüsna</option>
+                                <option value="diger">Diğer</option>
+                            </select>
+                        </div>
                         <div style="margin-bottom:8px; display:flex; gap:10px;">
                             <button id="privSaveBtn" class="btn-primary" style="background:var(--accent);flex:1;justify-content:center;" onclick="savePrivatePrayer()">💾 Kaydet</button>
                             <button id="btnDeletePrivatePrayer" class="btn-primary" style="background:#e74c3c; display:none; justify-content:center; flex:1;" onclick="if(window._editingPrivId) { deletePrivatePrayer(window._editingPrivId); }">🗑️ Sil</button>
@@ -2566,17 +2577,21 @@
                         </select>
                     </div>
                 </div>
-                <div id="depotMultiActionBar" style="display:none; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:rgba(46,204,113,0.15); padding:8px 12px; border-radius:10px; margin-bottom:10px;">
+                <div id="depotMultiActionBar" style="display:none; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:rgba(46,204,113,0.15); padding:8px 12px; border-radius:10px; margin-bottom:8px;">
                     <div style="font-size:0.85rem;"><b id="depotMultiCount">0</b> seçili</div>
                     <div style="display:flex; gap:6px; flex-wrap:wrap;">
                         <button class="mini-btn" onclick="clearDepotSelection()">✖ Seçimi Temizle</button>
                         <button class="mini-btn" onclick="selectAllDepotPrayers()">Tümünü Seç</button>
                     </div>
                 </div>
+                <div id="depotTargetRow" style="display:none; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                    <span style="font-size:0.85rem; opacity:0.85; white-space:nowrap;">➕ Eklenecek liste:</span>
+                    <select id="depotTargetList" onchange="updateDepotTargetUI()" style="flex:1; min-width:140px; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(16,185,129,0.4); color:var(--text); margin:0;"></select>
+                </div>
                 <div id="depotRows" style="max-height:54vh;overflow-y:auto;"></div>
                 <!-- Seçili duaları ekleme butonu (altta sabit, her zaman görünür) -->
                 <div id="depotAddBottomBar" style="display:none; position:sticky; bottom:0; margin-top:10px; padding:10px 0 2px; background:var(--card); border-top:1px solid rgba(255,255,255,0.1); box-shadow:0 -8px 16px rgba(0,0,0,0.18);">
-                    <button class="btn-primary" style="background:var(--accent); color:white; border:none; justify-content:center; width:100%; font-weight:bold;" onclick="addSelectedDepotPrayers()">➕ <span id="depotAddBottomCount"></span> Ekle</button>
+                    <button class="btn-primary" style="background:var(--accent); color:white; border:none; justify-content:center; width:100%; font-weight:bold; flex-wrap:wrap;" onclick="addSelectedDepotPrayers()">➕ <span id="depotAddBottomCount"></span> duayı "<span id="depotTargetName"></span>" listesine ekle</button>
                 </div>
             </div>
 
@@ -3587,15 +3602,15 @@
                     const sharedBadge = isShared ? '<span style="background:rgba(16,185,129,0.2);color:var(--accent);font-size:0.65rem;padding:2px 6px;border-radius:6px;font-weight:700;">Paylaşımlı</span>' : '';
                     // Liste yalnızca telefon hafızasında tutulur; bulut rozeti kaldırıldı.
                     const backupBadge = '';
-                    return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : ''}margin-bottom:8px;">
+                    // Kartın kendisi düzenleyiciyi açar; istatistik ve silme düzenleyicinin alt barında.
+                    return `<div class="list-item" style="${isActive ? 'border-left:4px solid var(--accent);background:rgba(16,185,129,0.08);' : ''}margin-bottom:8px;cursor:pointer;" onclick="openListEditor('${lst.id}')" title="Listeyi düzenlemek için dokunun">
                         <div class="list-info">
                             <div class="list-info-title">${escapeHtml(lst.name)}${isActive ? ' <span style="color:var(--accent);font-size:0.7rem;">● Aktif</span>' : ''}</div>
                             <div class="list-info-meta"><span class="list-badge">${lst.items.length} dua</span>${backupBadge}${sharedBadge}</div>
                         </div>
-                        <div class="list-actions" style="width: 100%; display: flex; flex-wrap: nowrap; gap: 4px;">
-                            ${!isActive ? `<button class="mini-btn" style="flex: 3; justify-content: center; padding: 8px 4px; font-size: 0.85rem; font-weight: 700;" onclick="setActiveListById('${lst.id}'); closeList()">Seç</button>` : '<div style="flex: 3; display: flex; align-items: center; justify-content: center; background: rgba(16,185,129,0.1); border: 1px solid var(--accent); border-radius: 8px;"><span style="font-size:0.85rem;color:var(--accent);font-weight:700;">✓ Seçili</span></div>'}
-                            <button class="mini-btn" style="flex: 2; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openStats('${lst.id}', false)">📊 İstatistik</button>
-                            <button class="mini-btn" style="flex: 1.5; justify-content: center; padding: 8px 2px; font-size: 0.72rem;" onclick="openListEditor('${lst.id}')">⚙️ Düzenle</button>
+                        <div class="list-actions" style="width:auto; display:flex; flex-wrap:nowrap; gap:6px; align-items:center;" onclick="event.stopPropagation();">
+                            ${!isActive ? `<button class="mini-btn" style="justify-content:center; padding:9px 14px; font-size:0.85rem; font-weight:700;" onclick="setActiveListById('${lst.id}'); closeList();">Seç</button>` : `<div style="display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.1);border:1px solid var(--accent);border-radius:8px;padding:8px 10px;"><span style="font-size:0.8rem;color:var(--accent);font-weight:700;">✓ Aktif</span></div>`}
+                            <span style="opacity:0.4;font-size:1.3rem;line-height:1;padding:0 2px;">›</span>
                         </div>
                     </div>`;
                 }).join('');
@@ -7407,6 +7422,35 @@
         let _currentListTab = 'listelerim';
         let _editingListId = null;
 
+        // Liste düzenleyicideki "+ Dua Ekle" seçim panelini açar/kapatır
+        function toggleEditorAddChooser() {
+            const c = document.getElementById('editorAddChooser');
+            if (!c) return;
+            c.style.display = (c.style.display === 'none') ? '' : 'none';
+        }
+
+        // "Depodan Seç": yalnızca hazır/kişisel dua seçim listesi gösterilir
+        function editorAddFromDepot() {
+            const c = document.getElementById('editorAddChooser');
+            if (c) c.style.display = 'none';
+            window._depotAddExplicitOpen = false;
+            switchListTab('depo');
+        }
+
+        // "Yazarak Ekle": depo sekmesindeki "+ Dua Ekle" formu bu liste için açılır
+        function editorAddWriteNew() {
+            const c = document.getElementById('editorAddChooser');
+            if (c) c.style.display = 'none';
+            window._depotAddExplicitOpen = true;
+            switchListTab('depo');
+            if (typeof toggleDepotAddForm === 'function') toggleDepotAddForm(true);
+        }
+
+        // Düzenlenen listenin istatistiklerini aç (kartlardaki 📊 butonu buraya taşındı)
+        function openEditorListStats() {
+            if (_editingListId) openStats(_editingListId, false);
+        }
+
         function switchListTab(tab) {
             _currentListTab = tab;
             ['listelerim','depo'].forEach(t => {
@@ -7418,7 +7462,10 @@
             if (tab === 'depo') {
                 const addWrapper = document.getElementById('depotAddWrapper');
                 if (addWrapper) {
-                    addWrapper.style.display = _editingListId ? 'none' : '';
+                    // Liste düzenleyiciden gelindiyse form yalnızca "Yazarak Ekle" ile
+                    // bilinçli açıldığında görünür; "Depodan Seç" akışında yalnızca
+                    // dua seçim listesi gösterilir.
+                    addWrapper.style.display = (_editingListId && !window._depotAddExplicitOpen) ? 'none' : '';
                 }
                 populateTypeFilters();
                 renderDepotByCategory();
@@ -7464,11 +7511,39 @@
             document.getElementById('depotMultiCount').textContent = count;
             const bar = document.getElementById('depotMultiActionBar');
             if (bar) bar.style.display = count > 0 ? 'flex' : 'none';
+            const targetRow = document.getElementById('depotTargetRow');
+            if (targetRow) targetRow.style.display = count > 0 ? 'flex' : 'none';
             const bottomBar = document.getElementById('depotAddBottomBar');
             if (bottomBar) {
                 bottomBar.style.display = count > 0 ? 'block' : 'none';
                 const cnt = document.getElementById('depotAddBottomCount');
                 if (cnt) cnt.textContent = count > 0 ? `(${count})` : '';
+            }
+            if (count > 0) {
+                populateDepotTargetList();
+            }
+        }
+
+        // Depodan ekleme yapılacak hedef liste seçici: düzenlenen liste (varsa) veya
+        // aktif liste varsayılan olarak seçilir; kullanıcı başka liste seçebilir.
+        function populateDepotTargetList() {
+            const sel = document.getElementById('depotTargetList');
+            if (!sel) return;
+            const lists = (state.lists || []).filter(l => l && l.id !== 'list_sayac' && l.id !== 'list_default' && !l.autoSingleList && !l.virtualSharedList);
+            const preferred = _editingListId || state.activeListId;
+            const prev = sel.value;
+            const ordered = [...lists].sort((a, b) => (b.id === preferred ? 1 : 0) - (a.id === preferred ? 1 : 0));
+            sel.innerHTML = ordered.map(l => `<option value="${l.id}">${escapeHtml(l.name)}</option>`).join('');
+            sel.value = ordered.some(l => l.id === prev) ? prev
+                : (ordered.some(l => l.id === preferred) ? preferred : (ordered[0] ? ordered[0].id : ''));
+            updateDepotTargetUI();
+        }
+
+        function updateDepotTargetUI() {
+            const sel = document.getElementById('depotTargetList');
+            const nameEl = document.getElementById('depotTargetName');
+            if (nameEl && sel) {
+                nameEl.textContent = (sel.selectedOptions && sel.selectedOptions[0]) ? sel.selectedOptions[0].textContent : '';
             }
         }
 
@@ -7498,10 +7573,16 @@
         async function addSelectedDepotPrayers() {
             if (depotSelectedIds.size === 0) return showToast('Önce dua seçin');
 
-            // Hedef liste: liste düzenleyici açıksa düzenlenen liste, değilse aktif liste.
+            // Hedef liste: ekrandaki "Eklenecek liste" seçicisinden okunur; seçici yoksa
+            // liste düzenleyicideki liste, o da yoksa aktif liste kullanılır.
             // (Düzenlenen liste aktif olandan farklıysa dualar yanlış listeye gidiyordu.)
             let targetList = null;
-            if (_editingListId) {
+            const targetSel = document.getElementById('depotTargetList');
+            const chosenTargetId = targetSel ? String(targetSel.value || '') : '';
+            if (chosenTargetId) {
+                targetList = (state.lists || []).find(l => l && l.id === chosenTargetId && !l.virtualSharedList) || null;
+            }
+            if (!targetList && _editingListId) {
                 targetList = (state.lists || []).find(l => l.id === _editingListId);
             }
             if (!targetList || targetList.virtualSharedList) {
@@ -7802,11 +7883,17 @@
             const newListRow = document.getElementById('newListRow');
             if (managerEl) managerEl.style.display = 'none';
             if (newListRow) newListRow.style.display = 'none';
-            
+
+            // Düzenleyici her açılışta dua ekleme seçim paneli kapalı başlasın
+            const chooser = document.getElementById('editorAddChooser');
+            if (chooser) chooser.style.display = 'none';
+
             const renameBtn = document.getElementById('renameListBtn');
             const deleteBtn = document.getElementById('deleteListBtn');
+            const statsBtn = document.getElementById('statsListBtn');
             if (renameBtn) renameBtn.style.display = (listId === 'list_sayac') ? 'none' : '';
             if (deleteBtn) deleteBtn.style.display = (listId === 'list_sayac') ? 'none' : '';
+            if (statsBtn) statsBtn.style.display = (listId === 'list_sayac') ? 'none' : '';
             
             const panel = document.getElementById('listEditorPanel');
             if (panel) panel.style.display = '';
@@ -8519,21 +8606,28 @@
                 renderZikirlerimModalRows();
             }
             
-            // Yeni eklenen kişisel dua, aktif listeye otomatik eklenir (listede hemen görünsün)
+            // Yeni eklenen kişisel dua otomatik bir listeye eklenir (listede hemen görünsün).
+            // Hedef: liste düzenleyicisi açıkken DÜZENLENEN liste; değilse aktif liste.
             let addedToListId = null;
             if (!wasEditing) {
-                const activeLst = getActiveList();
-                const editable = activeLst && !activeLst.virtualSharedList;
-                if (editable) {
-                    if (!Array.isArray(activeLst.items)) activeLst.items = [];
-                    activeLst.items.unshift({
+                let targetLst = null;
+                if (_editingListId) {
+                    targetLst = (state.lists || []).find(l => l && l.id === _editingListId && !l.virtualSharedList) || null;
+                }
+                if (!targetLst) {
+                    const activeLst = getActiveList();
+                    if (activeLst && !activeLst.virtualSharedList) targetLst = activeLst;
+                }
+                if (targetLst) {
+                    if (!Array.isArray(targetLst.items)) targetLst.items = [];
+                    targetLst.items.unshift({
                         id: privId, prayerId: privId,
                         name, goal, count: 0, text, meaning, arabic, source,
                         _private: true
                     });
-                    syncActiveListIntoState();
-                    addedToListId = activeLst.id;
-                    showToast('Kişisel dua listenize eklendi');
+                    if (targetLst.id === state.activeListId) syncActiveListIntoState();
+                    addedToListId = targetLst.id;
+                    showToast(`Kişisel dua "${targetLst.name}" listesine eklendi`);
                 }
             }
             save();
@@ -8686,7 +8780,13 @@
             document.getElementById('privSource').value = prayer.source || '';
             document.getElementById('privGoal').value = prayer.goal || '';
             document.getElementById('privCategory').value = prayer.category || 'genel';
-            
+
+            // Düzenlemede detay alanları (arapça, meal, kaynak, hedef, kategori) görünür olsun
+            const advBox = document.getElementById('depotAddAdvanced');
+            if (advBox) advBox.style.display = '';
+            const advToggle = document.getElementById('depotAddAdvancedToggle');
+            if (advToggle) advToggle.textContent = '▾ Arapça, meal, hedef ve diğer detayları gizle';
+
             window._editingPrivId = privId;
             
             // Kapatılacak modallar varsa kapat
@@ -8844,6 +8944,17 @@
             if (notice && hide) notice.style.display = 'none';
         }
 
+        // Yeni dua formunda isteğe bağlı detay alanlarını (arapça, meal, kaynak,
+        // hedef, kategori) açar/kapatır. Varsayılan: yalnızca ad + okunuş görünür.
+        function toggleDepotAddAdvanced() {
+            const box = document.getElementById('depotAddAdvanced');
+            if (!box) return;
+            const show = (box.style.display === 'none');
+            box.style.display = show ? '' : 'none';
+            const t = document.getElementById('depotAddAdvancedToggle');
+            if (t) t.textContent = show ? '▾ Arapça, meal, hedef ve diğer detayları gizle' : '▸ Arapça, meal, hedef ve diğer detaylar';
+        }
+
         function toggleDepotAddForm(forceOpen) {
             const form = document.getElementById('depotAddForm');
             if (!form) return;
@@ -8873,6 +8984,11 @@
             document.getElementById('privSource').value = '';
             document.getElementById('privGoal').value = '';
             document.getElementById('privCategory').value = 'genel';
+            // Detay alanları varsayılan olarak katlı gelsin
+            const advBoxReset = document.getElementById('depotAddAdvanced');
+            if (advBoxReset) advBoxReset.style.display = 'none';
+            const advToggleReset = document.getElementById('depotAddAdvancedToggle');
+            if (advToggleReset) advToggleReset.textContent = '▸ Arapça, meal, hedef ve diğer detaylar';
             closeZikirlerimModal();
             const listModal = document.getElementById('listModal');
             if (listModal) { listModal.style.display = 'flex'; listModal.style.zIndex = '7000'; }
