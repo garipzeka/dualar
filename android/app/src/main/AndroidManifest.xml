@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Google Drive yedeği OAuth yönlendirmesi (PKCE, özel şema).
+                 Şema, Android OAuth client id'sinden türetilir:
+                 com.googleusercontent.apps.<client-id> -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.googleusercontent.apps.284416304977-eftrps9voipmsi15pjqemtfp6s40m9s4" />
+            </intent-filter>
+
         </activity>
 
         <provider

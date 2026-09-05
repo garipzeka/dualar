@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Zikirmatik Pro</string>
     <string name="title_activity_main">Zikirmatik Pro</string>
-    <string name="package_name">com.zikirmatik.pro</string>
-    <string name="custom_url_scheme">com.zikirmatik.pro</string>
-    <string name="default_web_client_id">765011064176-vqrnb1k13l1i18n03temj65faosenojj.apps.googleusercontent.com</string>
+    <string name="package_name">app.garipzeka.zikirmatik</string>
+    <string name="custom_url_scheme">app.garipzeka.zikirmatik</string>
+    <string name="default_web_client_id">284416304977-m2cg1ns4ip357b8imve1km5ac10o9lun.apps.googleusercontent.com</string>
 </resources>

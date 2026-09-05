@@ -52,3 +52,7 @@ script_test.html
 jdk-*/
 Yeni klasör/
 *.py
+
+# Android imza anahtari (keystore) gite eklenmez
+*.jks
+*.keystore

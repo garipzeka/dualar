@@ -1,7 +1,7 @@
 ext {
     minSdkVersion = 23
-    compileSdkVersion = 35
-    targetSdkVersion = 35
+    compileSdkVersion = 36
+    targetSdkVersion = 36
     androidxActivityVersion = '1.8.0'
     androidxAppCompatVersion = '1.6.1'
     androidxCoordinatorLayoutVersion = '1.2.0'
@@ -13,4 +13,7 @@ ext {
     androidxJunitVersion = '1.1.5'
     androidxEspressoCoreVersion = '3.5.1'
     cordovaAndroidVersion = '10.1.1'
+    // @capacitor/browser 8 varsayılan olarak 1.9.0 ister; 1.9.0 AGP 8.9.1+ gerektirir.
+    // Proje AGP 8.2.1 kullandığından Custom Tabs için yeterli olan 1.8.0'a sabitlenir.
+    androidxBrowserVersion = '1.8.0'
 }

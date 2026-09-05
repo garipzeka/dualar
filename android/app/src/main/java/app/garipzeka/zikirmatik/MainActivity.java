@@ -1,4 +1,4 @@
-package com.zikirmatik.pro;
+package app.garipzeka.zikirmatik;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;

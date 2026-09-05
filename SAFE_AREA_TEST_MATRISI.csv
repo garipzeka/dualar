@@ -1,0 +1,8 @@
+﻿"#";"Senaryo";"Jest + Dikey: Sonuç (Geçti/Kaldı)";"Jest + Dikey: Ekran Görüntüsü Notu";"3 Buton + Dikey: Sonuç (Geçti/Kaldı)";"3 Buton + Dikey: Ekran Görüntüsü Notu";"Jest + Yatay (2 yön): Sonuç (Geçti/Kaldı)";"Jest + Yatay (2 yön): Ekran Görüntüsü Notu";"3 Buton + Yatay (2 yön): Sonuç (Geçti/Kaldı)";"3 Buton + Yatay (2 yön): Ekran Görüntüsü Notu";"Sorun / Yorum"
+"A";"Ana zikir ekranı (başlık çubuğu, sayaç, mavi zikir butonu)";"";"";"";"";"";"";"";"";""
+"B";"Okuma / tam ekran modu (dua okuma + reader-mode)";"";"";"";"";"";"";"";"";""
+"C";"Sade Sayaç (#modernSayacContainer)";"";"";"";"";"";"";"";"";""
+"D";"Listelerim / Dua Deposu modalı (sekmeli tam ekran)";"";"";"";"";"";"";"";"";""
+"E";"Alttan açılan paneller (Görünüm Ayarları, Genel Ayarlar, İstatistik)";"";"";"";"";"";"";"";"";""
+"F";"Tanıtım ekranı + Giriş ekranı";"";"";"";"";"";"";"";"";""
+"G";"Klavye açıkken formlar (Dua Ekle / Dua Düzenle — küçük ekran)";"";"";"";"";"";"";"";"";""
