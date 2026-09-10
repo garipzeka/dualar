@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "items": [
     {
       "id": "d00001",
@@ -493,7 +493,7 @@
       "name": "La ilahe illallah",
       "text": "La ilahe illallah",
       "meaning": "Allah'tan başka ilah yoktur.",
-      "goal": null,
+      "goal": 1,
       "arabic": "لَا إِلَهَ إِلَّا اللَّهُ",
       "source": "Buhari, Müslim"
     },
@@ -504,7 +504,7 @@
       "name": "La havle ve la kuvvete illa billah",
       "text": "La havle ve la kuvvete illa billah",
       "meaning": "Güç ve kuvvet ancak Allah'ın yardımıyladır.",
-      "goal": null,
+      "goal": 1,
       "arabic": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
       "source": "Buhari, Müslim"
     },
@@ -526,7 +526,7 @@
       "name": "Sübhanallahi ve bihamdihi, Sübhanallahil azim",
       "text": "Sübhanallahi ve bihamdihi, Sübhanallahil azim",
       "meaning": "Allah'ı hamdiyle tesbih ederim; Yüce Allah'ı tesbih ederim.",
-      "goal": null,
+      "goal": 1,
       "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
       "source": "Buhari, Müslim"
     },
@@ -680,7 +680,7 @@
       "name": "Hasbiyallahu",
       "text": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltü",
       "meaning": "Bana Allah yeter. O'ndan başka ilah yoktur. O'na tevekkül ettim.",
-      "goal": null,
+      "goal": 1,
       "arabic": "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
       "source": "Kur'an 9:129"
     },
@@ -691,7 +691,7 @@
       "name": "Rabbena atina",
       "text": "Rabbena atina fid dünya haseneten ve fil ahireti haseneten ve kına azaben nar",
       "meaning": "Rabbimiz! Bize dünyada iyilik, ahirette de iyilik ver ve bizi ateş azabından koru.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
       "source": "Kur'an 2:201"
     },
@@ -702,7 +702,7 @@
       "name": "Salavat",
       "text": "Allahümme salli ala Muhammed",
       "meaning": "Allah'ım, Muhammed'e salât eyle.",
-      "goal": null,
+      "goal": 1,
       "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ",
       "source": "Müslim"
     },
@@ -713,7 +713,7 @@
       "name": "Rabbi zidni ilma",
       "text": "Rabbi zidni ilma",
       "meaning": "Rabbim! İlmimi artır.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبِّ زِدْنِي عِلْمًا",
       "source": "Kur'an 20:114"
     },
@@ -724,7 +724,7 @@
       "name": "Hasbünallah",
       "text": "Hasbünallahu ve ni'mel vekil",
       "meaning": "Allah bize yeter; O ne güzel vekildir.",
-      "goal": null,
+      "goal": 1,
       "arabic": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
       "source": "Kur'an 3:173"
     },
@@ -735,7 +735,7 @@
       "name": "La ilahe illallahul melikül hakk",
       "text": "La ilahe illallahul melikul hakkul mübin",
       "meaning": "Gerçek ve apaçık hükümdar Allah'tan başka ilah yoktur.",
-      "goal": null,
+      "goal": 1,
       "arabic": "لَا إِلَهَ إِلَّا اللَّهُ الْمَلِكُ الْحَقُّ الْمُبِينُ",
       "source": "İbn Mace"
     },
@@ -746,7 +746,7 @@
       "name": "Allahümme inni es'elükel huda",
       "text": "Allahümme inni es'elükel hüda vet tüka vel afafe vel gına",
       "meaning": "Allah'ım! Senden hidayet, takva, iffet ve gönül zenginliği isterim.",
-      "goal": null,
+      "goal": 1,
       "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى",
       "source": "Müslim"
     },
@@ -757,7 +757,7 @@
       "name": "Allahümme inni euzu bike minel hemmi",
       "text": "Allahümme inni euzu bike minel hemmi vel hazen",
       "meaning": "Allah'ım! Sıkıntıdan ve kederden Sana sığınırım.",
-      "goal": null,
+      "goal": 1,
       "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
       "source": "Buhari"
     },
@@ -768,7 +768,7 @@
       "name": "Allahümme a'inni ala zikrike",
       "text": "Allahümme a'inni ala zikrike ve şükrike ve hüsnü ibadetike",
       "meaning": "Allah'ım! Seni zikretmem, Sana şükretmem ve Sana güzel kulluk etmem için bana yardım et.",
-      "goal": null,
+      "goal": 1,
       "arabic": "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
       "source": "Ebu Davud, Nesai"
     },
@@ -779,7 +779,7 @@
       "name": "Rabbena la tuziğ",
       "text": "Rabbena la tuziğ kulubena ba'de iz hedeytena",
       "meaning": "Rabbimiz! Bizi hidayete erdirdikten sonra kalplerimizi eğriltme.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا",
       "source": "Kur'an 3:8"
     },
@@ -790,7 +790,7 @@
       "name": "Rabbena hab lena",
       "text": "Rabbena heb lena min ezvacina ve zürriyyatina kurrete a'yunin",
       "meaning": "Rabbimiz! Bize eşlerimizden ve çocuklarımızdan göz aydınlığı bağışla.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
       "source": "Kur'an 25:74"
     },
@@ -801,7 +801,7 @@
       "name": "Rabbighfir li",
       "text": "Rabbigfir li",
       "meaning": "Rabbim! Beni bağışla.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبِّ اغْفِرْ لِي",
       "source": "Kur'an 38:35"
     },
@@ -812,7 +812,7 @@
       "name": "Rabbena zalemna",
       "text": "Rabbena zalemna enfüsena ve in lem tağfir lena ve terhamna le nekunenne minel hasirin",
       "meaning": "Rabbimiz! Kendimize zulmettik; bizi bağışlamaz ve bize merhamet etmezsen mutlaka ziyana uğrayanlardan oluruz.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
       "source": "Kur'an 7:23"
     },
@@ -823,7 +823,7 @@
       "name": "Rabbena la tuahizna",
       "text": "Rabbena la tüahizna in nesina ev ahta'na",
       "meaning": "Rabbimiz! Unutur veya yanılırsak bizi sorumlu tutma.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا",
       "source": "Kur'an 2:286"
     },
@@ -834,7 +834,7 @@
       "name": "Rabbena la tuhammilna",
       "text": "Rabbena ve la tahmil aleyna isran kema hameltehu alellezine min kablina",
       "meaning": "Rabbimiz! Bizden öncekilere yüklediğin gibi bize ağır bir yük yükleme.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا",
       "source": "Kur'an 2:286"
     },
@@ -845,7 +845,7 @@
       "name": "Rabbena la tuhammilna ma la takata",
       "text": "Rabbena ve la tuhammilna ma la takate lena bih",
       "meaning": "Rabbimiz! Gücümüzün yetmediği şeyi bize yükleme.",
-      "goal": null,
+      "goal": 1,
       "arabic": "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ",
       "source": "Kur'an 2:286"
     },
@@ -856,7 +856,7 @@
       "name": "Er-Rahmân",
       "text": "Er-Rahman",
       "meaning": "Dünyada bütün varlıklara merhamet eden.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّحْمَنُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -867,7 +867,7 @@
       "name": "Er-Rahîm",
       "text": "Er-Rahim",
       "meaning": "Çok merhamet eden, rahmeti sürekli olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّحِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -878,7 +878,7 @@
       "name": "El-Melik",
       "text": "El-Melik",
       "meaning": "Mülkün gerçek sahibi ve mutlak hükümdar.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمَلِكُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -889,7 +889,7 @@
       "name": "El-Kuddûs",
       "text": "El-Kuddus",
       "meaning": "Her türlü eksiklikten münezzeh olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقُدُّوسُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -900,7 +900,7 @@
       "name": "Es-Selâm",
       "text": "Es-Selam",
       "meaning": "Esenlik veren, selamete çıkaran.",
-      "goal": null,
+      "goal": 1,
       "arabic": "السَّلَامُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -911,7 +911,7 @@
       "name": "El-Mü'min",
       "text": "El-Mümin",
       "meaning": "Güven veren, emniyete kavuşturan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُؤْمِنُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -922,7 +922,7 @@
       "name": "El-Müheymin",
       "text": "El-Müheymin",
       "meaning": "Gözetip koruyan ve yöneten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُهَيْمِنُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -933,7 +933,7 @@
       "name": "El-Azîz",
       "text": "El-Aziz",
       "meaning": "Mutlak izzet sahibi, mağlup edilemeyen.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَزِيزُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -944,7 +944,7 @@
       "name": "El-Cebbâr",
       "text": "El-Cebbar",
       "meaning": "İradesi her şeye üstün olan, eksikleri gideren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْجَبَّارُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -955,7 +955,7 @@
       "name": "El-Mütekebbir",
       "text": "El-Mütekebbir",
       "meaning": "Büyüklük ve ululuk sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُتَكَبِّرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -966,7 +966,7 @@
       "name": "El-Hâlık",
       "text": "El-Halik",
       "meaning": "Her şeyi yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْخَالِقُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -977,7 +977,7 @@
       "name": "El-Bâri'",
       "text": "El-Bari",
       "meaning": "Varlıkları örneksiz ve kusursuz yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَارِئُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -988,7 +988,7 @@
       "name": "El-Musavvir",
       "text": "El-Musavvir",
       "meaning": "Varlıklara şekil ve suret veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُصَوِّرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -999,7 +999,7 @@
       "name": "El-Gaffâr",
       "text": "El-Gaffar",
       "meaning": "Günahları çokça bağışlayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْغَفَّارُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1010,7 +1010,7 @@
       "name": "El-Kahhâr",
       "text": "El-Kahhar",
       "meaning": "Her şeye galip ve hakim olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقَهَّارُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1021,7 +1021,7 @@
       "name": "El-Vehhâb",
       "text": "El-Vehhab",
       "meaning": "Karşılıksız ve bolca bağışlayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَهَّابُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1032,7 +1032,7 @@
       "name": "Er-Rezzâk",
       "text": "Er-Rezzak",
       "meaning": "Rızıkları veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّزَّاقُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1043,7 +1043,7 @@
       "name": "El-Fettâh",
       "text": "El-Fettah",
       "meaning": "Hayır kapılarını açan, hükmeden.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْفَتَّاحُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1054,7 +1054,7 @@
       "name": "El-Alîm",
       "text": "El-Alim",
       "meaning": "Her şeyi hakkıyla bilen.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَلِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1065,7 +1065,7 @@
       "name": "El-Kâbız",
       "text": "El-Kabız",
       "meaning": "Dilediğinin rızkını daraltan, ruhları alan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقَابِضُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1076,7 +1076,7 @@
       "name": "El-Bâsıt",
       "text": "El-Basıt",
       "meaning": "Rızkı ve imkanları genişleten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَاسِطُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1087,7 +1087,7 @@
       "name": "El-Hâfıd",
       "text": "El-Hafıd",
       "meaning": "Dilediğini alçaltan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْخَافِضُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1098,7 +1098,7 @@
       "name": "Er-Râfi'",
       "text": "Er-Rafi",
       "meaning": "Dilediğini yükselten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّافِعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1109,7 +1109,7 @@
       "name": "El-Mu'izz",
       "text": "El-Muizz",
       "meaning": "İzzet ve şeref veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُعِزُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1120,7 +1120,7 @@
       "name": "El-Müzill",
       "text": "El-Müzill",
       "meaning": "Dilediğini zillete düşüren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُذِلُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1131,7 +1131,7 @@
       "name": "Es-Semî'",
       "text": "Es-Semi",
       "meaning": "Her şeyi işiten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "السَّمِيعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1142,7 +1142,7 @@
       "name": "El-Basîr",
       "text": "El-Basir",
       "meaning": "Her şeyi gören.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَصِيرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1153,7 +1153,7 @@
       "name": "El-Hakem",
       "text": "El-Hakem",
       "meaning": "Hükmeden, hakkı ortaya koyan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَكَمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1164,7 +1164,7 @@
       "name": "El-Adl",
       "text": "El-Adl",
       "meaning": "Mutlak adalet sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَدْلُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1175,7 +1175,7 @@
       "name": "El-Latîf",
       "text": "El-Latif",
       "meaning": "Lütfu ince ve kullarına iyilikleri ulaştıran.",
-      "goal": null,
+      "goal": 1,
       "arabic": "اللَّطِيفُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1186,7 +1186,7 @@
       "name": "El-Habîr",
       "text": "El-Habir",
       "meaning": "Her şeyden haberdar olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْخَبِيرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1197,7 +1197,7 @@
       "name": "El-Halîm",
       "text": "El-Halim",
       "meaning": "Ceza vermekte acele etmeyen, yumuşak davranan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَلِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1208,7 +1208,7 @@
       "name": "El-Azîm",
       "text": "El-Azim",
       "meaning": "Pek yüce ve büyük olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَظِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1219,7 +1219,7 @@
       "name": "El-Gafûr",
       "text": "El-Gafur",
       "meaning": "Çok bağışlayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْغَفُورُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1230,7 +1230,7 @@
       "name": "Eş-Şekûr",
       "text": "Eş-Şekur",
       "meaning": "Az amele çok karşılık veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الشَّكُورُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1241,7 +1241,7 @@
       "name": "El-Aliyy",
       "text": "El-Aliyy",
       "meaning": "Pek yüce olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَلِيُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1252,7 +1252,7 @@
       "name": "El-Kebîr",
       "text": "El-Kebir",
       "meaning": "Büyüklüğü sınırsız olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْكَبِيرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1263,7 +1263,7 @@
       "name": "El-Hafîz",
       "text": "El-Hafiz",
       "meaning": "Koruyup gözeten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَفِيظُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1274,7 +1274,7 @@
       "name": "El-Mukît",
       "text": "El-Mukit",
       "meaning": "Rızık ve güç veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُقِيتُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1285,7 +1285,7 @@
       "name": "El-Hasîb",
       "text": "El-Hasib",
       "meaning": "Hesaba çeken, kullarına yeten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَسِيبُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1296,7 +1296,7 @@
       "name": "El-Celîl",
       "text": "El-Celil",
       "meaning": "Ululuk ve azamet sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْجَلِيلُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1307,7 +1307,7 @@
       "name": "El-Kerîm",
       "text": "El-Kerim",
       "meaning": "Çok cömert ve ikram sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْكَرِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1318,7 +1318,7 @@
       "name": "Er-Rakîb",
       "text": "Er-Rakib",
       "meaning": "Her şeyi gözeten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّقِيبُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1329,7 +1329,7 @@
       "name": "El-Mucîb",
       "text": "El-Mucib",
       "meaning": "Dualara cevap veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُجِيبُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1340,7 +1340,7 @@
       "name": "El-Vâsi'",
       "text": "El-Vasi",
       "meaning": "Rahmeti ve ilmi geniş olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَاسِعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1351,7 +1351,7 @@
       "name": "El-Hakîm",
       "text": "El-Hakim",
       "meaning": "Her işi hikmetli olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَكِيمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1362,7 +1362,7 @@
       "name": "El-Vedûd",
       "text": "El-Vedud",
       "meaning": "Kullarını seven ve sevilen.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَدُودُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1373,7 +1373,7 @@
       "name": "El-Mecîd",
       "text": "El-Mecid",
       "meaning": "Şanı ve şerefi yüce olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمَجِيدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1384,7 +1384,7 @@
       "name": "El-Bâis",
       "text": "El-Bais",
       "meaning": "Ölüleri dirilten, peygamberler gönderen.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَاعِثُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1395,7 +1395,7 @@
       "name": "Eş-Şehîd",
       "text": "Eş-Şehid",
       "meaning": "Her şeye şahit olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الشَّهِيدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1406,7 +1406,7 @@
       "name": "El-Hakk",
       "text": "El-Hakk",
       "meaning": "Varlığı gerçek ve değişmez olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَقُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1417,7 +1417,7 @@
       "name": "El-Vekîl",
       "text": "El-Vekil",
       "meaning": "Kendisine güvenilip dayanılan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَكِيلُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1428,7 +1428,7 @@
       "name": "El-Kaviyy",
       "text": "El-Kaviyy",
       "meaning": "Gücü sonsuz olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقَوِيُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1439,7 +1439,7 @@
       "name": "El-Metîn",
       "text": "El-Metin",
       "meaning": "Pek güçlü ve sağlam olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمَتِينُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1450,7 +1450,7 @@
       "name": "El-Veliyy",
       "text": "El-Veliyy",
       "meaning": "Dost ve yardımcı olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَلِيُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1461,7 +1461,7 @@
       "name": "El-Hamîd",
       "text": "El-Hamid",
       "meaning": "Her türlü övgüye layık olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَمِيدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1472,7 +1472,7 @@
       "name": "El-Muhsî",
       "text": "El-Muhsi",
       "meaning": "Her şeyi tek tek bilen ve sayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُحْصِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1483,7 +1483,7 @@
       "name": "El-Mübdi'",
       "text": "El-Mübdi",
       "meaning": "Varlıkları ilk defa yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُبْدِئُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1494,7 +1494,7 @@
       "name": "El-Muîd",
       "text": "El-Muid",
       "meaning": "Yaratmayı tekrar eden, yeniden dirilten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُعِيدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1505,7 +1505,7 @@
       "name": "El-Muhyî",
       "text": "El-Muhyi",
       "meaning": "Hayat veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُحْيِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1516,7 +1516,7 @@
       "name": "El-Mümît",
       "text": "El-Mümit",
       "meaning": "Ölümü yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُمِيتُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1527,7 +1527,7 @@
       "name": "El-Hayy",
       "text": "El-Hayy",
       "meaning": "Daima diri olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْحَيُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1538,7 +1538,7 @@
       "name": "El-Kayyûm",
       "text": "El-Kayyum",
       "meaning": "Her şeyi ayakta tutan, kendisi hiçbir şeye muhtaç olmayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقَيُّومُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1549,7 +1549,7 @@
       "name": "El-Vâcid",
       "text": "El-Vacid",
       "meaning": "Dilediğini bulan, hiçbir şeyden aciz olmayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَاجِدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1560,7 +1560,7 @@
       "name": "El-Mâcid",
       "text": "El-Macid",
       "meaning": "Şanı ve keremi yüce olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمَاجِدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1571,7 +1571,7 @@
       "name": "El-Vâhid",
       "text": "El-Vahid",
       "meaning": "Tek ve eşsiz olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَاحِدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1582,7 +1582,7 @@
       "name": "El-Ehad",
       "text": "El-Ehad",
       "meaning": "Bir ve tek olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْأَحَدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1593,7 +1593,7 @@
       "name": "Es-Samed",
       "text": "Es-Samed",
       "meaning": "Her şeyin kendisine muhtaç olduğu, kendisi hiçbir şeye muhtaç olmayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الصَّمَدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1604,7 +1604,7 @@
       "name": "El-Kâdir",
       "text": "El-Kadir",
       "meaning": "Her şeye gücü yeten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْقَادِرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1615,7 +1615,7 @@
       "name": "El-Muktedir",
       "text": "El-Muktedir",
       "meaning": "Kudreti her şeye yeten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُقْتَدِرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1626,7 +1626,7 @@
       "name": "El-Mukaddim",
       "text": "El-Mukaddim",
       "meaning": "Dilediğini öne alan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُقَدِّمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1637,7 +1637,7 @@
       "name": "El-Muahhir",
       "text": "El-Muahhir",
       "meaning": "Dilediğini geri bırakan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُؤَخِّرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1648,7 +1648,7 @@
       "name": "El-Evvel",
       "text": "El-Evvel",
       "meaning": "Başlangıcı olmayan ilk.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْأَوَّلُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1659,7 +1659,7 @@
       "name": "El-Âhir",
       "text": "El-Ahir",
       "meaning": "Sonu olmayan son.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْآخِرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1670,7 +1670,7 @@
       "name": "Ez-Zâhir",
       "text": "Ez-Zahir",
       "meaning": "Varlığı açık ve üstün olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الظَّاهِرُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1681,7 +1681,7 @@
       "name": "El-Bâtın",
       "text": "El-Batın",
       "meaning": "Mahiyeti duyularla kavranamayan, gizli olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَاطِنُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1692,7 +1692,7 @@
       "name": "El-Vâlî",
       "text": "El-Vali",
       "meaning": "Her şeyi yöneten.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَالِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1703,7 +1703,7 @@
       "name": "El-Müteâlî",
       "text": "El-Müteali",
       "meaning": "Her türlü eksiklikten yüce olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُتَعَالِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1714,7 +1714,7 @@
       "name": "El-Berr",
       "text": "El-Berr",
       "meaning": "İyiliği ve lütfu bol olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَرُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1725,7 +1725,7 @@
       "name": "Et-Tevvâb",
       "text": "Et-Tevvab",
       "meaning": "Tövbeleri kabul eden.",
-      "goal": null,
+      "goal": 1,
       "arabic": "التَّوَّابُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1736,7 +1736,7 @@
       "name": "El-Müntekim",
       "text": "El-Müntakim",
       "meaning": "Haksızlık edenlerden adaletle intikam alan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُنْتَقِمُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1747,7 +1747,7 @@
       "name": "El-Afüvv",
       "text": "El-Afüvv",
       "meaning": "Günahları affeden ve izlerini silen.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْعَفُوُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1758,7 +1758,7 @@
       "name": "Er-Raûf",
       "text": "Er-Rauf",
       "meaning": "Çok şefkatli ve merhametli olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّؤُوفُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1769,7 +1769,7 @@
       "name": "Mâlikü'l-Mülk",
       "text": "Malikül Mülk",
       "meaning": "Mülkün gerçek sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "مَالِكُ الْمُلْكِ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1780,7 +1780,7 @@
       "name": "Zü'l-Celâli ve'l-İkrâm",
       "text": "Zül Celali vel İkram",
       "meaning": "Celal ve ikram sahibi.",
-      "goal": null,
+      "goal": 1,
       "arabic": "ذُو الْجَلَالِ وَالْإِكْرَامِ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1791,7 +1791,7 @@
       "name": "El-Muksit",
       "text": "El-Muksit",
       "meaning": "Adaletle hükmeden.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُقْسِطُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1802,7 +1802,7 @@
       "name": "El-Câmi'",
       "text": "El-Cami",
       "meaning": "Bir araya getiren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْجَامِعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1813,7 +1813,7 @@
       "name": "El-Ganî",
       "text": "El-Gani",
       "meaning": "Hiçbir şeye muhtaç olmayan, zengin.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْغَنِيُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1824,7 +1824,7 @@
       "name": "El-Muğnî",
       "text": "El-Muğni",
       "meaning": "Zengin eden, ihtiyaçları gideren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمُغْنِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1835,7 +1835,7 @@
       "name": "El-Mâni'",
       "text": "El-Mani",
       "meaning": "Dilediğine engel olan, koruyan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْمَانِعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1846,7 +1846,7 @@
       "name": "Ed-Dârr",
       "text": "Ed-Darr",
       "meaning": "Dilediğinde zarar verici sonuçları yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الضَّارُّ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1857,7 +1857,7 @@
       "name": "En-Nâfi'",
       "text": "En-Nafi",
       "meaning": "Fayda veren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "النَّافِعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1868,7 +1868,7 @@
       "name": "En-Nûr",
       "text": "En-Nur",
       "meaning": "Nurlandıran, aydınlatan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "النُّورُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1879,7 +1879,7 @@
       "name": "El-Hâdî",
       "text": "El-Hadi",
       "meaning": "Hidayet veren, doğru yolu gösteren.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْهَادِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1890,7 +1890,7 @@
       "name": "El-Bedî'",
       "text": "El-Bedi",
       "meaning": "Eşi ve benzeri olmadan yaratan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَدِيعُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1901,7 +1901,7 @@
       "name": "El-Bâkî",
       "text": "El-Baki",
       "meaning": "Varlığının sonu olmayan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْبَاقِي",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1912,7 +1912,7 @@
       "name": "El-Vâris",
       "text": "El-Varis",
       "meaning": "Her şeyin gerçek sahibi olarak kalan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الْوَارِثُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1923,7 +1923,7 @@
       "name": "Er-Reşîd",
       "text": "Er-Reşid",
       "meaning": "Doğru yolu gösteren, işleri isabetli olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الرَّشِيدُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     },
@@ -1934,7 +1934,7 @@
       "name": "Es-Sabûr",
       "text": "Es-Sabur",
       "meaning": "Ceza vermekte acele etmeyen, çok sabırlı olan.",
-      "goal": null,
+      "goal": 1,
       "arabic": "الصَّبُورُ",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
     }
