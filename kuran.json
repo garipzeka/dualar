@@ -1,6 +1,6 @@
 {
-  "version": 6,
-  "contentHash": "e0bdbf427b3e655e",
+  "version": 7,
+  "contentHash": "9eed58c121ab7994",
   "items": [
     {
       "id": "k00001",
@@ -1378,7 +1378,8 @@
       "meaning": "Allah'ım! Seni eksikliklerden tenzih ederim; övgü Sana mahsustur. Adın mübarektir, azametin ve şanın yücedir. Senden başka ilâh yoktur.",
       "arabic": "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
       "goal": 1,
-      "source": "Namaz Duaları · Sübhaneke · ilk rekatın başında okunur"
+      "source": "Namaz Duaları · Sübhaneke · ilk rekatın başında okunur",
+      "ses": "namaz-subhaneke.mp3"
     },
     {
       "id": "kd0002",
@@ -1388,7 +1389,8 @@
       "meaning": "Bütün sözler, ibadetler ve güzellikler Allah'a mahsustur. Ey Peygamber! Sana selâm, rahmet ve bereketler olsun. Selâm bizlere ve Allah'ın salih kullarına olsun. Şahitlik ederim ki Allah'tan başka ilâh yoktur; yine şahitlik ederim ki Hz. Muhammed, O'nun kulu ve elçisidir.",
       "arabic": "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
       "goal": 1,
-      "source": "Namaz Duaları · Tahiyyat · oturuşlarda okunur"
+      "source": "Namaz Duaları · Tahiyyat · oturuşlarda okunur",
+      "ses": "namaz-ettahiyyatu.mp3"
     },
     {
       "id": "kd0003",
@@ -1398,7 +1400,8 @@
       "meaning": "Allah'ım! Muhammed'e ve Muhammed'in âline salât et (rahmetini ver); İbrâhîm'e ve İbrâhîm'in âline salât ettiğin gibi. Şüphesiz Sen Hamîd'sin (hamdedilensin), Mecîd'sin (şerefi yüce olansın).",
       "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
       "goal": 1,
-      "source": "Namaz Duaları · Salavat-ı İbrâhîmiye (1) · son oturuşta okunur"
+      "source": "Namaz Duaları · Salavat-ı İbrâhîmiye (1) · son oturuşta okunur",
+      "ses": "namaz-salli-barik.mp3"
     },
     {
       "id": "kd0004",
@@ -1408,7 +1411,8 @@
       "meaning": "Allah'ım! Muhammed'e ve Muhammed'in âline bereketler ver; İbrâhîm'e ve İbrâhîm'in âline bereket verdiğin gibi. Şüphesiz Sen Hamîd'sin, Mecîd'sin.",
       "arabic": "اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
       "goal": 1,
-      "source": "Namaz Duaları · Salavat-ı İbrâhîmiye (2) · son oturuşta okunur"
+      "source": "Namaz Duaları · Salavat-ı İbrâhîmiye (2) · son oturuşta okunur",
+      "ses": "namaz-salli-barik.mp3"
     },
     {
       "id": "kd0005",
@@ -1418,7 +1422,8 @@
       "meaning": "Allah'ım! Rabbimiz! Bize dünyada güzellik (iyilik) ver, âhirette de güzellik (iyilik) ver ve bizi cehennem azabından koru.",
       "arabic": "اللَّهُمَّ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
       "goal": 1,
-      "source": "Namaz Duaları · Rabbenâ Âtinâ · son oturuşta okunur (Bakara 201)"
+      "source": "Namaz Duaları · Rabbenâ Âtinâ · son oturuşta okunur (Bakara 201)",
+      "ses": "namaz-rabbena-atina.mp3"
     },
     {
       "id": "kd0006",
@@ -1428,7 +1433,8 @@
       "meaning": "Allah'ım! Senden yardım diliyoruz, bağışlanmanı diliyoruz. Sana iman ettik, Sana dayandık ve güvendik. Seni her hayır ile övüyoruz, nimetlerine şükrediyoruz. Seni inkâr etmiyoruz; Sen'in emirlerini çiğneyen günahkâr kimseyi bırakıp terk ediyoruz.",
       "arabic": "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنُؤْمِنُ بِكَ وَتَوَكَّلْنَا عَلَيْكَ وَنُثْنِي عَلَيْكَ الْخَيْرَ كُلَّهُ وَنَشْكُرُكَ وَلَا نَكْفُرُكَ وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ",
       "goal": 1,
-      "source": "Namaz Duaları · Kunut 1 · vitir ve vacip durumlarda okunur"
+      "source": "Namaz Duaları · Kunut 1 · vitir ve vacip durumlarda okunur",
+      "ses": "namaz-kunut.mp3"
     },
     {
       "id": "kd0007",
@@ -1438,7 +1444,8 @@
       "meaning": "Allah'ım! Yalnız Sana kulluk ederiz; yalnız Senin için namaz kılar ve secde ederiz. Yalnız Sana yöneliriz ve Sana koşarız. Rahmetini ümit ederiz, azabından korkarız. Çünkü Sen'in azabın kâfirleri mutlaka yakalayacaktır.",
       "arabic": "اللَّهُمَّ إِيَّاكَ نَعْبُدُ وَلَكَ نُصَلِّي وَنَسْجُدُ وَإِلَيْكَ نَسْعَى وَنَحْفِدُ نَرْجُو رَحْمَتَكَ وَنَخْشَى عَذَابَكَ إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ",
       "goal": 1,
-      "source": "Namaz Duaları · Kunut 2 · vitir ve vacip durumlarda okunur"
+      "source": "Namaz Duaları · Kunut 2 · vitir ve vacip durumlarda okunur",
+      "ses": "namaz-kunut.mp3"
     },
     {
       "id": "kd0008",
@@ -1448,7 +1455,8 @@
       "meaning": "Allah'a, meleklerine, kitaplarına, peygamberlerine, âhiret gününe, kadere ve kaderin hayrının da şerrinin de Allah Teâlâ'dan olduğuna iman ettik. Ölümden sonra diriliğin hak olduğuna inandık. Şahitlik ederim ki Allah'tan başka ilâh yoktur; yine şahitlik ederim ki Hz. Muhammed, O'nun kulu ve elçisidir.",
       "arabic": "آمَنَّا بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ وَالْيَوْمِ الْآخِرِ وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللَّهِ تَعَالَى وَالْبَعْثُ بَعْدَ الْمَوْتِ حَقٌّ أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
       "goal": 1,
-      "source": "Namaz Duaları · Amentü · iman esasları"
+      "source": "Namaz Duaları · Amentü · iman esasları",
+      "ses": "namaz-amentu.mp3"
     }
   ],
   "lists": [
