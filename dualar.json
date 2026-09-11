@@ -1,8 +1,9 @@
 {
-  "version": 6,
+  "version": 8,
   "items": [
     {
       "id": "d00001",
+      "sure": 1,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Fatiha",
@@ -14,6 +15,8 @@
     },
     {
       "id": "d00002",
+      "sure": 2,
+      "ayet": 255,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Ayetel Kürsi",
@@ -56,6 +59,8 @@
     },
     {
       "id": "d00006",
+      "sure": 59,
+      "ayet": 22,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 22.",
@@ -67,6 +72,8 @@
     },
     {
       "id": "d00007",
+      "sure": 59,
+      "ayet": 23,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 23",
@@ -78,6 +85,8 @@
     },
     {
       "id": "d00008",
+      "sure": 59,
+      "ayet": 24,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 24.",
@@ -119,6 +128,7 @@
     },
     {
       "id": "d00012",
+      "sure": 112,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "İhlas",
@@ -130,6 +140,7 @@
     },
     {
       "id": "d00013",
+      "sure": 113,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Felak",
@@ -141,6 +152,7 @@
     },
     {
       "id": "d00014",
+      "sure": 114,
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Nas",
@@ -675,6 +687,8 @@
     },
     {
       "id": "d00073",
+      "sure": 9,
+      "ayet": 129,
       "grpid": "g00011",
       "tur": "sıkıntı",
       "name": "Hasbiyallahu",
@@ -686,6 +700,8 @@
     },
     {
       "id": "d00074",
+      "sure": 2,
+      "ayet": 201,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena atina",
@@ -708,6 +724,8 @@
     },
     {
       "id": "d00076",
+      "sure": 20,
+      "ayet": 114,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbi zidni ilma",
@@ -719,6 +737,8 @@
     },
     {
       "id": "d00077",
+      "sure": 3,
+      "ayet": 173,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Hasbünallah",
@@ -774,6 +794,8 @@
     },
     {
       "id": "d00082",
+      "sure": 3,
+      "ayet": 8,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuziğ",
@@ -785,6 +807,8 @@
     },
     {
       "id": "d00083",
+      "sure": 25,
+      "ayet": 74,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena hab lena",
@@ -796,6 +820,8 @@
     },
     {
       "id": "d00084",
+      "sure": 38,
+      "ayet": 35,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbighfir li",
@@ -807,6 +833,8 @@
     },
     {
       "id": "d00085",
+      "sure": 7,
+      "ayet": 23,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena zalemna",
@@ -818,6 +846,8 @@
     },
     {
       "id": "d00086",
+      "sure": 2,
+      "ayet": 286,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuahizna",
@@ -829,6 +859,8 @@
     },
     {
       "id": "d00087",
+      "sure": 2,
+      "ayet": 286,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuhammilna",
@@ -840,6 +872,8 @@
     },
     {
       "id": "d00088",
+      "sure": 2,
+      "ayet": 286,
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuhammilna ma la takata",
