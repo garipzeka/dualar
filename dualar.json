@@ -1,5 +1,5 @@
 {
-  "version": 8,
+  "version": 10,
   "items": [
     {
       "id": "d00001",
@@ -892,7 +892,8 @@
       "arabic": "الرَّحْمَنُ",
       "meaning": "Dünyada bütün varlıklara merhamet eden.",
       "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
-      "goal": 1
+      "goal": 1,
+      "ses": "esma-1.mp3"
     },
     {
       "id": "d00090",
@@ -903,7 +904,8 @@
       "meaning": "Çok merhamet eden, rahmeti sürekli olan.",
       "goal": 1,
       "arabic": "الرَّحِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-2.mp3"
     },
     {
       "id": "d00091",
@@ -914,7 +916,8 @@
       "meaning": "Mülkün gerçek sahibi ve mutlak hükümdar.",
       "goal": 1,
       "arabic": "الْمَلِكُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-3.mp3"
     },
     {
       "id": "d00092",
@@ -925,7 +928,8 @@
       "meaning": "Her türlü eksiklikten münezzeh olan.",
       "goal": 1,
       "arabic": "الْقُدُّوسُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-4.mp3"
     },
     {
       "id": "d00093",
@@ -936,7 +940,8 @@
       "meaning": "Esenlik veren, selamete çıkaran.",
       "goal": 1,
       "arabic": "السَّلَامُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-5.mp3"
     },
     {
       "id": "d00094",
@@ -947,7 +952,8 @@
       "meaning": "Güven veren, emniyete kavuşturan.",
       "goal": 1,
       "arabic": "الْمُؤْمِنُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-6.mp3"
     },
     {
       "id": "d00095",
@@ -958,7 +964,8 @@
       "meaning": "Gözetip koruyan ve yöneten.",
       "goal": 1,
       "arabic": "الْمُهَيْمِنُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-7.mp3"
     },
     {
       "id": "d00096",
@@ -969,7 +976,8 @@
       "meaning": "Mutlak izzet sahibi, mağlup edilemeyen.",
       "goal": 1,
       "arabic": "الْعَزِيزُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-8.mp3"
     },
     {
       "id": "d00097",
@@ -980,7 +988,8 @@
       "meaning": "İradesi her şeye üstün olan, eksikleri gideren.",
       "goal": 1,
       "arabic": "الْجَبَّارُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-9.mp3"
     },
     {
       "id": "d00098",
@@ -991,7 +1000,8 @@
       "meaning": "Büyüklük ve ululuk sahibi.",
       "goal": 1,
       "arabic": "الْمُتَكَبِّرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-10.mp3"
     },
     {
       "id": "d00099",
@@ -1002,7 +1012,8 @@
       "meaning": "Her şeyi yaratan.",
       "goal": 1,
       "arabic": "الْخَالِقُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-11.mp3"
     },
     {
       "id": "d00100",
@@ -1013,7 +1024,8 @@
       "meaning": "Varlıkları örneksiz ve kusursuz yaratan.",
       "goal": 1,
       "arabic": "الْبَارِئُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-12.mp3"
     },
     {
       "id": "d00101",
@@ -1024,7 +1036,8 @@
       "meaning": "Varlıklara şekil ve suret veren.",
       "goal": 1,
       "arabic": "الْمُصَوِّرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-13.mp3"
     },
     {
       "id": "d00102",
@@ -1035,7 +1048,8 @@
       "meaning": "Günahları çokça bağışlayan.",
       "goal": 1,
       "arabic": "الْغَفَّارُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-14.mp3"
     },
     {
       "id": "d00103",
@@ -1046,7 +1060,8 @@
       "meaning": "Her şeye galip ve hakim olan.",
       "goal": 1,
       "arabic": "الْقَهَّارُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-15.mp3"
     },
     {
       "id": "d00104",
@@ -1057,7 +1072,8 @@
       "meaning": "Karşılıksız ve bolca bağışlayan.",
       "goal": 1,
       "arabic": "الْوَهَّابُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-16.mp3"
     },
     {
       "id": "d00105",
@@ -1068,7 +1084,8 @@
       "meaning": "Rızıkları veren.",
       "goal": 1,
       "arabic": "الرَّزَّاقُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-17.mp3"
     },
     {
       "id": "d00106",
@@ -1079,7 +1096,8 @@
       "meaning": "Hayır kapılarını açan, hükmeden.",
       "goal": 1,
       "arabic": "الْفَتَّاحُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-18.mp3"
     },
     {
       "id": "d00107",
@@ -1090,7 +1108,8 @@
       "meaning": "Her şeyi hakkıyla bilen.",
       "goal": 1,
       "arabic": "الْعَلِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-19.mp3"
     },
     {
       "id": "d00108",
@@ -1101,7 +1120,8 @@
       "meaning": "Dilediğinin rızkını daraltan, ruhları alan.",
       "goal": 1,
       "arabic": "الْقَابِضُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-20.mp3"
     },
     {
       "id": "d00109",
@@ -1112,7 +1132,8 @@
       "meaning": "Rızkı ve imkanları genişleten.",
       "goal": 1,
       "arabic": "الْبَاسِطُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-21.mp3"
     },
     {
       "id": "d00110",
@@ -1123,7 +1144,8 @@
       "meaning": "Dilediğini alçaltan.",
       "goal": 1,
       "arabic": "الْخَافِضُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-22.mp3"
     },
     {
       "id": "d00111",
@@ -1134,7 +1156,8 @@
       "meaning": "Dilediğini yükselten.",
       "goal": 1,
       "arabic": "الرَّافِعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-23.mp3"
     },
     {
       "id": "d00112",
@@ -1145,7 +1168,8 @@
       "meaning": "İzzet ve şeref veren.",
       "goal": 1,
       "arabic": "الْمُعِزُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-24.mp3"
     },
     {
       "id": "d00113",
@@ -1156,7 +1180,8 @@
       "meaning": "Dilediğini zillete düşüren.",
       "goal": 1,
       "arabic": "الْمُذِلُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-25.mp3"
     },
     {
       "id": "d00114",
@@ -1167,7 +1192,8 @@
       "meaning": "Her şeyi işiten.",
       "goal": 1,
       "arabic": "السَّمِيعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-26.mp3"
     },
     {
       "id": "d00115",
@@ -1178,7 +1204,8 @@
       "meaning": "Her şeyi gören.",
       "goal": 1,
       "arabic": "الْبَصِيرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-27.mp3"
     },
     {
       "id": "d00116",
@@ -1189,7 +1216,8 @@
       "meaning": "Hükmeden, hakkı ortaya koyan.",
       "goal": 1,
       "arabic": "الْحَكَمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-28.mp3"
     },
     {
       "id": "d00117",
@@ -1200,7 +1228,8 @@
       "meaning": "Mutlak adalet sahibi.",
       "goal": 1,
       "arabic": "الْعَدْلُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-29.mp3"
     },
     {
       "id": "d00118",
@@ -1211,7 +1240,8 @@
       "meaning": "Lütfu ince ve kullarına iyilikleri ulaştıran.",
       "goal": 1,
       "arabic": "اللَّطِيفُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-30.mp3"
     },
     {
       "id": "d00119",
@@ -1222,7 +1252,8 @@
       "meaning": "Her şeyden haberdar olan.",
       "goal": 1,
       "arabic": "الْخَبِيرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-31.mp3"
     },
     {
       "id": "d00120",
@@ -1233,7 +1264,8 @@
       "meaning": "Ceza vermekte acele etmeyen, yumuşak davranan.",
       "goal": 1,
       "arabic": "الْحَلِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-32.mp3"
     },
     {
       "id": "d00121",
@@ -1244,7 +1276,8 @@
       "meaning": "Pek yüce ve büyük olan.",
       "goal": 1,
       "arabic": "الْعَظِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-33.mp3"
     },
     {
       "id": "d00122",
@@ -1255,7 +1288,8 @@
       "meaning": "Çok bağışlayan.",
       "goal": 1,
       "arabic": "الْغَفُورُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-34.mp3"
     },
     {
       "id": "d00123",
@@ -1266,7 +1300,8 @@
       "meaning": "Az amele çok karşılık veren.",
       "goal": 1,
       "arabic": "الشَّكُورُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-35.mp3"
     },
     {
       "id": "d00124",
@@ -1277,7 +1312,8 @@
       "meaning": "Pek yüce olan.",
       "goal": 1,
       "arabic": "الْعَلِيُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-36.mp3"
     },
     {
       "id": "d00125",
@@ -1288,7 +1324,8 @@
       "meaning": "Büyüklüğü sınırsız olan.",
       "goal": 1,
       "arabic": "الْكَبِيرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-37.mp3"
     },
     {
       "id": "d00126",
@@ -1299,7 +1336,8 @@
       "meaning": "Koruyup gözeten.",
       "goal": 1,
       "arabic": "الْحَفِيظُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-38.mp3"
     },
     {
       "id": "d00127",
@@ -1310,7 +1348,8 @@
       "meaning": "Rızık ve güç veren.",
       "goal": 1,
       "arabic": "الْمُقِيتُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-39.mp3"
     },
     {
       "id": "d00128",
@@ -1321,7 +1360,8 @@
       "meaning": "Hesaba çeken, kullarına yeten.",
       "goal": 1,
       "arabic": "الْحَسِيبُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-40.mp3"
     },
     {
       "id": "d00129",
@@ -1332,7 +1372,8 @@
       "meaning": "Ululuk ve azamet sahibi.",
       "goal": 1,
       "arabic": "الْجَلِيلُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-41.mp3"
     },
     {
       "id": "d00130",
@@ -1343,7 +1384,8 @@
       "meaning": "Çok cömert ve ikram sahibi.",
       "goal": 1,
       "arabic": "الْكَرِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-42.mp3"
     },
     {
       "id": "d00131",
@@ -1354,7 +1396,8 @@
       "meaning": "Her şeyi gözeten.",
       "goal": 1,
       "arabic": "الرَّقِيبُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-43.mp3"
     },
     {
       "id": "d00132",
@@ -1365,7 +1408,8 @@
       "meaning": "Dualara cevap veren.",
       "goal": 1,
       "arabic": "الْمُجِيبُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-44.mp3"
     },
     {
       "id": "d00133",
@@ -1376,7 +1420,8 @@
       "meaning": "Rahmeti ve ilmi geniş olan.",
       "goal": 1,
       "arabic": "الْوَاسِعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-45.mp3"
     },
     {
       "id": "d00134",
@@ -1387,7 +1432,8 @@
       "meaning": "Her işi hikmetli olan.",
       "goal": 1,
       "arabic": "الْحَكِيمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-46.mp3"
     },
     {
       "id": "d00135",
@@ -1398,7 +1444,8 @@
       "meaning": "Kullarını seven ve sevilen.",
       "goal": 1,
       "arabic": "الْوَدُودُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-47.mp3"
     },
     {
       "id": "d00136",
@@ -1409,7 +1456,8 @@
       "meaning": "Şanı ve şerefi yüce olan.",
       "goal": 1,
       "arabic": "الْمَجِيدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-48.mp3"
     },
     {
       "id": "d00137",
@@ -1420,7 +1468,8 @@
       "meaning": "Ölüleri dirilten, peygamberler gönderen.",
       "goal": 1,
       "arabic": "الْبَاعِثُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-49.mp3"
     },
     {
       "id": "d00138",
@@ -1431,7 +1480,8 @@
       "meaning": "Her şeye şahit olan.",
       "goal": 1,
       "arabic": "الشَّهِيدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-50.mp3"
     },
     {
       "id": "d00139",
@@ -1442,7 +1492,8 @@
       "meaning": "Varlığı gerçek ve değişmez olan.",
       "goal": 1,
       "arabic": "الْحَقُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-51.mp3"
     },
     {
       "id": "d00140",
@@ -1453,7 +1504,8 @@
       "meaning": "Kendisine güvenilip dayanılan.",
       "goal": 1,
       "arabic": "الْوَكِيلُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-52.mp3"
     },
     {
       "id": "d00141",
@@ -1464,7 +1516,8 @@
       "meaning": "Gücü sonsuz olan.",
       "goal": 1,
       "arabic": "الْقَوِيُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-53.mp3"
     },
     {
       "id": "d00142",
@@ -1475,7 +1528,8 @@
       "meaning": "Pek güçlü ve sağlam olan.",
       "goal": 1,
       "arabic": "الْمَتِينُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-54.mp3"
     },
     {
       "id": "d00143",
@@ -1486,7 +1540,8 @@
       "meaning": "Dost ve yardımcı olan.",
       "goal": 1,
       "arabic": "الْوَلِيُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-55.mp3"
     },
     {
       "id": "d00144",
@@ -1497,7 +1552,8 @@
       "meaning": "Her türlü övgüye layık olan.",
       "goal": 1,
       "arabic": "الْحَمِيدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-56.mp3"
     },
     {
       "id": "d00145",
@@ -1508,7 +1564,8 @@
       "meaning": "Her şeyi tek tek bilen ve sayan.",
       "goal": 1,
       "arabic": "الْمُحْصِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-57.mp3"
     },
     {
       "id": "d00146",
@@ -1519,7 +1576,8 @@
       "meaning": "Varlıkları ilk defa yaratan.",
       "goal": 1,
       "arabic": "الْمُبْدِئُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-58.mp3"
     },
     {
       "id": "d00147",
@@ -1530,7 +1588,8 @@
       "meaning": "Yaratmayı tekrar eden, yeniden dirilten.",
       "goal": 1,
       "arabic": "الْمُعِيدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-59.mp3"
     },
     {
       "id": "d00148",
@@ -1541,7 +1600,8 @@
       "meaning": "Hayat veren.",
       "goal": 1,
       "arabic": "الْمُحْيِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-60.mp3"
     },
     {
       "id": "d00149",
@@ -1552,7 +1612,8 @@
       "meaning": "Ölümü yaratan.",
       "goal": 1,
       "arabic": "الْمُمِيتُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-61.mp3"
     },
     {
       "id": "d00150",
@@ -1563,7 +1624,8 @@
       "meaning": "Daima diri olan.",
       "goal": 1,
       "arabic": "الْحَيُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-62.mp3"
     },
     {
       "id": "d00151",
@@ -1574,7 +1636,8 @@
       "meaning": "Her şeyi ayakta tutan, kendisi hiçbir şeye muhtaç olmayan.",
       "goal": 1,
       "arabic": "الْقَيُّومُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-63.mp3"
     },
     {
       "id": "d00152",
@@ -1585,7 +1648,8 @@
       "meaning": "Dilediğini bulan, hiçbir şeyden aciz olmayan.",
       "goal": 1,
       "arabic": "الْوَاجِدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-64.mp3"
     },
     {
       "id": "d00153",
@@ -1596,7 +1660,8 @@
       "meaning": "Şanı ve keremi yüce olan.",
       "goal": 1,
       "arabic": "الْمَاجِدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-65.mp3"
     },
     {
       "id": "d00154",
@@ -1607,7 +1672,8 @@
       "meaning": "Tek ve eşsiz olan.",
       "goal": 1,
       "arabic": "الْوَاحِدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-66.mp3"
     },
     {
       "id": "d00155",
@@ -1618,7 +1684,8 @@
       "meaning": "Bir ve tek olan.",
       "goal": 1,
       "arabic": "الْأَحَدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-67.mp3"
     },
     {
       "id": "d00156",
@@ -1629,7 +1696,8 @@
       "meaning": "Her şeyin kendisine muhtaç olduğu, kendisi hiçbir şeye muhtaç olmayan.",
       "goal": 1,
       "arabic": "الصَّمَدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-68.mp3"
     },
     {
       "id": "d00157",
@@ -1640,7 +1708,8 @@
       "meaning": "Her şeye gücü yeten.",
       "goal": 1,
       "arabic": "الْقَادِرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-69.mp3"
     },
     {
       "id": "d00158",
@@ -1651,7 +1720,8 @@
       "meaning": "Kudreti her şeye yeten.",
       "goal": 1,
       "arabic": "الْمُقْتَدِرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-70.mp3"
     },
     {
       "id": "d00159",
@@ -1662,7 +1732,8 @@
       "meaning": "Dilediğini öne alan.",
       "goal": 1,
       "arabic": "الْمُقَدِّمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-71.mp3"
     },
     {
       "id": "d00160",
@@ -1673,7 +1744,8 @@
       "meaning": "Dilediğini geri bırakan.",
       "goal": 1,
       "arabic": "الْمُؤَخِّرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-72.mp3"
     },
     {
       "id": "d00161",
@@ -1684,7 +1756,8 @@
       "meaning": "Başlangıcı olmayan ilk.",
       "goal": 1,
       "arabic": "الْأَوَّلُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-73.mp3"
     },
     {
       "id": "d00162",
@@ -1695,7 +1768,8 @@
       "meaning": "Sonu olmayan son.",
       "goal": 1,
       "arabic": "الْآخِرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-74.mp3"
     },
     {
       "id": "d00163",
@@ -1706,7 +1780,8 @@
       "meaning": "Varlığı açık ve üstün olan.",
       "goal": 1,
       "arabic": "الظَّاهِرُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-75.mp3"
     },
     {
       "id": "d00164",
@@ -1717,7 +1792,8 @@
       "meaning": "Mahiyeti duyularla kavranamayan, gizli olan.",
       "goal": 1,
       "arabic": "الْبَاطِنُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-76.mp3"
     },
     {
       "id": "d00165",
@@ -1728,7 +1804,8 @@
       "meaning": "Her şeyi yöneten.",
       "goal": 1,
       "arabic": "الْوَالِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-77.mp3"
     },
     {
       "id": "d00166",
@@ -1739,7 +1816,8 @@
       "meaning": "Her türlü eksiklikten yüce olan.",
       "goal": 1,
       "arabic": "الْمُتَعَالِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-78.mp3"
     },
     {
       "id": "d00167",
@@ -1750,7 +1828,8 @@
       "meaning": "İyiliği ve lütfu bol olan.",
       "goal": 1,
       "arabic": "الْبَرُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-79.mp3"
     },
     {
       "id": "d00168",
@@ -1761,7 +1840,8 @@
       "meaning": "Tövbeleri kabul eden.",
       "goal": 1,
       "arabic": "التَّوَّابُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-80.mp3"
     },
     {
       "id": "d00169",
@@ -1772,7 +1852,8 @@
       "meaning": "Haksızlık edenlerden adaletle intikam alan.",
       "goal": 1,
       "arabic": "الْمُنْتَقِمُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-81.mp3"
     },
     {
       "id": "d00170",
@@ -1783,7 +1864,8 @@
       "meaning": "Günahları affeden ve izlerini silen.",
       "goal": 1,
       "arabic": "الْعَفُوُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-82.mp3"
     },
     {
       "id": "d00171",
@@ -1794,7 +1876,8 @@
       "meaning": "Çok şefkatli ve merhametli olan.",
       "goal": 1,
       "arabic": "الرَّؤُوفُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-83.mp3"
     },
     {
       "id": "d00172",
@@ -1805,7 +1888,8 @@
       "meaning": "Mülkün gerçek sahibi.",
       "goal": 1,
       "arabic": "مَالِكُ الْمُلْكِ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-84.mp3"
     },
     {
       "id": "d00173",
@@ -1816,7 +1900,8 @@
       "meaning": "Celal ve ikram sahibi.",
       "goal": 1,
       "arabic": "ذُو الْجَلَالِ وَالْإِكْرَامِ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-85.mp3"
     },
     {
       "id": "d00174",
@@ -1827,7 +1912,8 @@
       "meaning": "Adaletle hükmeden.",
       "goal": 1,
       "arabic": "الْمُقْسِطُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-86.mp3"
     },
     {
       "id": "d00175",
@@ -1838,7 +1924,8 @@
       "meaning": "Bir araya getiren.",
       "goal": 1,
       "arabic": "الْجَامِعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-87.mp3"
     },
     {
       "id": "d00176",
@@ -1849,7 +1936,8 @@
       "meaning": "Hiçbir şeye muhtaç olmayan, zengin.",
       "goal": 1,
       "arabic": "الْغَنِيُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-88.mp3"
     },
     {
       "id": "d00177",
@@ -1860,7 +1948,8 @@
       "meaning": "Zengin eden, ihtiyaçları gideren.",
       "goal": 1,
       "arabic": "الْمُغْنِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-89.mp3"
     },
     {
       "id": "d00178",
@@ -1871,7 +1960,8 @@
       "meaning": "Dilediğine engel olan, koruyan.",
       "goal": 1,
       "arabic": "الْمَانِعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-90.mp3"
     },
     {
       "id": "d00179",
@@ -1882,7 +1972,8 @@
       "meaning": "Dilediğinde zarar verici sonuçları yaratan.",
       "goal": 1,
       "arabic": "الضَّارُّ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-91.mp3"
     },
     {
       "id": "d00180",
@@ -1893,7 +1984,8 @@
       "meaning": "Fayda veren.",
       "goal": 1,
       "arabic": "النَّافِعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-92.mp3"
     },
     {
       "id": "d00181",
@@ -1904,7 +1996,8 @@
       "meaning": "Nurlandıran, aydınlatan.",
       "goal": 1,
       "arabic": "النُّورُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-93.mp3"
     },
     {
       "id": "d00182",
@@ -1915,7 +2008,8 @@
       "meaning": "Hidayet veren, doğru yolu gösteren.",
       "goal": 1,
       "arabic": "الْهَادِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-94.mp3"
     },
     {
       "id": "d00183",
@@ -1926,7 +2020,8 @@
       "meaning": "Eşi ve benzeri olmadan yaratan.",
       "goal": 1,
       "arabic": "الْبَدِيعُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-95.mp3"
     },
     {
       "id": "d00184",
@@ -1937,7 +2032,8 @@
       "meaning": "Varlığının sonu olmayan.",
       "goal": 1,
       "arabic": "الْبَاقِي",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-96.mp3"
     },
     {
       "id": "d00185",
@@ -1948,7 +2044,8 @@
       "meaning": "Her şeyin gerçek sahibi olarak kalan.",
       "goal": 1,
       "arabic": "الْوَارِثُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-97.mp3"
     },
     {
       "id": "d00186",
@@ -1959,7 +2056,8 @@
       "meaning": "Doğru yolu gösteren, işleri isabetli olan.",
       "goal": 1,
       "arabic": "الرَّشِيدُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-98.mp3"
     },
     {
       "id": "d00187",
@@ -1970,7 +2068,8 @@
       "meaning": "Ceza vermekte acele etmeyen, çok sabırlı olan.",
       "goal": 1,
       "arabic": "الصَّبُورُ",
-      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi"
+      "source": "Yaygın 99'lu Esmâ-i Hüsnâ listesi",
+      "ses": "esma-99.mp3"
     }
   ],
   "lists": [
