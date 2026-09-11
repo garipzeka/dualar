@@ -167,7 +167,17 @@ const ZIKIR_DESENLER = [
 ];
 // İleride eklenecek tekil zikir klipleri için açık liste (dosya adı → kaynak URL):
 const ZIKIR_DOSYALAR = {
-    // ornek: 'subhanallah.mp3': 'https://...'
+    // Namaz duaları (Sübhaneke, Tahiyyat, Salavat-ı İbrâhîmiye, Kunut, Rabbenâ
+    // Âtinâ, Amentü) — dinimizislam.com (Hakikat Kitabevi) "sesli namaz
+    // öğrenme" kayıtları. Kaynak/atıf notu: SES_KAYNAKLARI.md §2.
+    'namaz-subhaneke.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Subhaneke.mp3',
+    'namaz-ettahiyyatu.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Ettehiyyatu.mp3',
+    // Tek kayıt iki duayı kapsıyor: Salli + Bârik aynı klipte.
+    'namaz-salli-barik.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Allahumme_Salli_Allahumme_Barik.mp3',
+    // Tek kayıt Kunut 1 + Kunut 2'yi kapsıyor.
+    'namaz-kunut.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Kunut_Dualari.mp3',
+    'namaz-rabbena-atina.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Rabbena_Atina.mp3',
+    'namaz-amentu.mp3': 'https://dinimizislam.com/Download/Ses/SualCevap/Amentu.mp3'
 };
 
 async function zikirProxy(request) {
