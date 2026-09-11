@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "items": [
     {
       "id": "d00001",
@@ -7,10 +7,10 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Fatiha",
-      "text": "Bismillahirrahmanirrahim \nElhamdulillâhi Rabbil'alemin. Errahmânir'rahim. Mâliki yevmiddin. İyyâke na'budü ve iyyâke neste'în, İhdinessırâtel müstakîm. Sırâtellezine en'amte aleyhim ğayrilmağdûbi aleyhim ve leddâllîn.",
-      "meaning": "Rahmân ve Rahîm olan Allah'ın ismiyle. Hamd o âlemlerin Rabbi, o Rahmân ve Rahim, o, din gününün maliki Allah'ın. Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. Hidayet eyle bizi doğru yola. O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.",
+      "text": "1. Bismillâhir rahmânir rahîm\n2. El hamdu lillâhi rabbil âlemîn\n3. Er rahmânir rahîm\n4. Mâliki yevmid dîn\n5. İyyâke na’budu ve iyyâke nestaîn\n6. İhdinas sırâtel mustakîm\n7. Sırâtallezîne en’amte aleyhim gayril magdûbi aleyhim ve lâd dâllîn",
+      "meaning": "1. Rahman ve Rahim olan Allah'ın adıyla:\n2. Hamd, Alemlerin Rabbi Allah'a mahsustur.\n3. O Rahman ve Rahim'dir,\n4. Din Gününün sahibidir.\n5. Ancak Sana kulluk eder ve yalnız Senden yardım dileriz.\n6. Bizi doğru yola eriştir.\n7. Nimete erdirdiğin kimselerin yoluna; gazaba uğrayanların, ya da sapıtanların yoluna değil.",
       "goal": 1,
-      "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَنِ الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ. صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ.",
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ مَٰلِكِ يَوْمِ ٱلدِّينِ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
       "source": "Kur'an-ı Kerim, Fatiha Suresi"
     },
     {
@@ -20,8 +20,8 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Ayetel Kürsi",
-      "text": "Bismillahirrahmanirrahim \nAllahü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te’huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil erd. Menzellezî yeşfeu indehû illâ biiznihi. ya’lemü mâ beyne eydîhim vemâ halfehüm velâ yühîtûne bişey’in min ilmihî illâ bimâ şâe vesia kürsiyyühüssemâvâti vel erd. Velâ yeûdühü hıfzuhumâ ve hüvel aliyyül azîm",
-      "meaning": "Allah, O'ndan başka tanrı yoktur; O, hayydır, kayyûmdur. Kendisine ne uyku gelir ne de uyuklama. Göklerde ve yerdekilerin hepsi O'nundur. İzni olmadan O'nun katında kim şefaat edebilir? O, kullarının yaptıklarını ve yapacaklarını bilir. (O'na hiçbir şey gizli kalmaz.) O'nun bildirdiklerinin dışında insanlar O'nun ilminden hiçbir şeyi tam olarak bilemezler. O'nun kürsüsü gökleri ve yeri içine alır, onları koruyup gözetmek kendisine ağır gelmez. O, yücedir, büyüktür.",
+      "text": "Allâhu lâ ilâhe illâ huvel hayyul kayyûm, lâ te’huzuhu sinetun ve lâ nevm, lehu mâ fîs semâvâti ve mâ fil ard, menzellezî yeşfeu indehû illâ bi iznih ya’lemu mâ beyne eydîhim ve mâ halfehum, ve lâ yuhîtûne bi şey’in min ilmihî illâ bi mâ şâe, vesia kursiyyuhus semâvâti vel ard, ve lâ yeûduhu hıfzuhumâ ve huvel aliyyul azîm",
+      "meaning": "Allah, O'ndan başka tanrı olmayan, kendisini uyuklama ve uyku tutmayan, diri, her an yaratıklarını gözetip durandır. Göklerde olan ve yerde olan ancak O'nundur. O'nun izni olmadan katında şefaat edecek kimdir? Onların işlediklerini ve işleyeceklerini bilir, dilediğinden başka ilminden hiçbir şeyi kavrayamazlar. Hükümranlığı gökleri ve yeri kaplamıştır, onların gözetilmesi O'na ağır gelmez. O yücedir, büyüktür.",
       "goal": 1,
       "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
       "source": "Kur'an-ı Kerim, Bakara Suresi 255. Ayet (Ayetel Kürsi)"
@@ -64,8 +64,8 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 22.",
-      "text": "Huvallâhullezî lâ ilâhe illâ huve, âlimul gaybi veş şehâdeti, huver rahmânur rahîm(rahîmu).",
-      "meaning": "O, kendisinden başka hiçbir ilâh olmayan Allah’tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân’dır, Rahîm’dir.",
+      "text": "Huvallâhullezî lâ ilâhe illâ huve, âlimul gaybi veş şehâdeh, huver rahmânur rahîm",
+      "meaning": "O, görüleni de görülmeyeni de bilen, kendisinden başka tanrı olmayan Allah'tır. O, acıyıcı olandır, acıyandır.",
       "goal": 1,
       "arabic": "هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَٰنُ الرَّحِيمُ",
       "source": "Kur'an-ı Kerim, Haşr Suresi 22. Ayet"
@@ -77,8 +77,8 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 23",
-      "text": "Huvallâhullezî lâ ilâhe illâ huve, el melikul kuddûsus selâmul mu'minul muheyminul azîzul cebbârul mutekebbir(mutekebbiru), subhânallâhi ammâ yuşrikûn(yuşrikûne).",
-      "meaning": "O, kendisinden başka hiçbir ilâh bulunmayan Allah’tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah’tır. Allah, onların ortak koştuklarından ortaktır.",
+      "text": "Huvallâhullezî lâ ilâhe illâ huve, elmelikul kuddûsus selâmul mû’minul muheyminul azîzul cebbârul mutekebbir, subhânallâhi ammâ yuşrikûn",
+      "meaning": "O, kendisinden başka tanrı olmayan, hükümran, çok kutsal; esenlik veren, güvenlik veren, görüp gözeten, güçlü, buyruğunu herşeye geçiren, ulu olan, Allah'tır. Allah onların koştukları eşlerden (ortaklardan) münezzehtir.",
       "goal": 1,
       "arabic": "هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ",
       "source": "Kur'an-ı Kerim, Haşr Suresi 23. Ayet"
@@ -90,8 +90,8 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Haşr Suresi 24.",
-      "text": "Huvallâhul hâlikul bâriul musavviru lehul esmâul husnâ, yusebbihu lehu mâ fîs semâvâti vel ard(ardı) ve huvel azîzul hakîm(hakîmu).",
-      "meaning": "O, yaratan, yoktan var eden, şekil veren Allah’tır. Güzel isimler O’nundur. Göklerdeki ve yerdeki her şey O’nu tespih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.",
+      "text": "Huvallâhul hâlikul bâriûl musavviru lehul esmâul husnâ, yusebbihu lehu mâ fîs semâvâti vel ard ve huvel azîzul hakîm",
+      "meaning": "O, vareden, güzel yaratan, yarattıklarına şekil veren, en güzel adlar kendisinin olan Allah'tır. Göklerde ve yerde olanlar O'nu tesbih ederler. O güçlüdür, Hakim'dir.",
       "goal": 1,
       "arabic": "هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ",
       "source": "Kur'an-ı Kerim, Haşr Suresi 24. Ayet"
@@ -132,10 +132,10 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "İhlas",
-      "text": "Bismillahirrahmanirrahim \nKul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
-      "meaning": "Rahmân ve Rahîm olan Allah'ın ismiyle. De ki: O, Allah birdir. Allah sameddir. O, doğurmamış ve doğmamıştır. O'nun hiçbir dengi yoktur.",
+      "text": "Bismillahirrahmanirrahim\n1. Kul huvallâhu ehad\n2. Allâhus samed\n3. Lem yelid ve lem yûled\n4. Ve lem yekun lehu kufuven ehad",
+      "meaning": "1. De ki: O Allah bir tektir.\n2. Allah her şeyden müstağni ve her şey O'na muhtaçtır.\n3. O doğurmamış ve doğmamıştır.\n4. Hiçbir şey O'na denk değildir.",
       "goal": 11,
-      "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ.",
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ هُوَ ٱللَّهُ أَحَدٌ ٱللَّهُ ٱلصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
       "source": "Kur'an-ı Kerim, İhlas Suresi"
     },
     {
@@ -144,10 +144,10 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Felak",
-      "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbilfelak. Min şerri mâ halak. Ve min şerri ğasikın izâ vekab. Ve min şerrinneffâsâti fil'ukad. Ve min şerri hâsidin izâ hased.",
-      "meaning": "Rahmân ve Rahîm olan Allah'ın ismiyle. De ki: Yarattığı şeylerin şerrinden, karanlığı çöktüğü zaman gecenin şerrinden, düğümlere üfleyen büyücülerin şerrinden ve haset ettiği zaman hasetçinin şerrinden, sabahın Rabbine sığınırım.",
+      "text": "Bismillahirrahmanirrahim\n1. Kul eûzu bi rabbil felak\n2. Min şerri mâ halak\n3. Ve min şerri gâsikın izâ vekab\n4. Ve min şerrin neffâsâti fîl ukad\n5. Ve min şerri hâsidin izâ hased",
+      "meaning": "1. De ki: \"Yaratıkların şerrinden, bastırdığı zaman karanlığın şerrinden, düğümlere nefes eden büyücülerin şerrinden, hased ettiği zaman hasedcilerin şerrinden, tan yerini ağartan Rabbe sığınırım.\"\n2. De ki: \"Yaratıkların şerrinden, bastırdığı zaman karanlığın şerrinden, düğümlere nefes eden büyücülerin şerrinden, hased ettiği zaman hasedcilerin şerrinden, tan yerini ağartan Rabbe sığınırım.\"\n3. De ki: \"Yaratıkların şerrinden, bastırdığı zaman karanlığın şerrinden, düğümlere nefes eden büyücülerin şerrinden, hased ettiği zaman hasedcilerin şerrinden, tan yerini ağartan Rabbe sığınırım.\"\n4. De ki: \"Yaratıkların şerrinden, bastırdığı zaman karanlığın şerrinden, düğümlere nefes eden büyücülerin şerrinden, hased ettiği zaman hasedcilerin şerrinden, tan yerini ağartan Rabbe sığınırım.\"\n5. De ki: \"Yaratıkların şerrinden, bastırdığı zaman karanlığın şerrinden, düğümlere nefes eden büyücülerin şerrinden, hased ettiği zaman hasedcilerin şerrinden, tan yerini ağartan Rabbe sığınırım.\"",
       "goal": 1,
-      "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِنْ شَرِّ مَا خَلَقَ. وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ.",
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ مِن شَرِّ مَا خَلَقَ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
       "source": "Kur'an-ı Kerim, Felak Suresi"
     },
     {
@@ -156,10 +156,10 @@
       "grpid": "g00002",
       "tur": "sureler",
       "name": "Nas",
-      "text": "Bismillahirrahmanirrahim \nKul e'ûzü birabbinnâsi. Melikinnâsi. İlâhinnâs. Min şerrilvesvâsilhannâs. Ellezî yüvesvisü fî sudûrinnâsi. Minelcinneti vennâs.",
-      "meaning": "Rahmân ve Rahîm olan Allah'ın ismiyle. De ki: İnsanların kalplerine vesvese sokan, (insan Allah'ı andığında) pusuya çekilen cin ve insan şeytanının şerrinden insanların Rabbine, insanların Melikine, insanların İlahına sığınırım.",
+      "text": "Bismillahirrahmanirrahim\n1. Kul eûzu bi rabbin nâs\n2. Melikin nâs\n3. İlâhin nâs\n4. Min şerril vesvâsil hannâs\n5. Ellezî yuvesvisu fî sudûrin nâs\n6. Minel cinneti ven nâs",
+      "meaning": "1. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"\n2. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"\n3. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"\n4. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"\n5. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"\n6. De ki: \"İnsanlardan ve cinlerden ve insanların gönüllerine vesvese veren o sinsi vesvesecinin şerrinden, insanların Tanrısı, insanların Hükümranı ve insanların Rabbi olan Allah'a sığınırım.\"",
       "goal": 1,
-      "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَهِ النَّاسِ. مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ.",
+      "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ مَلِكِ ٱلنَّاسِ إِلَٰهِ ٱلنَّاسِ مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ",
       "source": "Kur'an-ı Kerim, Nas Suresi"
     },
     {
@@ -692,8 +692,8 @@
       "grpid": "g00011",
       "tur": "sıkıntı",
       "name": "Hasbiyallahu",
-      "text": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltü",
-      "meaning": "Bana Allah yeter. O'ndan başka ilah yoktur. O'na tevekkül ettim.",
+      "text": "Fe in tevellev fe kul hasbîyallâh, lâ ilâhe illâ hûv, aleyhi tevekkeltu ve huve rabbul arşil azîm",
+      "meaning": "Eğer yüz çevirirlerse de ki: \"Allah bana yeter; O'ndan başka tanrı yoktur, yalnız O'na güveniyorum; O büyük arşın Rabbidir.\"",
       "goal": 1,
       "arabic": "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
       "source": "Kur'an 9:129"
@@ -705,8 +705,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena atina",
-      "text": "Rabbena atina fid dünya haseneten ve fil ahireti haseneten ve kına azaben nar",
-      "meaning": "Rabbimiz! Bize dünyada iyilik, ahirette de iyilik ver ve bizi ateş azabından koru.",
+      "text": "Ve minhum men yekûlu rabbenâ âtinâ fîd dunyâ haseneten ve fîl âhirati haseneten ve kınâ azâben nâr",
+      "meaning": "\"Rabbimiz! Bize dünyada iyiyi, ahirette de iyiyi ver, bizi ateşin azabından koru\" diyenler vardır.",
       "goal": 1,
       "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
       "source": "Kur'an 2:201"
@@ -729,8 +729,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbi zidni ilma",
-      "text": "Rabbi zidni ilma",
-      "meaning": "Rabbim! İlmimi artır.",
+      "text": "Fe teâlallâhul melikul hak, ve lâ ta’cel bil kur’âni min kabli en yukdâ ileyke vahyuhu ve kul rabbi zidnî ılmâ",
+      "meaning": "Gerçek hükümdar olan Allah Yüce'dir. Kuran sana vahyedilirken, vahy bitmezden önce, unutmamak için, tekrarda acele edip durma, \"Rabbim! ilmimi artır\" de.",
       "goal": 1,
       "arabic": "رَبِّ زِدْنِي عِلْمًا",
       "source": "Kur'an 20:114"
@@ -742,8 +742,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Hasbünallah",
-      "text": "Hasbünallahu ve ni'mel vekil",
-      "meaning": "Allah bize yeter; O ne güzel vekildir.",
+      "text": "Ellezîne kâle lehumun nâsu innen nâse kad cemeû lekum fahşevhum fe zâdehum îmânâ, ve kâlû hasbunâllâhu ve ni’mel vekîl",
+      "meaning": "İnsanlar onlara: \"Düşmanınız olan insanlar size karşı bir ordu topladılar, onlardan korkun\" dediler. Bu, onların imanını artırdı da: \"Allah bize yeter. O ne güzel Vekil'dir\" dediler.",
       "goal": 1,
       "arabic": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
       "source": "Kur'an 3:173"
@@ -799,8 +799,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuziğ",
-      "text": "Rabbena la tuziğ kulubena ba'de iz hedeytena",
-      "meaning": "Rabbimiz! Bizi hidayete erdirdikten sonra kalplerimizi eğriltme.",
+      "text": "Rabbenâ lâ tuziğ kulûbenâ ba’de iz hedeytenâ veheb lenâ min ledunke rahmeh, inneke entel vehhâb",
+      "meaning": "Rabbimiz! Bizi doğru yola erdirdikten sonra kalblerimizi eğriltme, katından bize rahmet bağışla; şüphesiz Sen sonsuz bağışta bulunansın.",
       "goal": 1,
       "arabic": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا",
       "source": "Kur'an 3:8"
@@ -812,8 +812,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena hab lena",
-      "text": "Rabbena heb lena min ezvacina ve zürriyyatina kurrete a'yunin",
-      "meaning": "Rabbimiz! Bize eşlerimizden ve çocuklarımızdan göz aydınlığı bağışla.",
+      "text": "Vellezîne yekûlûne rabbenâ heb lenâ min ezvâcinâ ve zurriyyâtinâ kurrete a’yunin vec’alnâ lil muttekîne imâmâ",
+      "meaning": "Onlar: \"Rabbimiz! Bize eşlerimizden ve çocuklarımızdan gözümüzün aydınlığı olacak insanlar ihsan et ve bizi, Allah'a karşı gelmekten sakınanlara önder yap\" derler.",
       "goal": 1,
       "arabic": "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
       "source": "Kur'an 25:74"
@@ -825,8 +825,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbighfir li",
-      "text": "Rabbigfir li",
-      "meaning": "Rabbim! Beni bağışla.",
+      "text": "Kâle rabbigfir lî veheb lî mulken lâ yenbagî li ehadin min ba’dî, inneke entel vehhâb",
+      "meaning": "Süleyman: \"Rabbim! Beni bağışla, bana benden sonra kimsenin ulaşamayacağı bir hükümranlık ver; Sen şüphesiz, daima bağışta bulunansın\" dedi.",
       "goal": 1,
       "arabic": "رَبِّ اغْفِرْ لِي",
       "source": "Kur'an 38:35"
@@ -838,8 +838,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena zalemna",
-      "text": "Rabbena zalemna enfüsena ve in lem tağfir lena ve terhamna le nekunenne minel hasirin",
-      "meaning": "Rabbimiz! Kendimize zulmettik; bizi bağışlamaz ve bize merhamet etmezsen mutlaka ziyana uğrayanlardan oluruz.",
+      "text": "Kâlâ rabbenâ zalemnâ enfusenâ ve in lem tagfirlenâ ve terhamnâ le nekûnenne minel hâsirîn",
+      "meaning": "Her ikisi, \"Rabbimiz! Kendimize yazık ettik; bizi bağışlamaz ve bize merhamet etmezsen biz kaybedenlerden oluruz\" dediler.",
       "goal": 1,
       "arabic": "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
       "source": "Kur'an 7:23"
@@ -851,8 +851,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuahizna",
-      "text": "Rabbena la tüahizna in nesina ev ahta'na",
-      "meaning": "Rabbimiz! Unutur veya yanılırsak bizi sorumlu tutma.",
+      "text": "Lâ yukellifullâhu nefsen illâ vus’ahâ lehâ mâ kesebet ve aleyhâ mektesebet rabbenâ lâ tuâhıznâ in nesînâ ev ahta’nâ, rabbenâ ve lâ tahmil aleynâ ısran kemâ hameltehu alellezîne min kablinâ, rabbenâ ve lâ tuhammilnâ mâ lâ tâkate lenâ bih, va’fu annâ, vagfir lenâ, verhamnâ, ente mevlânâ fensurnâ alel kavmil kâfirîn",
+      "meaning": "Allah kişiye ancak gücünün yeteceği kadar yükler; kazandığı iyilik lehine, ettiği kötülük de aleyhinedir. Rabbimiz! Eğer unutacak veya yanılacak olursak bizi sorumlu tutma. Rabbimiz bizden öncekilere yüklediğin gibi, bize de ağır yük yükleme. Rabbimiz! Bize gücümüzün yetmeyeceği şeyi taşıtma, bizi affet, bizi bağışla, bize acı. Sen Mevlamızsın, kafirlere karşı bize yardım et.",
       "goal": 1,
       "arabic": "رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا",
       "source": "Kur'an 2:286"
@@ -864,8 +864,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuhammilna",
-      "text": "Rabbena ve la tahmil aleyna isran kema hameltehu alellezine min kablina",
-      "meaning": "Rabbimiz! Bizden öncekilere yüklediğin gibi bize ağır bir yük yükleme.",
+      "text": "Lâ yukellifullâhu nefsen illâ vus’ahâ lehâ mâ kesebet ve aleyhâ mektesebet rabbenâ lâ tuâhıznâ in nesînâ ev ahta’nâ, rabbenâ ve lâ tahmil aleynâ ısran kemâ hameltehu alellezîne min kablinâ, rabbenâ ve lâ tuhammilnâ mâ lâ tâkate lenâ bih, va’fu annâ, vagfir lenâ, verhamnâ, ente mevlânâ fensurnâ alel kavmil kâfirîn",
+      "meaning": "Allah kişiye ancak gücünün yeteceği kadar yükler; kazandığı iyilik lehine, ettiği kötülük de aleyhinedir. Rabbimiz! Eğer unutacak veya yanılacak olursak bizi sorumlu tutma. Rabbimiz bizden öncekilere yüklediğin gibi, bize de ağır yük yükleme. Rabbimiz! Bize gücümüzün yetmeyeceği şeyi taşıtma, bizi affet, bizi bağışla, bize acı. Sen Mevlamızsın, kafirlere karşı bize yardım et.",
       "goal": 1,
       "arabic": "رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا",
       "source": "Kur'an 2:286"
@@ -877,8 +877,8 @@
       "grpid": "g00001",
       "tur": "genel",
       "name": "Rabbena la tuhammilna ma la takata",
-      "text": "Rabbena ve la tuhammilna ma la takate lena bih",
-      "meaning": "Rabbimiz! Gücümüzün yetmediği şeyi bize yükleme.",
+      "text": "Lâ yukellifullâhu nefsen illâ vus’ahâ lehâ mâ kesebet ve aleyhâ mektesebet rabbenâ lâ tuâhıznâ in nesînâ ev ahta’nâ, rabbenâ ve lâ tahmil aleynâ ısran kemâ hameltehu alellezîne min kablinâ, rabbenâ ve lâ tuhammilnâ mâ lâ tâkate lenâ bih, va’fu annâ, vagfir lenâ, verhamnâ, ente mevlânâ fensurnâ alel kavmil kâfirîn",
+      "meaning": "Allah kişiye ancak gücünün yeteceği kadar yükler; kazandığı iyilik lehine, ettiği kötülük de aleyhinedir. Rabbimiz! Eğer unutacak veya yanılacak olursak bizi sorumlu tutma. Rabbimiz bizden öncekilere yüklediğin gibi, bize de ağır yük yükleme. Rabbimiz! Bize gücümüzün yetmeyeceği şeyi taşıtma, bizi affet, bizi bağışla, bize acı. Sen Mevlamızsın, kafirlere karşı bize yardım et.",
       "goal": 1,
       "arabic": "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ",
       "source": "Kur'an 2:286"
