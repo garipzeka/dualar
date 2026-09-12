@@ -1,11 +1,12 @@
 /**
  * Zikirmatik bulut yardımcısı — Cloudflare Worker
  *
- * Dört iş yapar:
+ * Beş iş yapar:
  *   1) GET /dualar.json                → GitHub'daki dualar verisini yayınlar (mevcut davranış)
  *   2) GET /dualar2.json               → Kur'an-ı Kerim verisini yayınlar (ayrı dosya; /kuran.json da çalışır — eski APK uyumu)
  *   3) GET /ses/{bitrate}/{kari}/{no}.mp3 → Kur'an tilavetini proxy'ler
  *   4) GET /zikir/{dosya}.mp3          → zikir/Esma-ül Hüsna kliplerini proxy'ler (beyaz liste)
+ *   5) GET /sure/{sure}.mp3            → bütün sure yedek kaynağı (Maher 256k; R2 + ayna zinciri)
  *
  * 🔴 NEDEN PROXY?
  * cdn.islamic.network iki şey yapıyor:
@@ -155,14 +156,21 @@ async function sesAkisi(adaylar, request, kaynakAdi) {
         if (!kaynakYanit.ok) { sonDurum = kaynakYanit.status; continue; }
 
         // Gövde akış olarak geçirilir; hiçbir yerde saklanmaz.
+        // 206 yanıtlarında Content-Range/Content-Length istemciye taşınmalıdır:
+        // bütün sure dosyaları büyük, ileri sarma bu başlıklara bağlı.
+        const yanitBasliklari = cors({
+            'Content-Type': 'audio/mpeg',
+            'Cache-Control': NO_STORE,
+            'Content-Disposition': 'inline',
+            'Accept-Ranges': 'bytes'
+        });
+        const icerikAraligi = kaynakYanit.headers.get('Content-Range');
+        if (icerikAraligi) yanitBasliklari['Content-Range'] = icerikAraligi;
+        const icerikUzunlugu = kaynakYanit.headers.get('Content-Length');
+        if (icerikUzunlugu) yanitBasliklari['Content-Length'] = icerikUzunlugu;
         return new Response(request.method === 'HEAD' ? null : kaynakYanit.body, {
             status: kaynakYanit.status,
-            headers: cors({
-                'Content-Type': 'audio/mpeg',
-                'Cache-Control': NO_STORE,
-                'Content-Disposition': 'inline',
-                'Accept-Ranges': 'bytes'
-            })
+            headers: yanitBasliklari
         });
     }
     return json({ hata: kaynakAdi + ' kaynaklarından alınamadı', durum: sonDurum }, sonDurum === 404 ? 404 : 502);
@@ -238,6 +246,35 @@ async function zikirProxy(request) {
     return sesAkisi([hedef], request, 'Zikir sesi');
 }
 
+// ── Bütün sureler (/sure/{sure}.mp3) ─────────────────────────────────
+// Maher Al-Muaiqly 256 kbps bütün sure kayıtları. quranicaudio'daki
+// 'maher_256' seti (almuaiqly.com'un yayını) ile aynı performanstır;
+// /ses/'teki ayet ayet 128k kayıttan FARKLI bir tilavet oturumudur,
+// ikisi karıştırılmamalıdır. Birincil kaynak kendi R2 kopyamız; o
+// yapılandırılana kadar (ve erişilemez olduğu durumlarda) istek
+// quranicaudio aynasından karşılanır. Atıf notu: SES_KAYNAKLARI.md §1b.
+const SURE_R2_KOK = ''; // örn. 'https://pub-0123abcd.r2.dev' — R2 bucket yayına alınca doldurulur
+const SURE_AYNA_KOK = 'https://download.quranicaudio.com/quran/maher_256';
+
+async function sureProxy(request) {
+    const yol = new URL(request.url).pathname;
+    const parcalar = yol.split('/').filter(Boolean); // ['sure', 'n.mp3']
+    if (parcalar.length !== 2) {
+        return json({ hata: 'Beklenen yol: /sure/{sure}.mp3' }, 400);
+    }
+    const eslesen = parcalar[1].match(/^(\d{1,3})\.mp3$/);
+    const numara = eslesen ? parseInt(eslesen[1], 10) : 0;
+    if (numara < 1 || numara > 114) {
+        return json({ hata: 'Geçersiz sure numarası (1-114)' }, 400);
+    }
+    // Dosya adları 3 basamaklı standart formatta (001.mp3 … 114.mp3).
+    const dosya = pad3(numara) + '.mp3';
+    const adaylar = [];
+    if (SURE_R2_KOK) adaylar.push(SURE_R2_KOK + '/maher/256/' + dosya);
+    adaylar.push(SURE_AYNA_KOK + '/' + dosya);
+    return sesAkisi(adaylar, request, 'Bütün sure');
+}
+
 export default {
     async fetch(request) {
         const yol = new URL(request.url).pathname;
@@ -254,6 +291,7 @@ export default {
         if (yol === '/kuran.json' || yol === '/dualar2.json') return kuranJson();
         if (yol === '/ses' || yol.startsWith('/ses/')) return sesProxy(request);
         if (yol === '/zikir' || yol.startsWith('/zikir/')) return zikirProxy(request);
+        if (yol === '/sure' || yol.startsWith('/sure/')) return sureProxy(request);
 
         return json({ hata: 'Bulunamadı', yol }, 404);
     }
