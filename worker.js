@@ -6,7 +6,7 @@
  *   2) GET /dualar2.json               → Kur'an-ı Kerim verisini yayınlar (ayrı dosya; /kuran.json da çalışır — eski APK uyumu)
  *   3) GET /ses/{bitrate}/{kari}/{no}.mp3 → Kur'an tilavetini proxy'ler
  *   4) GET /zikir/{dosya}.mp3          → zikir/Esma-ül Hüsna kliplerini proxy'ler (beyaz liste)
- *   5) GET /sure/{sure}.mp3            → bütün sure yedek kaynağı (Maher 256k; R2 + ayna zinciri)
+ *   5) GET /sure/{sure}.mp3            → bütün sure yedek kaynağı (Maher 256k; ayna zinciri)
  *
  * 🔴 NEDEN PROXY?
  * cdn.islamic.network iki şey yapıyor:
@@ -250,11 +250,12 @@ async function zikirProxy(request) {
 // Maher Al-Muaiqly 256 kbps bütün sure kayıtları. quranicaudio'daki
 // 'maher_256' seti (almuaiqly.com'un yayını) ile aynı performanstır;
 // /ses/'teki ayet ayet 128k kayıttan FARKLI bir tilavet oturumudur,
-// ikisi karıştırılmamalıdır. Birincil kaynak kendi R2 kopyamız; o
-// yapılandırılana kadar (ve erişilemez olduğu durumlarda) istek
-// quranicaudio aynasından karşılanır. Atıf notu: SES_KAYNAKLARI.md §1b.
-const SURE_R2_KOK = ''; // örn. 'https://pub-0123abcd.r2.dev' — R2 bucket yayına alınca doldurulur
+// ikisi karıştırılmamalıdır. Sıralama: resmi quranicaudio yayını birincil,
+// ardından kendi kopyalarımız — IA item'i TAM 114 dosyalıdır (quranicaudio'da
+// 005.mp3 yok). Atıf notu: SES_KAYNAKLARI.md §1b.
 const SURE_AYNA_KOK = 'https://download.quranicaudio.com/quran/maher_256';
+const SURE_IA_KOK = 'https://archive.org/download/quran-maher-al-muaiqly-256kbps'; // maher_yukle_ia.py bu item'i doldurur
+const SURE_R2_KOK = ''; // örn. 'https://pub-0123abcd.r2.dev' — R2 kopyası ileride etkinleşince doldurulur
 
 async function sureProxy(request) {
     const yol = new URL(request.url).pathname;
@@ -269,9 +270,9 @@ async function sureProxy(request) {
     }
     // Dosya adları 3 basamaklı standart formatta (001.mp3 … 114.mp3).
     const dosya = pad3(numara) + '.mp3';
-    const adaylar = [];
+    const adaylar = [SURE_AYNA_KOK + '/' + dosya];
     if (SURE_R2_KOK) adaylar.push(SURE_R2_KOK + '/maher/256/' + dosya);
-    adaylar.push(SURE_AYNA_KOK + '/' + dosya);
+    adaylar.push(SURE_IA_KOK + '/' + dosya);
     return sesAkisi(adaylar, request, 'Bütün sure');
 }
 
