@@ -1,6 +1,6 @@
 {
-  "version": 7,
-  "contentHash": "9eed58c121ab7994",
+  "version": 8,
+  "contentHash": "e49a201d91565f4b",
   "items": [
     {
       "id": "k00001",
@@ -1618,7 +1618,7 @@
     },
     {
       "id": "kuran_hatmi",
-      "name": "Kur'an Hatmi",
+      "name": "Kur'an-ı Kerim Hatmi",
       "items": [
         {
           "id": "k00001",
