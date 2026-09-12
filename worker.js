@@ -3,7 +3,7 @@
  *
  * Dört iş yapar:
  *   1) GET /dualar.json                → GitHub'daki dualar verisini yayınlar (mevcut davranış)
- *   2) GET /kuran.json                 → Kur'an-ı Kerim verisini yayınlar (ayrı dosya)
+ *   2) GET /dualar2.json               → Kur'an-ı Kerim verisini yayınlar (ayrı dosya; /kuran.json da çalışır — eski APK uyumu)
  *   3) GET /ses/{bitrate}/{kari}/{no}.mp3 → Kur'an tilavetini proxy'ler
  *   4) GET /zikir/{dosya}.mp3          → zikir/Esma-ül Hüsna kliplerini proxy'ler (beyaz liste)
  *
@@ -23,8 +23,37 @@
 
 const DUALAR_KAYNAK = 'https://raw.githubusercontent.com/garipzeka/dualar/main/dualar.json';
 // Kur'an verisi ayrı dosyada durur (dualar.json'a dokunulmaz).
-const KURAN_KAYNAK = 'https://raw.githubusercontent.com/garipzeka/dualar/main/kuran.json';
+const KURAN_KAYNAK = 'https://raw.githubusercontent.com/garipzeka/dualar/main/dualar2.json';
 const SES_CDN = 'https://cdn.islamic.network/quran/audio/';
+
+// YEDEK SES AYNASI: everyayah.com — ayet ayet dosyalar (sure3+ayet3.mp3 düzeni).
+// islamic.network'in kaynağı kâri bazında bozulabiliyor (bazı kârilerde 502 /
+// askıda kalma); bu durumda tilavet aynadan akıtılır. Ayna yalnızca birincil
+// yanıt vermezse denenir ve hiçbir katmanda önbelleklenmez (no-store aynen).
+const SES_AYNA_KAYNAK = 'https://everyayah.com/data/';
+const SES_AYNA_KARILER = {
+    'ar.alafasy': 'Alafasy_128kbps',
+    'ar.husary': 'Husary_128kbps',
+    'ar.minshawi': 'Minshawy_Murattal_128kbps',
+    'ar.mahermuaiqly': 'MaherAlMuaiqly128kbps',
+    'ar.ahmedajamy': 'Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net',
+    'ar.hudhaify': 'Hudhaify_128kbps',
+    'ar.muhammadayyoub': 'Muhammad_Ayyoub_128kbps'
+};
+// Sure başına ayet sayıları — global ayet numarasını sure/ayet'e çevirmek için
+// (CDN dosya adı global numara, ayna dosya adı sure3+ayet3 basamaklıdır).
+const SURE_AYET_SAYILARI = [7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+
+function sureAyetten(globalAyet) {
+    if (!(globalAyet >= 1)) return null;
+    for (let s = 1; s <= 114; s++) {
+        const adet = SURE_AYET_SAYILARI[s - 1];
+        if (globalAyet <= adet) return [s, globalAyet];
+        globalAyet -= adet;
+    }
+    return null;
+}
+const pad3 = (x) => String(x).padStart(3, '0');
 
 // Açık proxy kötüye kullanımını engellemek için yalnızca bu değerler geçirilir.
 // Uygulamadaki AUDIO_KARILER listesiyle aynı olmalıdır.
@@ -82,7 +111,7 @@ async function dualarJson() {
     });
 }
 
-/** /kuran.json — Kur'an-ı Kerim verisi (ayrı dosya, ~3 MB).
+/** /dualar2.json — Kur'an-ı Kerim verisi (ayrı dosya, ~3 MB). /kuran.json aynı veriye yönlendirilir (eski APK uyumu).
  *  Kenarda (Cloudflare) 5 dk önbelleklenir; İSTEMCİYE "no-store" döner:
  *  kutsal metin cihazın disk önbelleğine asla yazılmaz, her açılışta ağdan gelir. */
 async function kuranJson() {
@@ -102,39 +131,41 @@ async function kuranJson() {
     });
 }
 
-/** Hedef ses dosyasını sunucu tarafında çeker ve "no-store" ile akıtır
- *  (tilavet ve zikir klipleri için ortak yol). */
-async function sesAkisi(hedef, request, kaynakAdi) {
+/** Ses dosyasını sunucu tarafında çeker ve "no-store" ile akıtır
+ *  (tilavet ve zikir klipleri için ortak yol). adaylar sıralı denenir:
+ *  ilk başarılı kaynak akıtılır (tilavette birincil CDN + yedek ayna). */
+async function sesAkisi(adaylar, request, kaynakAdi) {
     // İstemciden gelen Range varsa geçir (ileri sarma); yoksa tam dosya iner.
     const istekBasliklari = {};
     const range = request.headers.get('Range');
     if (range) istekBasliklari['Range'] = range;
 
-    let kaynakYanit;
-    try {
-        kaynakYanit = await fetch(hedef, {
-            headers: istekBasliklari,
-            // Kenar önbelleğini kapat: kutsal ses kenarda da birikmesin.
-            cf: { cacheEverything: false, cacheTtl: 0 }
+    let sonDurum = 0;
+    for (const hedef of adaylar) {
+        let kaynakYanit;
+        try {
+            kaynakYanit = await fetch(hedef, {
+                headers: istekBasliklari,
+                // Kenar önbelleğini kapat: kutsal ses kenarda da birikmesin.
+                cf: { cacheEverything: false, cacheTtl: 0 }
+            });
+        } catch (_) {
+            continue;   // bu kaynağa ulaşılamadı: sıradaki aday denenir
+        }
+        if (!kaynakYanit.ok) { sonDurum = kaynakYanit.status; continue; }
+
+        // Gövde akış olarak geçirilir; hiçbir yerde saklanmaz.
+        return new Response(request.method === 'HEAD' ? null : kaynakYanit.body, {
+            status: kaynakYanit.status,
+            headers: cors({
+                'Content-Type': 'audio/mpeg',
+                'Cache-Control': NO_STORE,
+                'Content-Disposition': 'inline',
+                'Accept-Ranges': 'bytes'
+            })
         });
-    } catch (_) {
-        return json({ hata: kaynakAdi + ' kaynağına ulaşılamadı' }, 502);
     }
-
-    if (!kaynakYanit.ok) {
-        return json({ hata: kaynakAdi + ' bulunamadı', durum: kaynakYanit.status }, kaynakYanit.status === 404 ? 404 : 502);
-    }
-
-    // Gövde akış olarak geçirilir; hiçbir yerde saklanmaz.
-    return new Response(request.method === 'HEAD' ? null : kaynakYanit.body, {
-        status: kaynakYanit.status,
-        headers: cors({
-            'Content-Type': 'audio/mpeg',
-            'Cache-Control': NO_STORE,
-            'Content-Disposition': 'inline',
-            'Accept-Ranges': 'bytes'
-        })
-    });
+    return json({ hata: kaynakAdi + ' kaynaklarından alınamadı', durum: sonDurum }, sonDurum === 404 ? 404 : 502);
 }
 
 /** /ses/{bitrate}/{kari}/{no}.mp3 — tilavet proxy'si, asla önbelleğe alınmaz. */
@@ -150,7 +181,16 @@ async function sesProxy(request) {
     if (!IZINLI_KARILER.has(kari)) return json({ hata: 'Desteklenmeyen kâri' }, 403);
     if (!/^\d{1,4}\.mp3$/.test(dosya)) return json({ hata: 'Geçersiz ayet numarası' }, 400);
 
-    return sesAkisi(SES_CDN + bitrate + '/' + kari + '/' + dosya, request, 'Tilavet');
+    // Birincil: islamic.network CDN. Yedek: everyayah aynası — birincilin kaynağı
+    // kâri bazında bozulduğunda (502/askıda) istek aynadan karşılanır. Ayna dosya
+    // adı sure3+ayet3 basamaklı olduğu için global ayet numarası çevrilir.
+    const adaylar = [SES_CDN + bitrate + '/' + kari + '/' + dosya];
+    const aynaKlasoru = SES_AYNA_KARILER[kari];
+    if (aynaKlasoru) {
+        const konum = sureAyetten(parseInt(dosya, 10));
+        if (konum) adaylar.push(SES_AYNA_KAYNAK + aynaKlasoru + '/' + pad3(konum[0]) + pad3(konum[1]) + '.mp3');
+    }
+    return sesAkisi(adaylar, request, 'Tilavet');
 }
 
 // ── Zikir/Esma klipleri (/zikir/{dosya}) ─────────────────────────────
@@ -195,7 +235,7 @@ async function zikirProxy(request) {
         }
     }
     if (!hedef) return json({ hata: 'İzin verilmeyen zikir dosyası' }, 403);
-    return sesAkisi(hedef, request, 'Zikir sesi');
+    return sesAkisi([hedef], request, 'Zikir sesi');
 }
 
 export default {
@@ -211,7 +251,7 @@ export default {
 
         // Kök yol da dualar.json döndürür — yayındaki eski sürümün davranışı korunur.
         if (yol === '/' || yol === '/dualar.json') return dualarJson();
-        if (yol === '/kuran.json') return kuranJson();
+        if (yol === '/kuran.json' || yol === '/dualar2.json') return kuranJson();
         if (yol === '/ses' || yol.startsWith('/ses/')) return sesProxy(request);
         if (yol === '/zikir' || yol.startsWith('/zikir/')) return zikirProxy(request);
 
