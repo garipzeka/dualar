@@ -75,12 +75,176 @@ const NO_STORE = 'no-store, no-cache, must-revalidate, max-age=0';
 function cors(ekBasliklar = {}) {
     return {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
-        'Access-Control-Allow-Headers': 'Range, Content-Type',
+        'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Range, Content-Type, Authorization, X-Admin-Key',
         'Access-Control-Max-Age': '86400',
         'X-Robots-Tag': 'noindex, nofollow',
         ...ekBasliklar
     };
+}
+
+// KV bağlı değilken veya soğuk başlangıçta kesintisiz çalışması için geçici bellek
+const GECICI_ONERILER = new Map();
+
+/** 🤲 Kullanıcılardan gelen anonim dua önerisini kabul eder ve Telegram bildirimi atar. */
+async function handleDuaOner(request, env) {
+    try {
+        const data = await request.json();
+        const name = String(data.name || '').slice(0, 150).trim();
+        const text = String(data.text || '').slice(0, 4000).trim();
+        const arabic = String(data.arabic || '').slice(0, 4000).trim();
+        const meaning = String(data.meaning || '').slice(0, 4000).trim();
+        const source = String(data.source || '').slice(0, 300).trim();
+        const category = String(data.category || 'genel').slice(0, 50).trim();
+        const goal = Math.max(1, Math.min(99999, Number(data.goal) || 33));
+
+        if (!name && !text) {
+            return json({ ok: false, hata: 'Dua adı veya metni boş olamaz' }, 400);
+        }
+
+        const docId = 'oner_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+        const createdAt = new Date().toISOString();
+
+        const record = {
+            doc_id: docId,
+            id: docId,
+            name,
+            text,
+            arabic,
+            meaning,
+            source,
+            category,
+            goal,
+            createdAt,
+            status: 'bekliyor'
+        };
+
+        // 1. Geçici belleğe kaydet (son 100 öneri tutulur)
+        GECICI_ONERILER.set(docId, record);
+        if (GECICI_ONERILER.size > 100) {
+            const ilkKey = GECICI_ONERILER.keys().next().value;
+            GECICI_ONERILER.delete(ilkKey);
+        }
+
+        // 2. Cloudflare KV bağlıysa kalıcı kaydet
+        if (env && env.BEKLEYEN_DUALAR) {
+            try {
+                await env.BEKLEYEN_DUALAR.put(docId, JSON.stringify(record));
+            } catch (kvErr) {
+                console.error('KV yazma hatası:', kvErr);
+            }
+        }
+
+        // 3. Telegram Bildirimi (BotFather token ve Chat ID tanımlıysa)
+        const tgToken = (env && env.TELEGRAM_BOT_TOKEN) || '';
+        const tgChat = (env && env.TELEGRAM_CHAT_ID) || '';
+        if (tgToken && tgChat) {
+            const tgMetin =
+                `🤲 *Yeni Dua Önerisi Geldi!*\n\n` +
+                `📖 *Ad:* ${name}\n` +
+                `📿 *Hedef:* ${goal}  |  📂 *Kategori:* ${category}\n\n` +
+                (text ? `📝 *Okunuş:*\n${text}\n\n` : '') +
+                (arabic ? `🔤 *Arapça:*\n${arabic}\n\n` : '') +
+                (meaning ? `💡 *Anlamı:*\n${meaning}\n\n` : '') +
+                (source ? `📚 *Kaynak:* ${source}\n\n` : '') +
+                `💻 _Yönetici aracını (yonetici.py) açıp inceleyebilir ve onaylayabilirsiniz._`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: tgChat,
+                        text: tgMetin,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (tgErr) {
+                console.error('Telegram bildirim hatası:', tgErr);
+            }
+        }
+
+        return json({ ok: true, id: docId, mesaj: 'Dua öneriniz iletildi' });
+    } catch (e) {
+        return json({ ok: false, hata: e.message || 'Geçersiz veri' }, 400);
+    }
+}
+
+/** 📋 Yönetici aracı (yonetici.py) için bekleyen dua önerilerini listeler. */
+async function handleBekleyenDualar(request, env) {
+    const dualarMap = new Map();
+
+    // Önce KV'den oku (varsa)
+    if (env && env.BEKLEYEN_DUALAR) {
+        try {
+            const list = await env.BEKLEYEN_DUALAR.list();
+            for (const key of list.keys) {
+                const val = await env.BEKLEYEN_DUALAR.get(key.name);
+                if (val) {
+                    try {
+                        const parsed = JSON.parse(val);
+                        dualarMap.set(parsed.doc_id || key.name, parsed);
+                    } catch (_) {}
+                }
+            }
+        } catch (kvErr) {
+            console.error('KV okuma hatası:', kvErr);
+        }
+    }
+
+    // Bellekteki öğelerle birleştir
+    GECICI_ONERILER.forEach((v, k) => {
+        if (!dualarMap.has(k)) dualarMap.set(k, v);
+    });
+
+    const dualar = Array.from(dualarMap.values());
+    dualar.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+    return json({ ok: true, dualar, adet: dualar.length });
+}
+
+/** 🗑️ Onaylanan veya reddedilen dua önerisini kuyruktan siler. */
+async function handleDuaSil(request, env) {
+    try {
+        const data = await request.json().catch(() => ({}));
+        const id = String(data.id || data.doc_id || '').trim();
+        if (id) {
+            GECICI_ONERILER.delete(id);
+            if (env && env.BEKLEYEN_DUALAR) {
+                try {
+                    await env.BEKLEYEN_DUALAR.delete(id);
+                } catch (kvErr) {
+                    console.error('KV silme hatası:', kvErr);
+                }
+            }
+        }
+        return json({ ok: true, silindi: true, id });
+    } catch (e) {
+        return json({ ok: false, hata: e.message }, 500);
+    }
+}
+
+/** 🧪 Telegram bot bağlantı testi uç noktası. */
+async function handleTelegramTest(request, env) {
+    const tgToken = (env && env.TELEGRAM_BOT_TOKEN) || '';
+    const tgChat = (env && env.TELEGRAM_CHAT_ID) || '';
+    if (!tgToken || !tgChat) {
+        return json({ ok: false, hata: 'TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID ayarlanmamış' }, 400);
+    }
+    try {
+        const tgRes = await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: tgChat,
+                text: '🧪 *Zikirmatik Bot Testi:* Telegram bildirim bağlantısı başarıyla çalışıyor! ✅',
+                parse_mode: 'Markdown'
+            })
+        });
+        const resData = await tgRes.json();
+        return json({ ok: resData.ok, telegram: resData });
+    } catch (e) {
+        return json({ ok: false, hata: e.message }, 500);
+    }
 }
 
 function json(govde, durum = 200) {
@@ -277,12 +441,30 @@ async function sureProxy(request) {
 }
 
 export default {
-    async fetch(request) {
+    async fetch(request, env) {
         const yol = new URL(request.url).pathname;
 
         if (request.method === 'OPTIONS') {
             return new Response(null, { status: 204, headers: cors() });
         }
+
+        // ── Dua Öner (Anonim Topluluk Paylaşımı) Uç Noktaları ──
+        if (yol === '/api/dua-oner' || yol === '/dua-paylas') {
+            if (request.method === 'POST') return handleDuaOner(request, env);
+            return json({ hata: 'Yalnızca POST desteklenir' }, 405);
+        }
+        if (yol === '/api/bekleyen-dualar') {
+            if (request.method === 'GET') return handleBekleyenDualar(request, env);
+            return json({ hata: 'Yalnızca GET desteklenir' }, 405);
+        }
+        if (yol === '/api/dua-sil') {
+            if (request.method === 'POST') return handleDuaSil(request, env);
+            return json({ hata: 'Yalnızca POST desteklenir' }, 405);
+        }
+        if (yol === '/api/telegram-test') {
+            return handleTelegramTest(request, env);
+        }
+
         if (request.method !== 'GET' && request.method !== 'HEAD') {
             return json({ hata: 'Yalnızca GET desteklenir' }, 405);
         }
